@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew Matrix.Plugins", "Flowerdew Matrix.Plugins.csproj", "{C0DA4327-80A6-E81C-F72F-674E18DD59F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew Matrix", "Flowerdew Matrix.csproj", "{86CBD0BA-FDA9-86CB-F5F0-24F8B805262F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew Matrix.Editor.Plugins", "Flowerdew Matrix.Editor.Plugins.csproj", "{85BC6429-84FF-68E4-8261-B3AF4109483F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0DA4327-80A6-E81C-F72F-674E18DD59F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0DA4327-80A6-E81C-F72F-674E18DD59F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0DA4327-80A6-E81C-F72F-674E18DD59F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0DA4327-80A6-E81C-F72F-674E18DD59F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86CBD0BA-FDA9-86CB-F5F0-24F8B805262F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CBD0BA-FDA9-86CB-F5F0-24F8B805262F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86CBD0BA-FDA9-86CB-F5F0-24F8B805262F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86CBD0BA-FDA9-86CB-F5F0-24F8B805262F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85BC6429-84FF-68E4-8261-B3AF4109483F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85BC6429-84FF-68E4-8261-B3AF4109483F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85BC6429-84FF-68E4-8261-B3AF4109483F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85BC6429-84FF-68E4-8261-B3AF4109483F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
