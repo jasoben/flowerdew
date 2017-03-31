@@ -17,8 +17,8 @@ public class MoveUser : MonoBehaviour
     public string spinCW;
     public string spinCCW;
 
-    public MonoBehaviour moveMouseY;
-    public MonoBehaviour moveMouseX;
+    //public MonoBehaviour moveMouseY;
+    //public MonoBehaviour moveMouseX;
 
     // Use this for initialization
     void Start()
@@ -26,17 +26,16 @@ public class MoveUser : MonoBehaviour
 
         viewpointObject = this.gameObject;
 
-        moveMouseY = viewpointObject.GetComponent<MouseLookY>() as MonoBehaviour;
-        moveMouseX = mainCamera.GetComponent<MouseLookX>() as MonoBehaviour;
+        //moveMouseY = viewpointObject.GetComponent<MouseLookY>() as MonoBehaviour;
+        //moveMouseX = mainCamera.GetComponent<MouseLookX>() as MonoBehaviour;
 
-        Debug.Log(moveMouseX);
-        Debug.Log(moveMouseY);
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
 
     }
 
@@ -49,33 +48,33 @@ public class MoveUser : MonoBehaviour
 
         if (Input.GetKey(moveForward) == true)
         {
-            viewpointObject.transform.Translate(Vector3.forward);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
+            viewpointObject.transform.Translate(Vector3.forward / 2);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
         }
         else if (Input.GetKey(moveBackwards) == true)
         {
-            viewpointObject.transform.Translate(Vector3.back);
+            viewpointObject.transform.Translate(Vector3.back / 2);
         }
         else if (Input.GetKey(moveLeft) == true)
         {
-            viewpointObject.transform.Translate(Vector3.left);
+            viewpointObject.transform.Translate(Vector3.left / 2);
         }
         else if (Input.GetKey(moveRight) == true)
         {
-            viewpointObject.transform.Translate(Vector3.right);
+            viewpointObject.transform.Translate(Vector3.right / 2);
         }
         else if (Input.GetKey(flyUp) == true)
         {
-            viewpointObject.transform.Translate(Vector3.up);
+            viewpointObject.transform.Translate(Vector3.up / 2);
         }
         else if (Input.GetKey(flyDown) == true)
         {
-            viewpointObject.transform.Translate(Vector3.down);
+            viewpointObject.transform.Translate(Vector3.down / 2);
         }
 
         else if (Input.GetKeyDown(spinCCW) == true || Input.GetKeyDown(spinCW) == true)
         {
-            moveMouseX.enabled = false;
-            moveMouseY.enabled = false;
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = false;
         }
 
         
@@ -83,20 +82,22 @@ public class MoveUser : MonoBehaviour
         else if (Input.GetKey(spinCCW) == true)
         {
             viewpointObject.transform.Rotate(0, -1, 0);
+            viewpointObject.GetComponent<MouseLookY>().rotY = viewpointObject.transform.localRotation.eulerAngles.y;
         }
         else if (Input.GetKey(spinCW) == true)
         {
             viewpointObject.transform.Rotate(0, 1, 0);
+            viewpointObject.GetComponent<MouseLookY>().rotY = viewpointObject.transform.localRotation.eulerAngles.y;
         }
 
         
 
 
 
-        else if (Input.GetKeyDown("o") == true)
+        else if (Input.GetKeyDown("m") == true)
         {
-            moveMouseX.enabled = !moveMouseX.enabled;
-            moveMouseY.enabled = !moveMouseY.enabled;
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = !viewpointObject.GetComponent<MouseLookY>().moveCamera;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = !mainCamera.GetComponent<MouseLookX>().moveCamera;
         }
 
     }

@@ -7,6 +7,8 @@ public class MouseLookX : MonoBehaviour
     public float mouseSensitivity = 100.0f;
     public float clampAngle = 80.0f;
 
+    public bool moveCamera;
+
     public GameObject viewpointUser;
 
     Quaternion viewpointRotation;
@@ -19,21 +21,30 @@ public class MouseLookX : MonoBehaviour
         Vector3 rot = transform.localRotation.eulerAngles;
         rotY = rot.y;
         rotX = rot.x;
+
+        moveCamera = true;
     }
 
     void Update()
     {
-        //float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = -Input.GetAxis("Mouse Y");
+        if (moveCamera)
+        {
 
-        rotX += mouseY * mouseSensitivity * Time.deltaTime;
-        //rotY += mouseX * mouseSensitivity * Time.deltaTime;
+            //float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = -Input.GetAxis("Mouse Y");
 
-        //rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
+            rotX += mouseY * mouseSensitivity * Time.deltaTime;
+            //rotY += mouseX * mouseSensitivity * Time.deltaTime;
 
-        viewpointRotation = viewpointUser.transform.rotation;
-                
-        Quaternion localRotation = Quaternion.Euler(rotX, viewpointRotation.eulerAngles.y, 0);
-        transform.rotation = localRotation;
+            //rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
+
+            viewpointRotation = viewpointUser.transform.rotation;
+
+            Quaternion localRotation = Quaternion.Euler(rotX, viewpointRotation.eulerAngles.y, 0);
+
+            transform.rotation = localRotation;
+        }
     }
+
+   
 }

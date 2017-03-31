@@ -36,7 +36,8 @@ public class CreateMatrix : MonoBehaviour {
 
         matrixCenter = this.gameObject;
 
-        matrixCubeHeight = matrixCubeWidth = matrixCubeDepth = 1;
+        matrixCubeHeight = matrixCubeWidth = 1;
+        matrixCubeDepth = 1;
 
         matrixWidth = 6;
         matrixHeight = 4;
@@ -53,7 +54,26 @@ public class CreateMatrix : MonoBehaviour {
 
         currentLayer = matrixDepth - 1;
 
-        CreateLargeSquare(387, 0, 0, 0);
+        for (int d = 0; d < 5; d++)
+        {
+            GameObject[] largeSquare387 = CreateLargeSquare(387, 0, 0, d);
+            GameObject[] largeSquare388 = CreateLargeSquare(388, 1, 0, d);
+            GameObject[] largeSquare389 = CreateLargeSquare(389, 2, 0, d);
+
+            GameObject[] largeSquare317 = CreateLargeSquare(317, 0, 1, d);
+            GameObject[] largeSquare318 = CreateLargeSquare(318, 1, 1, d);
+            GameObject[] largeSquare319 = CreateLargeSquare(319, 2, 1, d);
+
+            GameObject[] largeSquare247 = CreateLargeSquare(247, 0, 2, d);
+            GameObject[] largeSquare248 = CreateLargeSquare(248, 1, 2, d);
+            GameObject[] largeSquare249 = CreateLargeSquare(249, 2, 2, d);
+
+            GameObject[] largeSquare177 = CreateLargeSquare(177, 0, 3, d);
+            GameObject[] largeSquare178 = CreateLargeSquare(178, 1, 3, d);
+            GameObject[] largeSquare179 = CreateLargeSquare(179, 2, 3, d);
+        }
+
+
 
         //for (int y = 0; y < matrixDepth; y++)
         //{
@@ -67,11 +87,11 @@ public class CreateMatrix : MonoBehaviour {
         //}
 
 
-    // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
+        // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
 
-    //  StartCoroutine("StackBoxes");
+        //  StartCoroutine("StackBoxes");
 
-}
+    }
 
         // Update is called once per frame
         void Update () {
@@ -120,43 +140,43 @@ public class CreateMatrix : MonoBehaviour {
         int i = 0;
         int j = 0;
 
-        
-        for (int x = 0; x < matrixWidth; x++)
+
+        for (int z = 0; z < matrixHeight; z++)
         {
 
-            for (int z = 0; z < matrixHeight; z++)
+            for (int x = 0; x < matrixWidth; x++)
             {
-                cubesInMatrix[i] = Instantiate(matrixCube, new Vector3((bigSquareXLocation * interCubeDistance) + x * interCubeDistance, 0, (bigSquareYLocation * interCubeDistance) + z * interCubeDistance), Quaternion.identity) as GameObject;
+                cubesInMatrix[i] = Instantiate(matrixCube, new Vector3((bigSquareXLocation * interCubeDistance * 6 * matrixCubeWidth) + x * interCubeDistance, bigSquareDepth * matrixCubeDepth * interCubeDistance, (bigSquareYLocation * interCubeDistance * 4 * matrixCubeHeight) + z * interCubeDistance), Quaternion.identity) as GameObject;
 
                 string cubeName = "littleSquare" + "_alpha" + j + "_" + bigSquareNumber + "_" + bigSquareDepth;
 
-                cubeName.Replace("alpha18", "A");
-                cubeName.Replace("alpha19", "B");
-                cubeName.Replace("alpha20", "C");
-                cubeName.Replace("alpha21", "D");
-                cubeName.Replace("alpha22", "E");
-                cubeName.Replace("alpha23", "F");
+                cubeName = cubeName.Replace("alpha18", "A");
+                cubeName = cubeName.Replace("alpha19", "B");
+                cubeName = cubeName.Replace("alpha20", "C");
+                cubeName = cubeName.Replace("alpha21", "D");
+                cubeName = cubeName.Replace("alpha22", "E");
+                cubeName = cubeName.Replace("alpha23", "F");
 
-                cubeName.Replace("alpha12", "G");
-                cubeName.Replace("alpha13", "H");
-                cubeName.Replace("alpha14", "J");
-                cubeName.Replace("alpha15", "K");
-                cubeName.Replace("alpha16", "L");
-                cubeName.Replace("alpha17", "M");
+                cubeName = cubeName.Replace("alpha12", "G");
+                cubeName = cubeName.Replace("alpha13", "H");
+                cubeName = cubeName.Replace("alpha14", "J");
+                cubeName = cubeName.Replace("alpha15", "K");
+                cubeName = cubeName.Replace("alpha16", "L");
+                cubeName = cubeName.Replace("alpha17", "M");
 
-                cubeName.Replace("alpha6", "N");
-                cubeName.Replace("alpha7", "P");
-                cubeName.Replace("alpha8", "Q");
-                cubeName.Replace("alpha9", "R");
-                cubeName.Replace("alpha10", "S");
-                cubeName.Replace("alpha11", "T");
+                cubeName = cubeName.Replace("alpha6", "N");
+                cubeName = cubeName.Replace("alpha7", "P");
+                cubeName = cubeName.Replace("alpha8", "Q");
+                cubeName = cubeName.Replace("alpha9", "R");
+                cubeName = cubeName.Replace("alpha10", "S");
+                cubeName = cubeName.Replace("alpha11", "T");
 
-                cubeName.Replace("alpha0", "U");
-                cubeName.Replace("alpha1", "V");
-                cubeName.Replace("alpha2", "W");
-                cubeName.Replace("alpha3", "X");
-                cubeName.Replace("alpha4", "Y");
-                cubeName.Replace("alpha5", "Z");
+                cubeName = cubeName.Replace("alpha0", "U");
+                cubeName = cubeName.Replace("alpha1", "V");
+                cubeName = cubeName.Replace("alpha2", "W");
+                cubeName = cubeName.Replace("alpha3", "X");
+                cubeName = cubeName.Replace("alpha4", "Y");
+                cubeName = cubeName.Replace("alpha5", "Z");
 
                 cubesInMatrix[i].name = cubeName;
                 
