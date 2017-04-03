@@ -22,7 +22,7 @@ public class CreateMatrix : MonoBehaviour {
     private float interCubeDistance = 1.2f; 
 
     private GameObject[] cubesInMatrix;
-    public GameObject[][] cubeLayers = new GameObject[100][];
+    public GameObject[][] cubeLayers = new GameObject[288][];
 
     public GameObject currentCube;
 
@@ -32,7 +32,8 @@ public class CreateMatrix : MonoBehaviour {
     private int currentLayer;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         matrixCenter = this.gameObject;
 
@@ -50,7 +51,7 @@ public class CreateMatrix : MonoBehaviour {
 
         matrixCenter.transform.position = matrixOrigin;
 
-        
+
 
         currentLayer = matrixDepth - 1;
 
@@ -73,7 +74,16 @@ public class CreateMatrix : MonoBehaviour {
             GameObject[] largeSquare179 = CreateLargeSquare(179, 2, 3, d);
         }
 
+        foreach (GameObject specificCube in cubesInMatrix)
+        { 
+            cubeLayers[0] = GameObject.FindGameObjectsWithTag("level0");
+            cubeLayers[1] = GameObject.FindGameObjectsWithTag("level1");
+            cubeLayers[2] = GameObject.FindGameObjectsWithTag("level2");
+            cubeLayers[3] = GameObject.FindGameObjectsWithTag("level3");
+            cubeLayers[4] = GameObject.FindGameObjectsWithTag("level4");
+        }
 
+        Debug.Log(cubeLayers[0]);
 
         //for (int y = 0; y < matrixDepth; y++)
         //{
@@ -179,6 +189,7 @@ public class CreateMatrix : MonoBehaviour {
                 cubeName = cubeName.Replace("alpha5", "Z");
 
                 cubesInMatrix[i].name = cubeName;
+                cubesInMatrix[i].tag = "level" + bigSquareDepth;
                 
                 ClickOnCube thisCube = cubesInMatrix[i].GetComponent<ClickOnCube>();
                 thisCube.myNameIs = cubesInMatrix[i].name;
