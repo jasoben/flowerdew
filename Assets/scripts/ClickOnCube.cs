@@ -8,10 +8,12 @@ public class ClickOnCube : MonoBehaviour {
     public string myNameIs;
     public Text cubeInfo;
 
-    public GameObject[] cubeColumn;
-    
+    private GameObject[] cubeColumn;
+    private List<GameObject> otherCubes;
+
     public Material activeColor;
     public Material passiveColor;
+    public Material transparentColor;
 
     private CreateMatrix matrix;
 
@@ -23,6 +25,7 @@ public class ClickOnCube : MonoBehaviour {
         matrix = GameObject.Find("CubeDuplicator").GetComponent<CreateMatrix>();
 
         cubeColumn = new GameObject[5];
+        otherCubes = new List<GameObject>();
         
     }
 
@@ -33,15 +36,23 @@ public class ClickOnCube : MonoBehaviour {
     }
     void OnMouseDown()
     {
+
+        foreach(GameObject thisCube in matrix.totalCubesInMatrix)
+        {
+            otherCubes.Add(thisCube);
+        }
         
+        
+
         if (Input.GetKey(KeyCode.LeftShift) == true)
         {
+            matrix.OtherCubes.Clear();
+
             for (int d = 0; d < 5; d++)
             {
 
                 cubeNameWithoutDepth = this.name.Remove(this.name.Length - 1, 1);
                 
-
                 foreach (GameObject cubeWithSimilarName in matrix.totalCubesInMatrix)
                 {
 
@@ -49,15 +60,18 @@ public class ClickOnCube : MonoBehaviour {
                     {
                         cubeColumn[d] = cubeWithSimilarName;
                     }
+                    
                 }
-            
+
+                otherCubes.Remove(cubeColumn[d]);
 
             }
 
-            foreach (GameObject selectedColumnCube in cubeColumn)
+            foreach (GameObject thisCube in otherCubes)
             {
-                selectedColumnCube.GetComponent<Renderer>().material = activeColor;
+                matrix.OtherCubes.Add(thisCube);
             }
+                        
 
             if (matrix.CurrentCubeColumn[0] != null)
             {
@@ -67,20 +81,38 @@ public class ClickOnCube : MonoBehaviour {
                 }
             }
 
-            if (matrix.currentCube != null) matrix.currentCube.GetComponent<Renderer>().material = passiveColor;
+            if (matrix.currentCube != null)
+            {
+                matrix.currentCube.GetComponent<Renderer>().material = passiveColor;
+                matrix.currentCube = null;
+            }
 
-            //TODO fix the cube turn on / off depending on column selection and vice versa (e.g. if you click on a column, you can't then select individual cubes from within that column, and vice versa for columns with cubes)
 
             for (int y = 0; y < cubeColumn.Length; y++)
             {
                 matrix.CurrentCubeColumn[y] = cubeColumn[y];
             }
-           
-            
+
+            foreach (GameObject hideThisCube in matrix.OtherCubes)
+            {
+                hideThisCube.GetComponent<Renderer>().material = transparentColor;
+            }
+
+            foreach (GameObject selectedColumnCube in cubeColumn)
+            {
+                selectedColumnCube.GetComponent<Renderer>().material = activeColor;
+            }
+
+
         }
         
         else
         {
+
+            foreach (GameObject showThisCube in matrix.OtherCubes)
+            {
+                showThisCube.GetComponent<Renderer>().material = passiveColor;
+            }
 
             this.GetComponent<Renderer>().material = activeColor;
             if (matrix.currentCube != null) matrix.currentCube.GetComponent<Renderer>().material = passiveColor;
@@ -89,11 +121,17 @@ public class ClickOnCube : MonoBehaviour {
 
             Application.ExternalCall("find_content", myNameIs);
 
+            
+
             if (matrix.CurrentCubeColumn[0] != null)
             {
                 foreach (GameObject currentColumn in matrix.CurrentCubeColumn)
                 {
                     currentColumn.GetComponent<Renderer>().material = passiveColor;
+                }
+                for (int y = 0; y < matrix.CurrentCubeColumn.Length; y++)
+                {
+                    matrix.CurrentCubeColumn[y] = null;
                 }
             }
 

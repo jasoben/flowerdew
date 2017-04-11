@@ -48,6 +48,21 @@ public class CreateMatrix : MonoBehaviour {
         }
     }
 
+    private List<GameObject> otherCubes;
+
+    public List<GameObject> OtherCubes
+    {
+        get
+        {
+            return otherCubes;
+        }
+
+        set
+        {
+
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -64,6 +79,7 @@ public class CreateMatrix : MonoBehaviour {
 
         cubesInMatrix = new GameObject[matrixSize];
         totalCubesInMatrix = new List<GameObject>();
+        otherCubes = new List<GameObject>();
 
         matrixOrigin = new Vector3(FixNumber(matrixWidth), FixNumber(matrixHeight), FixNumber(matrixDepth));
 
@@ -179,35 +195,16 @@ public class CreateMatrix : MonoBehaviour {
 
                 string cubeName = "littleSquare" + "_alpha" + j + "_" + bigSquareNumber + "_" + bigSquareDepth;
 
-                cubeName = cubeName.Replace("alpha18", "A");
-                cubeName = cubeName.Replace("alpha19", "B");
-                cubeName = cubeName.Replace("alpha20", "C");
-                cubeName = cubeName.Replace("alpha21", "D");
-                cubeName = cubeName.Replace("alpha22", "E");
-                cubeName = cubeName.Replace("alpha23", "F");
+                cubeName = ChangeNumberToLetter(cubeName);
 
-                cubeName = cubeName.Replace("alpha12", "G");
-                cubeName = cubeName.Replace("alpha13", "H");
-                cubeName = cubeName.Replace("alpha14", "J");
-                cubeName = cubeName.Replace("alpha15", "K");
-                cubeName = cubeName.Replace("alpha16", "L");
-                cubeName = cubeName.Replace("alpha17", "M");
-
-                cubeName = cubeName.Replace("alpha6", "N");
-                cubeName = cubeName.Replace("alpha7", "P");
-                cubeName = cubeName.Replace("alpha8", "Q");
-                cubeName = cubeName.Replace("alpha9", "R");
-                cubeName = cubeName.Replace("alpha10", "S");
-                cubeName = cubeName.Replace("alpha11", "T");
-
-                cubeName = cubeName.Replace("alpha0", "U");
-                cubeName = cubeName.Replace("alpha1", "V");
-                cubeName = cubeName.Replace("alpha2", "W");
-                cubeName = cubeName.Replace("alpha3", "X");
-                cubeName = cubeName.Replace("alpha4", "Y");
-                cubeName = cubeName.Replace("alpha5", "Z");
-
+                
                 cubesInMatrix[i].name = cubeName;
+                cubesInMatrix[i].transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = bigSquareNumber.ToString();
+                cubesInMatrix[i].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "alpha" + j.ToString();
+                cubesInMatrix[i].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = ChangeNumberToLetter(cubesInMatrix[i].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text);
+
+                //TODO change color of text based on which square it is
+
                 cubesInMatrix[i].tag = "level" + bigSquareDepth;
                 
                 ClickOnCube thisCube = cubesInMatrix[i].GetComponent<ClickOnCube>();
@@ -235,6 +232,39 @@ public class CreateMatrix : MonoBehaviour {
     }
 
     // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
+
+    private string ChangeNumberToLetter (string thisName)
+    {
+        thisName = thisName.Replace("alpha18", "A");
+        thisName = thisName.Replace("alpha19", "B");
+        thisName = thisName.Replace("alpha20", "C");
+        thisName = thisName.Replace("alpha21", "D");
+        thisName = thisName.Replace("alpha22", "E");
+        thisName = thisName.Replace("alpha23", "F");
+
+        thisName = thisName.Replace("alpha12", "G");
+        thisName = thisName.Replace("alpha13", "H");
+        thisName = thisName.Replace("alpha14", "J");
+        thisName = thisName.Replace("alpha15", "K");
+        thisName = thisName.Replace("alpha16", "L");
+        thisName = thisName.Replace("alpha17", "M");
+
+        thisName = thisName.Replace("alpha6", "N");
+        thisName = thisName.Replace("alpha7", "P");
+        thisName = thisName.Replace("alpha8", "Q");
+        thisName = thisName.Replace("alpha9", "R");
+        thisName = thisName.Replace("alpha10", "S");
+        thisName = thisName.Replace("alpha11", "T");
+
+        thisName = thisName.Replace("alpha0", "U");
+        thisName = thisName.Replace("alpha1", "V");
+        thisName = thisName.Replace("alpha2", "W");
+        thisName = thisName.Replace("alpha3", "X");
+        thisName = thisName.Replace("alpha4", "Y");
+        thisName = thisName.Replace("alpha5", "Z");
+
+        return thisName;
+    }
 
     IEnumerator StackBoxes()
     {
