@@ -21,8 +21,10 @@ public class CreateMatrix : MonoBehaviour {
 
     private float interCubeDistance = 1.2f; 
 
-    private GameObject[] cubesInMatrix;
+    public GameObject[] cubesInMatrix;
     public GameObject[][] cubeLayers = new GameObject[288][];
+
+    public List<GameObject> totalCubesInMatrix;
 
     public GameObject currentCube;
 
@@ -30,6 +32,21 @@ public class CreateMatrix : MonoBehaviour {
     public string moveDownLayer;
 
     private int currentLayer;
+
+    private GameObject[] currentCubeColumn;
+
+    public GameObject[] CurrentCubeColumn
+    {
+        get
+        {
+            return currentCubeColumn;
+        }
+
+        set
+        {
+
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -46,12 +63,13 @@ public class CreateMatrix : MonoBehaviour {
         matrixSize = matrixWidth * matrixHeight;
 
         cubesInMatrix = new GameObject[matrixSize];
+        totalCubesInMatrix = new List<GameObject>();
 
         matrixOrigin = new Vector3(FixNumber(matrixWidth), FixNumber(matrixHeight), FixNumber(matrixDepth));
 
         matrixCenter.transform.position = matrixOrigin;
 
-
+        currentCubeColumn = new GameObject[5];
 
         currentLayer = matrixDepth - 1;
 
@@ -83,7 +101,6 @@ public class CreateMatrix : MonoBehaviour {
             cubeLayers[4] = GameObject.FindGameObjectsWithTag("level4");
         }
 
-        Debug.Log(cubeLayers[0]);
 
         //for (int y = 0; y < matrixDepth; y++)
         //{
@@ -157,6 +174,8 @@ public class CreateMatrix : MonoBehaviour {
             for (int x = 0; x < matrixWidth; x++)
             {
                 cubesInMatrix[i] = Instantiate(matrixCube, new Vector3((bigSquareXLocation * interCubeDistance * 6 * matrixCubeWidth) + x * interCubeDistance, bigSquareDepth * matrixCubeDepth * interCubeDistance, (bigSquareYLocation * interCubeDistance * 4 * matrixCubeHeight) + z * interCubeDistance), Quaternion.identity) as GameObject;
+
+                totalCubesInMatrix.Add(cubesInMatrix[i]);
 
                 string cubeName = "littleSquare" + "_alpha" + j + "_" + bigSquareNumber + "_" + bigSquareDepth;
 
