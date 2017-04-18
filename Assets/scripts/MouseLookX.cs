@@ -13,8 +13,20 @@ public class MouseLookX : MonoBehaviour
 
     Quaternion viewpointRotation;
 
-    private float rotY = 0.0f; // rotation around the up/y axis
-    private float rotX = 0.0f; // rotation around the right/x axis
+    public float rotY = 0.0f; // rotation around the up/y axis
+    public float rotX = 0.0f; // rotation around the right/x axis
+
+    public float RotY
+    {
+        get { return rotY; }
+        set { rotY = value; }
+    }
+
+    public float RotX
+    {
+        get { return rotX; }
+        set { rotX = value; }
+    }
 
     void Start()
     {

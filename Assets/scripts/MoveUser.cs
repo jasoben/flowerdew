@@ -100,5 +100,18 @@ public class MoveUser : MonoBehaviour
             mainCamera.GetComponent<MouseLookX>().moveCamera = !mainCamera.GetComponent<MouseLookX>().moveCamera;
         }
 
+        else if (Input.GetKeyDown("r") == true)
+        {
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = true;
+
+            viewpointObject.GetComponent<MouseLookY>().rotY = 0f;
+            viewpointObject.GetComponent<MouseLookY>().rotX = 0f;
+
+            
+            mainCamera.GetComponent<MouseLookX>().RotX = 0f;
+            mainCamera.GetComponent<MouseLookX>().RotY = 0f;
+        }
+
     }
 }

@@ -137,7 +137,10 @@ public class CreateMatrix : MonoBehaviour {
     }
 
         // Update is called once per frame
-        void Update () {
+    void Update ()
+    {
+
+        // Controls
 
         if (Input.GetKeyDown(moveDownLayer) == true)
         {
