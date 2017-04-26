@@ -27,7 +27,7 @@ public class ClickOnCube : MonoBehaviour {
         //Below we put the CreateMatrix class script (attached to the duplicator game object [an empty]) into an instance of that class.
         matrix = GameObject.Find("CubeDuplicator").GetComponent<CreateMatrix>();
 
-        cubeColumn = new GameObject[5];
+        cubeColumn = new GameObject[matrix.matrixDepth];
         otherCubes = new List<GameObject>();
         
     }
@@ -59,7 +59,7 @@ public class ClickOnCube : MonoBehaviour {
             //The following loop checks each layer of the selected cube to see if they have the same name (without the layer number). 
             //This allows us to select the "column" of cubes that have the same name. 
 
-            for (int d = 0; d < 5; d++)
+            for (int d = 0; d < matrix.matrixDepth; d++)
             {
 
                 cubeNameWithoutDepth = this.name.Remove(this.name.Length - 1, 1);

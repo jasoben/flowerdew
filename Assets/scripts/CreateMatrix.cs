@@ -17,12 +17,12 @@ public class CreateMatrix : MonoBehaviour {
 
     private int matrixCubeWidth;
     private int matrixCubeHeight;
-    private int matrixCubeDepth;
+    private float matrixCubeDepth;
 
-    private float interCubeDistance = 1.2f; 
+    private float interCubeDistance = 1.05f; 
 
     public GameObject[] cubesInMatrix;
-    public GameObject[][] cubeLayers = new GameObject[288][];
+    public GameObject[][] cubeLayers;
 
     public List<GameObject> totalCubesInMatrix;
 
@@ -70,26 +70,29 @@ public class CreateMatrix : MonoBehaviour {
         matrixCenter = this.gameObject;
 
         matrixCubeHeight = matrixCubeWidth = 1;
-        matrixCubeDepth = 1;
+        matrixCubeDepth = .5f;
 
         matrixWidth = 6;
         matrixHeight = 4;
+        matrixDepth = 8;
 
-        matrixSize = matrixWidth * matrixHeight;
+        matrixSize = matrixWidth * matrixHeight * matrixDepth;
 
         cubesInMatrix = new GameObject[matrixSize];
         totalCubesInMatrix = new List<GameObject>();
         otherCubes = new List<GameObject>();
 
+        cubeLayers = new GameObject[matrixSize][];
+
         matrixOrigin = new Vector3(FixNumber(matrixWidth), FixNumber(matrixHeight), FixNumber(matrixDepth));
 
         matrixCenter.transform.position = matrixOrigin;
 
-        currentCubeColumn = new GameObject[5];
+        currentCubeColumn = new GameObject[matrixDepth];
 
         currentLayer = matrixDepth - 1;
 
-        for (int d = 0; d < 5; d++)
+        for (int d = 0; d < matrixDepth; d++)
         {
             GameObject[] largeSquare387 = CreateLargeSquare(387, 0, 0, d);
             GameObject[] largeSquare388 = CreateLargeSquare(388, 1, 0, d);
@@ -115,6 +118,9 @@ public class CreateMatrix : MonoBehaviour {
             cubeLayers[2] = GameObject.FindGameObjectsWithTag("level2");
             cubeLayers[3] = GameObject.FindGameObjectsWithTag("level3");
             cubeLayers[4] = GameObject.FindGameObjectsWithTag("level4");
+            cubeLayers[4] = GameObject.FindGameObjectsWithTag("level5");
+            cubeLayers[4] = GameObject.FindGameObjectsWithTag("level6");
+            cubeLayers[4] = GameObject.FindGameObjectsWithTag("level7");
         }
 
 
