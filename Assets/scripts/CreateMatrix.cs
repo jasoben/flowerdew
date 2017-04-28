@@ -10,13 +10,15 @@ public class CreateMatrix : MonoBehaviour {
 
     public GameObject matrixCube;
     public GameObject matrixCenter;
-    
+
+    public Material groundColor;
+
     private int matrixSize;
     
     public Vector3 matrixOrigin;
 
-    private int matrixCubeWidth;
-    private int matrixCubeHeight;
+    private float matrixCubeWidth;
+    private float matrixCubeHeight;
     private float matrixCubeDepth;
 
     private float interCubeDistance = 1.05f; 
@@ -25,7 +27,6 @@ public class CreateMatrix : MonoBehaviour {
     public GameObject[][] cubeLayers;
 
     public List<GameObject> cubeText;
-    private GameObject tempCube;
     
     public List<GameObject> totalCubesInMatrix;
 
@@ -72,7 +73,7 @@ public class CreateMatrix : MonoBehaviour {
 
         matrixCenter = this.gameObject;
 
-        matrixCubeHeight = matrixCubeWidth = 1;
+        matrixCubeHeight = matrixCubeWidth = 1.15f;
         matrixCubeDepth = .5f;
 
         matrixWidth = 6;
@@ -85,7 +86,7 @@ public class CreateMatrix : MonoBehaviour {
         totalCubesInMatrix = new List<GameObject>();
         otherCubes = new List<GameObject>();
 
-        cubeLayers = new GameObject[matrixSize][];
+        cubeLayers = new GameObject[matrixDepth][];
 
         matrixOrigin = new Vector3(FixNumber(matrixWidth), FixNumber(matrixHeight), FixNumber(matrixDepth));
 
@@ -121,15 +122,21 @@ public class CreateMatrix : MonoBehaviour {
             cubeLayers[2] = GameObject.FindGameObjectsWithTag("level2");
             cubeLayers[3] = GameObject.FindGameObjectsWithTag("level3");
             cubeLayers[4] = GameObject.FindGameObjectsWithTag("level4");
-            cubeLayers[4] = GameObject.FindGameObjectsWithTag("level5");
-            cubeLayers[4] = GameObject.FindGameObjectsWithTag("level6");
-            cubeLayers[4] = GameObject.FindGameObjectsWithTag("level7");
+            cubeLayers[5] = GameObject.FindGameObjectsWithTag("level5");
+            cubeLayers[6] = GameObject.FindGameObjectsWithTag("level6");
+            cubeLayers[7] = GameObject.FindGameObjectsWithTag("level7");
         }
 
         foreach (GameObject cube in totalCubesInMatrix)
         {
-            tempCube = GameObject.FindGameObjectWithTag("level0");
-            cubeText.Add(tempCube);
+            
+            cubeText.Add(cube.transform.FindChild("cubeLetter").gameObject);
+            cubeText.Add(cube.transform.FindChild("squareNumber").gameObject);
+
+            if (cube.CompareTag("level0") || cube.CompareTag("level1") || cube.CompareTag("level2"))
+            {
+                cube.GetComponent<Renderer>().material = groundColor;
+            }
         }
 
         Debug.Log(cubeText);

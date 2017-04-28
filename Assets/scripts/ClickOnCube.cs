@@ -140,9 +140,13 @@ public class ClickOnCube : MonoBehaviour {
             //cubeInfo.text = myNameIs;
             matrix.currentCube = this.gameObject;
 
-            Application.ExternalCall("find_content", myNameIs);
+            this.transform.FindChild("squareNumber").gameObject.SetActive(true);
+            this.transform.FindChild("cubeLetter").gameObject.SetActive(true);
 
-            
+            //TODO make it so the text disapears when you select another cube
+
+            //TODO make it so the text shows on columns when you select them in "text off mode"
+
 
             if (matrix.CurrentCubeColumn[0] != null)
             {
@@ -155,6 +159,8 @@ public class ClickOnCube : MonoBehaviour {
                     matrix.CurrentCubeColumn[y] = null;
                 }
             }
+
+            Application.ExternalCall("find_content", myNameIs);
 
         }
 
