@@ -7,6 +7,9 @@ public class MoveUser : MonoBehaviour
 
     public GameObject viewpointObject;
     public GameObject mainCamera;
+    private CreateMatrix matrix;
+
+    private bool cubeTextBool;
 
     public string moveForward;
     public string moveBackwards;
@@ -25,11 +28,14 @@ public class MoveUser : MonoBehaviour
     {
 
         viewpointObject = this.gameObject;
+        matrix = GameObject.Find("CubeDuplicator").GetComponent<CreateMatrix>();
+        cubeTextBool = true;
 
         //moveMouseY = viewpointObject.GetComponent<MouseLookY>() as MonoBehaviour;
         //moveMouseX = mainCamera.GetComponent<MouseLookX>() as MonoBehaviour;
 
-       
+        
+
     }
 
     // Update is called once per frame
@@ -113,5 +119,12 @@ public class MoveUser : MonoBehaviour
             mainCamera.GetComponent<MouseLookX>().RotY = 0f;
         }
 
+        else if (Input.GetKeyDown("c") == true)
+        {
+            foreach (GameObject cubeText in matrix.cubeText)
+            {
+                cubeText.SetActive(false);
+            }
+        }
     }
 }

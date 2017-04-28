@@ -24,6 +24,9 @@ public class CreateMatrix : MonoBehaviour {
     public GameObject[] cubesInMatrix;
     public GameObject[][] cubeLayers;
 
+    public List<GameObject> cubeText;
+    private GameObject tempCube;
+    
     public List<GameObject> totalCubesInMatrix;
 
     public GameObject currentCube;
@@ -123,7 +126,13 @@ public class CreateMatrix : MonoBehaviour {
             cubeLayers[4] = GameObject.FindGameObjectsWithTag("level7");
         }
 
+        foreach (GameObject cube in totalCubesInMatrix)
+        {
+            tempCube = GameObject.FindGameObjectWithTag("level0");
+            cubeText.Add(tempCube);
+        }
 
+        Debug.Log(cubeText);
         //for (int y = 0; y < matrixDepth; y++)
         //{
 
@@ -240,7 +249,6 @@ public class CreateMatrix : MonoBehaviour {
         return newMatrixDimension;
     }
 
-    // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
 
     private string ChangeNumberToLetter (string thisName)
     {
@@ -274,6 +282,8 @@ public class CreateMatrix : MonoBehaviour {
 
         return thisName;
     }
+
+    // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
 
     IEnumerator StackBoxes()
     {
