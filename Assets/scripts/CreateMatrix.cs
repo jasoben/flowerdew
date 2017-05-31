@@ -8,6 +8,9 @@ public class CreateMatrix : MonoBehaviour {
     public int matrixHeight;
     public int matrixDepth;
 
+    private float layerDepthColorGradientSpread;
+    private float layerDepthColorStartingValue;
+
     public GameObject matrixCube;
     public GameObject matrixCenter;
 
@@ -82,6 +85,9 @@ public class CreateMatrix : MonoBehaviour {
         matrixHeight = 4;
         matrixDepth = 8;
 
+        layerDepthColorGradientSpread = .05f;
+        layerDepthColorStartingValue = .5f;
+
         matrixSize = matrixWidth * matrixHeight * matrixDepth;
 
         cubesInMatrix = new GameObject[matrixSize];
@@ -119,7 +125,7 @@ public class CreateMatrix : MonoBehaviour {
             GameObject[] largeSquare180 = CreateLargeSquare(180, -1, -1, d);
 
             currentLayerIndicatorBlock = Instantiate(layerIndicatorBlock, new Vector3(11, d * matrixCubeDepth * interCubeDistance, 22), Quaternion.identity);
-            currentLayerIndicatorBlock.GetComponent<Renderer>().material.color = new Color(.1f * d, .1f * d, .1f * d);
+            currentLayerIndicatorBlock.GetComponent<Renderer>().material.color = new Color(layerDepthColorStartingValue + layerDepthColorGradientSpread * d, layerDepthColorStartingValue + layerDepthColorGradientSpread * d, layerDepthColorStartingValue + layerDepthColorGradientSpread * d);
             currentLayerIndicatorBlock.transform.FindChild("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
             currentLayerIndicatorBlock.tag = "level" + d;
 
