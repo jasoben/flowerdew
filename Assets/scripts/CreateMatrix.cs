@@ -31,6 +31,8 @@ public class CreateMatrix : MonoBehaviour {
     public List<GameObject> totalCubesInMatrix;
 
     public GameObject currentCube;
+    public GameObject layerIndicatorBlock;
+    private GameObject currentLayerIndicatorBlock;
 
     public string moveUpLayer;
     public string moveDownLayer;
@@ -113,6 +115,14 @@ public class CreateMatrix : MonoBehaviour {
             GameObject[] largeSquare177 = CreateLargeSquare(177, 0, 3, d);
             GameObject[] largeSquare178 = CreateLargeSquare(178, 1, 3, d);
             GameObject[] largeSquare179 = CreateLargeSquare(179, 2, 3, d);
+
+            GameObject[] largeSquare180 = CreateLargeSquare(180, -1, -1, d);
+
+            currentLayerIndicatorBlock = Instantiate(layerIndicatorBlock, new Vector3(11, d * matrixCubeDepth * interCubeDistance, 22), Quaternion.identity);
+            currentLayerIndicatorBlock.GetComponent<Renderer>().material.color = new Color(.1f * d, .1f * d, .1f * d);
+            currentLayerIndicatorBlock.transform.FindChild("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
+            currentLayerIndicatorBlock.tag = "level" + d;
+
         }
 
         foreach (GameObject specificCube in cubesInMatrix)
