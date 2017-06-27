@@ -15,6 +15,7 @@ public class CreateMatrix : MonoBehaviour {
     public GameObject matrixCenter;
 
     public Material groundColor;
+    private Color newBlockColor;
 
     private int matrixSize;
     
@@ -24,7 +25,8 @@ public class CreateMatrix : MonoBehaviour {
     private float matrixCubeHeight;
     private float matrixCubeDepth;
 
-    private float interCubeDistance = 1.05f; 
+    private float interCubeDistance = 1.05f;
+    private float interBigSquareDistance = 5.2f;
 
     public GameObject[] cubesInMatrix;
     public GameObject[][] cubeLayers;
@@ -103,9 +105,21 @@ public class CreateMatrix : MonoBehaviour {
         currentCubeColumn = new GameObject[matrixDepth];
 
         currentLayer = matrixDepth - 1;
-
+        
         for (int d = 0; d < matrixDepth; d++)
         {
+
+            int e = d + 1;
+
+            if (d > 2)
+            {
+                newBlockColor = new Color(layerDepthColorStartingValue * .3f * e, layerDepthColorStartingValue * .3f * e, layerDepthColorStartingValue * .5f * e);
+            }
+            else if (d < 2)
+            {
+                newBlockColor = new Color(layerDepthColorStartingValue * .5f * e, layerDepthColorStartingValue * .1f * e, layerDepthColorStartingValue * .1f * e);
+            }
+
             GameObject[] largeSquare387 = CreateLargeSquare(387, 0, 0, d);
             GameObject[] largeSquare388 = CreateLargeSquare(388, 1, 0, d);
             GameObject[] largeSquare389 = CreateLargeSquare(389, 2, 0, d);
@@ -122,10 +136,9 @@ public class CreateMatrix : MonoBehaviour {
             GameObject[] largeSquare178 = CreateLargeSquare(178, 1, 3, d);
             GameObject[] largeSquare179 = CreateLargeSquare(179, 2, 3, d);
 
-            GameObject[] largeSquare180 = CreateLargeSquare(180, -1, -1, d);
 
             currentLayerIndicatorBlock = Instantiate(layerIndicatorBlock, new Vector3(11, d * matrixCubeDepth * interCubeDistance, 22), Quaternion.identity);
-            currentLayerIndicatorBlock.GetComponent<Renderer>().material.color = new Color(layerDepthColorStartingValue + layerDepthColorGradientSpread * d, layerDepthColorStartingValue + layerDepthColorGradientSpread * d, layerDepthColorStartingValue + layerDepthColorGradientSpread * d);
+            currentLayerIndicatorBlock.GetComponent<Renderer>().material.color = newBlockColor;
             currentLayerIndicatorBlock.transform.Find("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
             currentLayerIndicatorBlock.tag = "level" + d;
 
@@ -148,11 +161,7 @@ public class CreateMatrix : MonoBehaviour {
             
             cubeText.Add(cube.transform.Find("cubeLetter").gameObject);
             cubeText.Add(cube.transform.Find("squareNumber").gameObject);
-
-            if (cube.CompareTag("level0") || cube.CompareTag("level1") || cube.CompareTag("level2"))
-            {
-                cube.GetComponent<Renderer>().material = groundColor;
-            }
+                        
         }
 
         Debug.Log(cubeText);
@@ -230,7 +239,7 @@ public class CreateMatrix : MonoBehaviour {
 
             for (int x = 0; x < matrixWidth; x++)
             {
-                cubesInMatrix[i] = Instantiate(matrixCube, new Vector3((bigSquareXLocation * interCubeDistance * 6 * matrixCubeWidth) + x * interCubeDistance, bigSquareDepth * matrixCubeDepth * interCubeDistance, (bigSquareYLocation * interCubeDistance * 4 * matrixCubeHeight) + z * interCubeDistance), Quaternion.identity) as GameObject;
+                cubesInMatrix[i] = Instantiate(matrixCube, new Vector3((bigSquareXLocation * interCubeDistance * interBigSquareDistance * matrixCubeWidth) + x * interCubeDistance, bigSquareDepth * matrixCubeDepth * interCubeDistance, (bigSquareYLocation * interCubeDistance * (interBigSquareDistance-1.7f) * matrixCubeHeight) + z * interCubeDistance), Quaternion.identity) as GameObject;
 
                 totalCubesInMatrix.Add(cubesInMatrix[i]);
 
@@ -238,7 +247,7 @@ public class CreateMatrix : MonoBehaviour {
 
                 cubeName = ChangeNumberToLetter(cubeName);
 
-                
+                cubesInMatrix[i].GetComponent<Renderer>().material.color = newBlockColor;
                 cubesInMatrix[i].name = cubeName;
                 cubesInMatrix[i].transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = bigSquareNumber.ToString();
                 cubesInMatrix[i].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "alpha" + j.ToString();
