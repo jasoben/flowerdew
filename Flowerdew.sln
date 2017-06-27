@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew.Plugins", "Flowerdew.Plugins.csproj", "{D89CC3E3-4700-48C0-73A3-A97E8986BA42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew", "Flowerdew.csproj", "{819AF1E4-5E2F-A3CC-E59A-4804FE92848E}"

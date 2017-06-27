@@ -68,11 +68,11 @@ public class MoveUser : MonoBehaviour
         {
             viewpointObject.transform.Translate(Vector3.right / 2);
         }
-        else if (Input.GetKey(flyUp) == true)
+        else if ((Input.GetKey(flyUp) == true) || (Input.GetAxis("Mouse ScrollWheel") < 0f) )
         {
             viewpointObject.transform.Translate(Vector3.up / 2);
         }
-        else if (Input.GetKey(flyDown) == true)
+        else if (Input.GetKey(flyDown) == true || (Input.GetAxis("Mouse ScrollWheel") > 0f) )
         {
             viewpointObject.transform.Translate(Vector3.down / 2);
         }
@@ -100,10 +100,18 @@ public class MoveUser : MonoBehaviour
 
 
 
-        else if (Input.GetKeyDown("m") == true)
+        //else if (Input.GetKeyDown("m") == true)
+        else if (Input.GetMouseButton(1) == true)
         {
-            viewpointObject.GetComponent<MouseLookY>().moveCamera = !viewpointObject.GetComponent<MouseLookY>().moveCamera;
-            mainCamera.GetComponent<MouseLookX>().moveCamera = !mainCamera.GetComponent<MouseLookX>().moveCamera;
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = true;
+        }
+
+
+        else if (Input.GetMouseButtonUp(1) == true)
+        {
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = false;
         }
 
         else if (Input.GetKeyDown("r") == true)

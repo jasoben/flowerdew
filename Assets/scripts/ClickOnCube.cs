@@ -140,8 +140,8 @@ public class ClickOnCube : MonoBehaviour {
             //cubeInfo.text = myNameIs;
             matrix.currentCube = this.gameObject;
 
-            this.transform.FindChild("squareNumber").gameObject.SetActive(true);
-            this.transform.FindChild("cubeLetter").gameObject.SetActive(true);
+            this.transform.Find("squareNumber").gameObject.SetActive(true);
+            this.transform.Find("cubeLetter").gameObject.SetActive(true);
 
             //TODO make it so the text disapears when you select another cube
 

@@ -126,7 +126,7 @@ public class CreateMatrix : MonoBehaviour {
 
             currentLayerIndicatorBlock = Instantiate(layerIndicatorBlock, new Vector3(11, d * matrixCubeDepth * interCubeDistance, 22), Quaternion.identity);
             currentLayerIndicatorBlock.GetComponent<Renderer>().material.color = new Color(layerDepthColorStartingValue + layerDepthColorGradientSpread * d, layerDepthColorStartingValue + layerDepthColorGradientSpread * d, layerDepthColorStartingValue + layerDepthColorGradientSpread * d);
-            currentLayerIndicatorBlock.transform.FindChild("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
+            currentLayerIndicatorBlock.transform.Find("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
             currentLayerIndicatorBlock.tag = "level" + d;
 
         }
@@ -146,8 +146,8 @@ public class CreateMatrix : MonoBehaviour {
         foreach (GameObject cube in totalCubesInMatrix)
         {
             
-            cubeText.Add(cube.transform.FindChild("cubeLetter").gameObject);
-            cubeText.Add(cube.transform.FindChild("squareNumber").gameObject);
+            cubeText.Add(cube.transform.Find("cubeLetter").gameObject);
+            cubeText.Add(cube.transform.Find("squareNumber").gameObject);
 
             if (cube.CompareTag("level0") || cube.CompareTag("level1") || cube.CompareTag("level2"))
             {

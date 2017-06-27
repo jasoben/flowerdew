@@ -34,7 +34,7 @@ public class MouseLookX : MonoBehaviour
         rotY = rot.y;
         rotX = rot.x;
 
-        moveCamera = true;
+        moveCamera = false;
     }
 
     void Update()

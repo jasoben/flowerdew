@@ -20,7 +20,7 @@ public class MouseLookY : MonoBehaviour
         rotY = rot.y;
         rotX = rot.x;
 
-        moveCamera = true;
+        moveCamera = false;
 
     }
 
