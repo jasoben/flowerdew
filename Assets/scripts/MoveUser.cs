@@ -8,6 +8,11 @@ public class MoveUser : MonoBehaviour
     public GameObject viewpointObject;
     public GameObject mainCamera;
     private CreateMatrix matrix;
+    public GameObject matrixCubesOrigin;
+
+    private float distanceBetweenOriginAndPlayer;
+
+    public float movementModifier;
 
     private bool cubeTextBool;
 
@@ -50,31 +55,36 @@ public class MoveUser : MonoBehaviour
     private void LateUpdate()
     {
 
+        distanceBetweenOriginAndPlayer = Mathf.Clamp(-10 + viewpointObject.transform.position.y - matrixCubesOrigin.transform.position.y, 1, 10);
+
+        
+        Debug.Log(distanceBetweenOriginAndPlayer);
+
         // <<Change perspective with keys
 
         if (Input.GetKey(moveForward) == true)
         {
-            viewpointObject.transform.Translate(Vector3.forward / 2);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
+            viewpointObject.transform.Translate(Vector3.forward * distanceBetweenOriginAndPlayer * movementModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
         }
         else if (Input.GetKey(moveBackwards) == true)
         {
-            viewpointObject.transform.Translate(Vector3.back / 2);
+            viewpointObject.transform.Translate(Vector3.back * distanceBetweenOriginAndPlayer * movementModifier);
         }
         else if (Input.GetKey(moveLeft) == true)
         {
-            viewpointObject.transform.Translate(Vector3.left / 2);
+            viewpointObject.transform.Translate(Vector3.left * distanceBetweenOriginAndPlayer * movementModifier);
         }
         else if (Input.GetKey(moveRight) == true)
         {
-            viewpointObject.transform.Translate(Vector3.right / 2);
+            viewpointObject.transform.Translate(Vector3.right * distanceBetweenOriginAndPlayer * movementModifier);
         }
         else if ((Input.GetKey(flyUp) == true) || (Input.GetAxis("Mouse ScrollWheel") < 0f) )
         {
-            viewpointObject.transform.Translate(Vector3.up / 2);
+            viewpointObject.transform.Translate(Vector3.up * distanceBetweenOriginAndPlayer * movementModifier);
         }
         else if (Input.GetKey(flyDown) == true || (Input.GetAxis("Mouse ScrollWheel") > 0f) )
         {
-            viewpointObject.transform.Translate(Vector3.down / 2);
+            viewpointObject.transform.Translate(Vector3.down * distanceBetweenOriginAndPlayer * movementModifier);
         }
 
         else if (Input.GetKeyDown(spinCCW) == true || Input.GetKeyDown(spinCW) == true)
@@ -97,7 +107,14 @@ public class MoveUser : MonoBehaviour
         }
 
         
+        else if (Input.GetMouseButton(2))
+        {
+            float mouseY = Input.GetAxis("Mouse Y") * distanceBetweenOriginAndPlayer * movementModifier;
+            float mouseX = Input.GetAxis("Mouse X") * distanceBetweenOriginAndPlayer * movementModifier;
+            Vector3 mouseMoveWithMiddleButton = new Vector3(-mouseX, 0, -mouseY);
+            viewpointObject.transform.Translate(mouseMoveWithMiddleButton);
 
+        }
 
 
         //else if (Input.GetKeyDown("m") == true)
