@@ -12,7 +12,7 @@ public class MouseLookY : MonoBehaviour
     public float rotY = 0.0f; // rotation around the up/y axis
     public float rotX = 0.0f; // rotation around the right/x axis
 
-    //TODO change these public fields to private fields and add properties
+ 
 
     void Start()
     {

@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using System.Linq;
 
 public class CreateMatrix : MonoBehaviour {
 
     public int matrixWidth;
     public int matrixHeight;
     public int matrixDepth;
+
+    private bool nowCubesAreTransparent;
+    private bool noMoreTransparencyNeeded;
+    private bool textIsToggledOff;
 
     private float layerDepthColorGradientSpread;
     private float layerDepthColorStartingValue;
@@ -16,6 +22,10 @@ public class CreateMatrix : MonoBehaviour {
 
     public Material groundColor;
     private Color newBlockColor;
+    private Color[] thisLayersColor;
+    public Material passiveColor;
+    public Material activeColor;
+    public Material transparentColor;
 
     private int matrixSize;
     
@@ -59,13 +69,13 @@ public class CreateMatrix : MonoBehaviour {
         }
     }
 
-    private List<GameObject> otherCubes;
+    private List<GameObject> selectedCubes;
 
-    public List<GameObject> OtherCubes
+    public List<GameObject> SelectedCubes
     {
         get
         {
-            return otherCubes;
+            return selectedCubes;
         }
 
         set
@@ -87,14 +97,19 @@ public class CreateMatrix : MonoBehaviour {
         matrixHeight = 4;
         matrixDepth = 8;
 
+        nowCubesAreTransparent = false;
+        noMoreTransparencyNeeded = false;
+        textIsToggledOff = false;
+
         layerDepthColorGradientSpread = .05f;
         layerDepthColorStartingValue = .5f;
+        thisLayersColor = new Color[matrixDepth];
 
         matrixSize = matrixWidth * matrixHeight * matrixDepth;
 
         cubesInMatrix = new GameObject[matrixSize];
         totalCubesInMatrix = new List<GameObject>();
-        otherCubes = new List<GameObject>();
+        selectedCubes = new List<GameObject>();
 
         cubeLayers = new GameObject[matrixDepth][];
 
@@ -139,6 +154,7 @@ public class CreateMatrix : MonoBehaviour {
 
             currentLayerIndicatorBlock = Instantiate(layerIndicatorBlock, new Vector3(11, d * matrixCubeDepth * interCubeDistance, 22), Quaternion.identity);
             currentLayerIndicatorBlock.GetComponent<Renderer>().material.color = newBlockColor;
+            thisLayersColor[d] = newBlockColor;
             currentLayerIndicatorBlock.transform.Find("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
             currentLayerIndicatorBlock.tag = "level" + d;
 
@@ -164,17 +180,8 @@ public class CreateMatrix : MonoBehaviour {
                         
         }
 
-        Debug.Log(cubeText);
-        //for (int y = 0; y < matrixDepth; y++)
-        //{
-
-        //    cubeLayers[y] = new GameObject[matrixHeight * matrixWidth];
-
-        //
-
-        //    j = 0;
-
-        //}
+        
+       
 
 
         // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
@@ -188,7 +195,7 @@ public class CreateMatrix : MonoBehaviour {
     {
 
         
-        // Controls
+        // Controls for viewing the layers
 
         if (Input.GetKeyDown(moveDownLayer) == true)
         {
@@ -208,7 +215,7 @@ public class CreateMatrix : MonoBehaviour {
         {
             
 
-            Debug.Log(currentLayer);
+           
 
             for (int i = 0; i < cubeLayers[currentLayer].Length; i++)
             {
@@ -254,16 +261,10 @@ public class CreateMatrix : MonoBehaviour {
                 cubesInMatrix[i].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "alpha" + j.ToString();
                 cubesInMatrix[i].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = ChangeNumberToLetter(cubesInMatrix[i].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text);
 
-                //TODO change color of text based on which square it is
-
                 cubesInMatrix[i].tag = "level" + bigSquareDepth;
                 
                 ClickOnCube thisCube = cubesInMatrix[i].GetComponent<ClickOnCube>();
                 thisCube.myNameIs = cubesInMatrix[i].name;
-
-                // cubesInMatrix[i].SetActive(false);
-
-                // cubeLayers[y][j] = cubesInMatrix[i];
 
                 i++;
                 j++;
@@ -316,7 +317,107 @@ public class CreateMatrix : MonoBehaviour {
         return thisName;
     }
 
+    public void ActivateCubes(List<GameObject> theseCubes, bool transparentOrNot)
+    {
+        if (textIsToggledOff && selectedCubes!= null) 
+        {
+            foreach (GameObject thisCube in selectedCubes)
+            {
+                DeActivateTextOnCube(thisCube);
+            }
+        }
+
+        foreach (GameObject thisCube in selectedCubes)
+        {
+            string levelTagOfThisCube = thisCube.gameObject.tag.Replace("level", "");
+            int levelIntegerOfThisCube = Int32.Parse(levelTagOfThisCube);
+
+            thisCube.GetComponent<Renderer>().material = passiveColor;
+            thisCube.GetComponent<Renderer>().material.color = thisLayersColor[levelIntegerOfThisCube];
+
+            Debug.Log(thisCube);
+        }
+
+        // Case 1a: to reset the cubes to regular color coming out of transparency mode (e.g. when column is selected)
+        if (nowCubesAreTransparent && transparentOrNot == false)
+        {
+            foreach (GameObject thisCube in totalCubesInMatrix)
+            {
+                string levelTagOfThisCube = thisCube.gameObject.tag.Replace("level", "");
+                int levelIntegerOfThisCube = Int32.Parse(levelTagOfThisCube);
+
+                thisCube.GetComponent<Renderer>().material = passiveColor;
+                thisCube.GetComponent<Renderer>().material.color = thisLayersColor[levelIntegerOfThisCube];
+
+                if (textIsToggledOff == false) ActivateTextOnCube(thisCube);
+            }
+
+            nowCubesAreTransparent = false;
+            noMoreTransparencyNeeded = false;
+        }
+
+        // Case 2a: the first time a column is selected; sets all other cubes to transparent and without labels
+        if (transparentOrNot && noMoreTransparencyNeeded == false)
+        {
+            foreach (GameObject thisCube in totalCubesInMatrix)
+            {
+                thisCube.GetComponent<Renderer>().material = transparentColor;
+                DeActivateTextOnCube(thisCube);
+            }
+
+            nowCubesAreTransparent = true;
+            noMoreTransparencyNeeded = true;
+        }
+
+        // Case 2b: once in transparency mode; only turns the previously selected cubes transparent (to save on processing)
+        else if (transparentOrNot && noMoreTransparencyNeeded == true)
+        {
+            foreach (GameObject thisCube in selectedCubes)
+            {
+                thisCube.GetComponent<Renderer>().material = transparentColor;
+                DeActivateTextOnCube(thisCube);
+
+            }
+
+            nowCubesAreTransparent = true;
+
+        }
+        
+
+        foreach (GameObject thisCube in theseCubes)
+        {
+            thisCube.GetComponent<Renderer>().material = activeColor;
+            ActivateTextOnCube(thisCube);
+        }
+
+        selectedCubes = theseCubes;
+
+    }
     // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
+
+    public void ActivateTextOnCube (GameObject thisCube)
+    {
+        thisCube.transform.Find("squareNumber").gameObject.SetActive(true);
+        thisCube.transform.Find("cubeLetter").gameObject.SetActive(true);
+    }
+
+    public void DeActivateTextOnCube(GameObject thisCube)
+    {
+        thisCube.transform.Find("squareNumber").gameObject.SetActive(false);
+        thisCube.transform.Find("cubeLetter").gameObject.SetActive(false);
+    }
+
+    public void DeActivateTextOnAllCubes()
+    {
+        foreach (GameObject thisCube in totalCubesInMatrix)
+        { 
+            thisCube.transform.Find("squareNumber").gameObject.SetActive(textIsToggledOff);
+            thisCube.transform.Find("cubeLetter").gameObject.SetActive(textIsToggledOff);
+        }
+
+        textIsToggledOff = !textIsToggledOff;
+
+    }
 
     IEnumerator StackBoxes()
     {

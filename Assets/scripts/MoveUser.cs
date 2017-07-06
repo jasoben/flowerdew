@@ -154,5 +154,5 @@ public class MoveUser : MonoBehaviour
         }
     }
 
-    //TODO add overhead view button
+
 }
