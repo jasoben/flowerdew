@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +13,7 @@ public class ClickOnCube : MonoBehaviour {
     //This array and list are for selecting a single cube OR a column, and for clearing selection from the un-selected cubes
     private GameObject[] cubeColumn;
     private List<GameObject> otherCubes;
+    private List<GameObject> wholeLayerOfCubes;
 
     public Material activeColor;
     public Material passiveColor;
@@ -29,7 +32,8 @@ public class ClickOnCube : MonoBehaviour {
 
         cubeColumn = new GameObject[matrix.matrixDepth];
         otherCubes = new List<GameObject>();
-        
+        wholeLayerOfCubes = new List<GameObject>();
+
     }
 
     // Update is called once per frame
@@ -41,18 +45,18 @@ public class ClickOnCube : MonoBehaviour {
     {
 
         //This puts all cubes into the local otherCubes object
-        foreach(GameObject thisCube in matrix.totalCubesInMatrix)
+        foreach (GameObject thisCube in matrix.totalCubesInMatrix)
         {
             otherCubes.Add(thisCube);
         }
-        
-        
+
+
         //This is the conditional for selecting columns
 
         if (Input.GetKey(KeyCode.LeftShift) == true)
         {
             //This clears out the OtherCubes property in the matrix class object, which is how we talk to the non-selected cubes; 
-            //we need to do this because the scope of the otherCubes variable doesn't extend outside the conditional surrounding this chunk of code
+            //we need to use an external variable this because otherwise the scope of the otherCubes variable wouldn't extend outside the conditional surrounding this chunk of code
 
             matrix.OtherCubes.Clear();
 
@@ -84,6 +88,7 @@ public class ClickOnCube : MonoBehaviour {
             foreach (GameObject thisCube in otherCubes)
             {
                 matrix.OtherCubes.Add(thisCube);
+            
             }
                         
             /* This conditional checks to see if the external property CurrentCubeColumn has a value in the first position of its array. 
@@ -125,6 +130,42 @@ public class ClickOnCube : MonoBehaviour {
 
         }
         
+        //This is the conditional for selecting the whole layer
+
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+
+            matrix.OtherCubes.Clear();
+            otherCubes.Clear();
+
+            foreach (GameObject thisCube in matrix.totalCubesInMatrix)
+            {
+                otherCubes.Add(thisCube);
+            }
+
+            if (wholeLayerOfCubes != null) wholeLayerOfCubes.Clear();
+            string levelTagOfThisCube = this.tag.Replace("level", "");
+            int levelIntegerOfThisCube = Int32.Parse(levelTagOfThisCube);
+
+            Debug.Log(levelIntegerOfThisCube);
+
+            foreach (GameObject theCubeInThisLayer in matrix.cubeLayers[levelIntegerOfThisCube])
+            {
+                wholeLayerOfCubes.Add(theCubeInThisLayer);
+                theCubeInThisLayer.GetComponent<Renderer>().material = activeColor;
+                otherCubes.Remove(theCubeInThisLayer);
+            }
+            foreach (GameObject thisCube in otherCubes)
+            {
+                matrix.OtherCubes.Add(thisCube);
+
+            }
+            foreach (GameObject thisCube in matrix.OtherCubes)
+            {
+                thisCube.GetComponent<Renderer>().material = passiveColor;
+            }
+
+        }
         //This is for the condition when SHIFT is not held down, i.e. to select a single cube instead of a column
 
         else
@@ -147,6 +188,13 @@ public class ClickOnCube : MonoBehaviour {
 
             //TODO make it so the text shows on columns when you select them in "text off mode"
 
+            //TODO change it so that the cubes revert back to their layer color
+
+            //TODO add the level indicators into the otherCubes list so they change color as well
+
+            //TODO build the cube clearing function into a proper function!
+
+            //TODO figure out how to load that function into memory so that it doesn't have to run each time
 
             if (matrix.CurrentCubeColumn[0] != null)
             {
@@ -160,6 +208,7 @@ public class ClickOnCube : MonoBehaviour {
                 }
             }
 
+        
             Application.ExternalCall("find_content", myNameIs);
 
         }

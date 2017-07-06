@@ -58,8 +58,7 @@ public class MoveUser : MonoBehaviour
         distanceBetweenOriginAndPlayer = Mathf.Clamp(-10 + viewpointObject.transform.position.y - matrixCubesOrigin.transform.position.y, 1, 10);
 
         
-        Debug.Log(distanceBetweenOriginAndPlayer);
-
+     
         // <<Change perspective with keys
 
         if (Input.GetKey(moveForward) == true)
