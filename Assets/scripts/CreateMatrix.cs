@@ -19,6 +19,7 @@ public class CreateMatrix : MonoBehaviour {
 
     public GameObject matrixCube;
     public GameObject matrixCenter;
+    private GameObject newSquare;
 
     public Material groundColor;
     private Color newBlockColor;
@@ -124,7 +125,7 @@ public class CreateMatrix : MonoBehaviour {
         for (int d = 0; d < matrixDepth; d++)
         {
 
-            int e = d + 1;
+            float e = d + 1.5f;
 
             if (d > 2)
             {
@@ -132,7 +133,7 @@ public class CreateMatrix : MonoBehaviour {
             }
             else if (d < 2)
             {
-                newBlockColor = new Color(layerDepthColorStartingValue * .5f * e, layerDepthColorStartingValue * .1f * e, layerDepthColorStartingValue * .1f * e);
+                newBlockColor = new Color(layerDepthColorStartingValue * 1f * e, layerDepthColorStartingValue * .7f * e, layerDepthColorStartingValue * .7f * e);
             }
 
             GameObject[] largeSquare387 = CreateLargeSquare(387, 0, 0, d);
@@ -157,6 +158,14 @@ public class CreateMatrix : MonoBehaviour {
             thisLayersColor[d] = newBlockColor;
             currentLayerIndicatorBlock.transform.Find("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
             currentLayerIndicatorBlock.tag = "level" + d;
+
+            //create some large squares to stand in for layers when they're not visible (to increase performance)
+
+            newSquare = Instantiate(matrixCube, new Vector3(0 + 8.5f * 1.05f, d * matrixCubeDepth * interCubeDistance, 0 + 7.5f * 1.05f), Quaternion.identity);
+            newSquare.GetComponent<MeshRenderer>().material = transparentColor;
+            newSquare.transform.localScale = new Vector3(18 * 1.01f, .5f, 16 * 1.01f);
+            DeActivateTextOnCube(newSquare);
+            newSquare.name = "newSquare" + d;
 
         }
 
