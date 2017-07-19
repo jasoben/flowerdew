@@ -168,7 +168,7 @@ public class CreateMatrix : MonoBehaviour {
             currentLayerIndicatorBlock.transform.Find("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
             currentLayerIndicatorBlock.tag = "level" + d;
 
-            //create some large squares to stand in for layers when they're not visible (to increase performance)
+            //create some large squares to stand in for layers when they're not visible (to increase performance by rendering fewer independent meshes)
 
             renderSmartSquare = Instantiate(matrixCube, new Vector3(8.9f, d * matrixCubeDepth * interCubeDistance, 7.9f), Quaternion.identity);
             renderSmartSquare.GetComponent<MeshRenderer>().material = transparentColor;
@@ -249,27 +249,28 @@ public class CreateMatrix : MonoBehaviour {
                 cubeLayers[currentLayer][i].SetActive(false);
             }
 
+
+            
             HideSquares();
-            //TODO fix this so it uses tags instead of fancy arrays
-            //TODO work out this display bug
 
             currentLayer--;
 
             if (currentLayer < 0)
             {
-                currentLayer = 0;
+                currentLayer = -1;
             }
         }
 
         else if (Input.GetKeyDown(moveUpLayer) == true)
         {
-            
-            for (int i = 0; i < cubeLayers[currentLayer].Length; i++)
-            {
-                cubeLayers[currentLayer][i].SetActive(true);
-            }
 
-            ShowSquares();
+            if (currentLayer > 0)
+            {
+                for (int i = 0; i < cubeLayers[currentLayer].Length; i++)
+                {
+                    cubeLayers[currentLayer][i].SetActive(true);
+                }
+            }
 
             currentLayer++;
 
@@ -277,6 +278,13 @@ public class CreateMatrix : MonoBehaviour {
             {
                 currentLayer = matrixDepth - 1;
             }
+
+            for (int i = 0; i < cubeLayers[currentLayer].Length; i++)
+            {
+                cubeLayers[currentLayer][i].SetActive(true);
+            }
+
+            ShowSquares();
         }
 
         
@@ -477,12 +485,29 @@ public class CreateMatrix : MonoBehaviour {
         {
             cube.SetActive(false);
         }
-        
+        if (currentLayer > 0)
+        {
+            renderSmartSquareArray[currentLayer  - 1].SetActive(false);
+            foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[currentLayer - 1])
+            {
+                cube.SetActive(true);
+            }
+        }
+
     }
 
     public void ShowSquares()
     {
-        renderSmartSquareArray[currentLayer].SetActive(true);
+        renderSmartSquareArray[currentLayer].SetActive(false);
+
+        if (currentLayer < matrixDepth - 1 && currentLayer > 0)
+        {
+            foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[currentLayer - 1])
+            {
+                cube.SetActive(false);
+            }
+            renderSmartSquareArray[currentLayer - 1].SetActive(true);
+        }
 
         foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[currentLayer])
         {
@@ -490,6 +515,8 @@ public class CreateMatrix : MonoBehaviour {
         }
 
     }
+
+    //TODO fix column selection so that it works with visible squares and then de-activates them when the column goes away
 
 
 

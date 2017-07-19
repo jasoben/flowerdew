@@ -106,7 +106,7 @@ public class ClickOnCube : MonoBehaviour {
 
         matrix.ActivateCubes(theseCubes, transparentOrNot);
 
-        //TODO find out why when you click on the same cube twice it goofs things up
+        
     }
 
    
