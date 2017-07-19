@@ -19,7 +19,9 @@ public class CreateMatrix : MonoBehaviour {
 
     public GameObject matrixCube;
     public GameObject matrixCenter;
-    private GameObject newSquare;
+    private GameObject renderSmartSquare;
+    private GameObject[] renderSmartSquareArray;
+    private List<GameObject>[] blocksToDisableToDecreaseMemoryLoad;
 
     public Material groundColor;
     private Color newBlockColor;
@@ -113,6 +115,13 @@ public class CreateMatrix : MonoBehaviour {
         selectedCubes = new List<GameObject>();
 
         cubeLayers = new GameObject[matrixDepth][];
+        renderSmartSquareArray = new GameObject[matrixDepth];
+        blocksToDisableToDecreaseMemoryLoad = new List<GameObject>[matrixDepth];
+
+        for (int i = 0; i < blocksToDisableToDecreaseMemoryLoad.Length; i++)
+        {
+            blocksToDisableToDecreaseMemoryLoad[i] = new List<GameObject>();
+        }
 
         matrixOrigin = new Vector3(FixNumber(matrixWidth), FixNumber(matrixHeight), FixNumber(matrixDepth));
 
@@ -161,11 +170,15 @@ public class CreateMatrix : MonoBehaviour {
 
             //create some large squares to stand in for layers when they're not visible (to increase performance)
 
-            newSquare = Instantiate(matrixCube, new Vector3(0 + 8.5f * 1.05f, d * matrixCubeDepth * interCubeDistance, 0 + 7.5f * 1.05f), Quaternion.identity);
-            newSquare.GetComponent<MeshRenderer>().material = transparentColor;
-            newSquare.transform.localScale = new Vector3(18 * 1.01f, .5f, 16 * 1.01f);
-            DeActivateTextOnCube(newSquare);
-            newSquare.name = "newSquare" + d;
+            renderSmartSquare = Instantiate(matrixCube, new Vector3(8.9f, d * matrixCubeDepth * interCubeDistance, 7.9f), Quaternion.identity);
+            renderSmartSquare.GetComponent<MeshRenderer>().material = transparentColor;
+            renderSmartSquare.transform.localScale = new Vector3(16.4f, .5f, 13.5f);
+            DeActivateTextOnCube(renderSmartSquare);
+            renderSmartSquare.name = "renderSmartSquare" + d;
+            renderSmartSquare.tag = "level" + d;
+            Destroy(renderSmartSquare.GetComponent<ClickOnCube>());
+            renderSmartSquare.GetComponent<MeshRenderer>().material.color = new Color(0,0,0);
+            renderSmartSquareArray[d] = renderSmartSquare;
 
         }
 
@@ -189,8 +202,31 @@ public class CreateMatrix : MonoBehaviour {
                         
         }
 
-        
-       
+        //Assign cubes that intersect renderSmartSquares to arrays so they can be turned on and off when needed (this saves on processing)
+
+        foreach (GameObject cube in totalCubesInMatrix)
+        {
+            for (int i = 0; i < renderSmartSquareArray.Length; i++)
+            {
+                if (cube.GetComponent<BoxCollider>().bounds.Intersects(renderSmartSquareArray[i].GetComponent<BoxCollider>().bounds))
+                {
+                    blocksToDisableToDecreaseMemoryLoad[i].Add(cube);
+                }
+            }
+
+        }
+
+        for (int i = 0; i < currentLayer; i++)
+        {
+            foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[i])
+            {
+                cube.SetActive(false);
+            }
+        }
+
+        renderSmartSquareArray[currentLayer].SetActive(false);
+
+
 
 
         // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
@@ -213,6 +249,10 @@ public class CreateMatrix : MonoBehaviour {
                 cubeLayers[currentLayer][i].SetActive(false);
             }
 
+            HideSquares();
+            //TODO fix this so it uses tags instead of fancy arrays
+            //TODO work out this display bug
+
             currentLayer--;
 
             if (currentLayer < 0)
@@ -220,16 +260,16 @@ public class CreateMatrix : MonoBehaviour {
                 currentLayer = 0;
             }
         }
+
         else if (Input.GetKeyDown(moveUpLayer) == true)
         {
             
-
-           
-
             for (int i = 0; i < cubeLayers[currentLayer].Length; i++)
             {
                 cubeLayers[currentLayer][i].SetActive(true);
             }
+
+            ShowSquares();
 
             currentLayer++;
 
@@ -402,7 +442,8 @@ public class CreateMatrix : MonoBehaviour {
         selectedCubes = theseCubes;
 
     }
-    // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
+    
+    
 
     public void ActivateTextOnCube (GameObject thisCube)
     {
@@ -428,6 +469,31 @@ public class CreateMatrix : MonoBehaviour {
 
     }
 
+    public void HideSquares ()
+    {
+        renderSmartSquareArray[currentLayer].SetActive(false);
+
+        foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[currentLayer])
+        {
+            cube.SetActive(false);
+        }
+        
+    }
+
+    public void ShowSquares()
+    {
+        renderSmartSquareArray[currentLayer].SetActive(true);
+
+        foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[currentLayer])
+        {
+            cube.SetActive(true);
+        }
+
+    }
+
+
+
+    // This Coroutine does fancy box stacking at the start of the program, just for visual effect, nothing more
     IEnumerator StackBoxes()
     {
         for (int f = 0; f < cubesInMatrix.Length + 5; f = f + 3)
