@@ -11,6 +11,7 @@ public class ClickOnCube : MonoBehaviour {
     public Text cubeInfo;
 
     private bool transparentOrNot;
+    private bool showAllCubes;
 
     //This array and list are for selecting a single cube OR a column, and for clearing selection from the un-selected cubes
     private List<GameObject> theseCubes;
@@ -47,6 +48,7 @@ public class ClickOnCube : MonoBehaviour {
         {
 
             transparentOrNot = true;
+            showAllCubes = true;
 
             for (int d = 0; d < matrix.matrixDepth; d++)
             {
@@ -63,6 +65,8 @@ public class ClickOnCube : MonoBehaviour {
 
                 }
 
+                //TODO fix this function call so that it doesn't always set all cubes to active (for instance, when you're selecting a column at a lower layer)
+                //TODO decide whether or not to return the whole column (or just the objects beneath the current layer) when column is selected
 
             }
 
@@ -74,6 +78,7 @@ public class ClickOnCube : MonoBehaviour {
         {
 
             transparentOrNot = false;
+            showAllCubes = false;
 
             string levelTagOfThisCube = this.tag.Replace("level", "");
             int levelIntegerOfThisCube = Int32.Parse(levelTagOfThisCube);
@@ -92,6 +97,7 @@ public class ClickOnCube : MonoBehaviour {
         else
         {
             transparentOrNot = false;
+            showAllCubes = false;
 
             //cubeInfo.text = myNameIs;
             theseCubes.Add(this.gameObject);
@@ -104,9 +110,9 @@ public class ClickOnCube : MonoBehaviour {
 
         Application.ExternalCall("find_content", theseCubes);
 
-        matrix.ActivateCubes(theseCubes, transparentOrNot);
+        matrix.ActivateCubes(theseCubes, transparentOrNot, showAllCubes);
 
-        
+        //TODO fix problem where selecting whole layer, then selecting same individual cube, leaves whole layer selected
     }
 
    

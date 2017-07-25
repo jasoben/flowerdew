@@ -13,6 +13,7 @@ public class CreateMatrix : MonoBehaviour {
     private bool nowCubesAreTransparent;
     private bool noMoreTransparencyNeeded;
     private bool textIsToggledOff;
+    private bool allCubesActive;
 
     private float layerDepthColorGradientSpread;
     private float layerDepthColorStartingValue;
@@ -103,6 +104,7 @@ public class CreateMatrix : MonoBehaviour {
         nowCubesAreTransparent = false;
         noMoreTransparencyNeeded = false;
         textIsToggledOff = false;
+        allCubesActive = false;
 
         layerDepthColorGradientSpread = .05f;
         layerDepthColorStartingValue = .5f;
@@ -251,13 +253,15 @@ public class CreateMatrix : MonoBehaviour {
 
 
             
-            HideSquares();
+            if (allCubesActive == false) HideSquares();
 
             currentLayer--;
 
             if (currentLayer < 0)
             {
                 currentLayer = -1;
+
+                //TODO figure out why I need this to be -1 because it's causing an array error
             }
         }
 
@@ -284,7 +288,12 @@ public class CreateMatrix : MonoBehaviour {
                 cubeLayers[currentLayer][i].SetActive(true);
             }
 
-            ShowSquares();
+            if (allCubesActive == false) ShowSquares();
+            else if (allCubesActive == true)
+            {
+                renderSmartSquareArray[currentLayer].SetActive(false);
+                renderSmartSquareArray[currentLayer - 1].SetActive(false);
+            }
         }
 
         
@@ -374,8 +383,47 @@ public class CreateMatrix : MonoBehaviour {
         return thisName;
     }
 
-    public void ActivateCubes(List<GameObject> theseCubes, bool transparentOrNot)
+    public void ActivateCubes(List<GameObject> theseCubes, bool transparentOrNot, bool showAllCubes)
     {
+
+        if (showAllCubes == true && allCubesActive == false)
+        {
+            for (int i = 0; i < currentLayer; i++)
+            {
+                renderSmartSquareArray[i].SetActive(false);
+            }
+
+            foreach (GameObject cube in totalCubesInMatrix)
+            {
+                cube.SetActive(true);
+            }
+
+            allCubesActive = true;
+        }
+
+        else if (showAllCubes == true && allCubesActive == true) { }
+
+        else if (showAllCubes == false && allCubesActive == false) { }
+
+        else if (showAllCubes == false && allCubesActive == true)
+        {
+            for (int i = 0; i < currentLayer; i++)
+            {
+                renderSmartSquareArray[i].SetActive(true);
+            }
+
+            for (int i = 0; i < currentLayer; i++)
+            {
+                foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[i])
+                {
+                    cube.SetActive(false);
+                }
+            }
+
+            allCubesActive = false;
+        }
+
+
         if (textIsToggledOff && selectedCubes!= null) 
         {
             foreach (GameObject thisCube in selectedCubes)
@@ -421,7 +469,7 @@ public class CreateMatrix : MonoBehaviour {
                 thisCube.GetComponent<Renderer>().material = transparentColor;
                 DeActivateTextOnCube(thisCube);
             }
-
+            
             nowCubesAreTransparent = true;
             noMoreTransparencyNeeded = true;
         }
@@ -439,7 +487,7 @@ public class CreateMatrix : MonoBehaviour {
             nowCubesAreTransparent = true;
 
         }
-        
+                
 
         foreach (GameObject thisCube in theseCubes)
         {
@@ -479,6 +527,7 @@ public class CreateMatrix : MonoBehaviour {
 
     public void HideSquares ()
     {
+        
         renderSmartSquareArray[currentLayer].SetActive(false);
 
         foreach (GameObject cube in blocksToDisableToDecreaseMemoryLoad[currentLayer])
