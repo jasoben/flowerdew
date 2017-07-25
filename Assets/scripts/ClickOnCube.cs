@@ -43,7 +43,7 @@ public class ClickOnCube : MonoBehaviour {
 
         //This is the conditional for selecting columns
 
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
 
             transparentOrNot = true;
@@ -70,7 +70,7 @@ public class ClickOnCube : MonoBehaviour {
 
         //This is the conditional for selecting the whole layer
 
-        else if (Input.GetKey(KeyCode.LeftShift))
+        else if (Input.GetKey(KeyCode.LeftControl))
         {
 
             transparentOrNot = false;

@@ -19,9 +19,12 @@ public class CreateMatrix : MonoBehaviour {
 
     public GameObject matrixCube;
     public GameObject matrixCenter;
+<<<<<<< HEAD
     private GameObject renderSmartSquare;
     private GameObject[] renderSmartSquareArray;
     private List<GameObject>[] blocksToDisableToDecreaseMemoryLoad;
+=======
+>>>>>>> parent of 2bb9099... fixed movement for robbie, working with webgl speed
 
     public Material groundColor;
     private Color newBlockColor;
@@ -134,7 +137,7 @@ public class CreateMatrix : MonoBehaviour {
         for (int d = 0; d < matrixDepth; d++)
         {
 
-            float e = d + 1.5f;
+            int e = d + 1;
 
             if (d > 2)
             {
@@ -142,7 +145,7 @@ public class CreateMatrix : MonoBehaviour {
             }
             else if (d < 2)
             {
-                newBlockColor = new Color(layerDepthColorStartingValue * 1f * e, layerDepthColorStartingValue * .7f * e, layerDepthColorStartingValue * .7f * e);
+                newBlockColor = new Color(layerDepthColorStartingValue * .5f * e, layerDepthColorStartingValue * .1f * e, layerDepthColorStartingValue * .1f * e);
             }
 
             GameObject[] largeSquare387 = CreateLargeSquare(387, 0, 0, d);
@@ -168,6 +171,7 @@ public class CreateMatrix : MonoBehaviour {
             currentLayerIndicatorBlock.transform.Find("LayerIndicatorText").GetComponent<TextMesh>().text = "Level " + d;
             currentLayerIndicatorBlock.tag = "level" + d;
 
+<<<<<<< HEAD
             //create some large squares to stand in for layers when they're not visible (to increase performance by rendering fewer independent meshes)
 
             renderSmartSquare = Instantiate(matrixCube, new Vector3(8.9f, d * matrixCubeDepth * interCubeDistance, 7.9f), Quaternion.identity);
@@ -180,6 +184,8 @@ public class CreateMatrix : MonoBehaviour {
             renderSmartSquare.GetComponent<MeshRenderer>().material.color = new Color(0,0,0);
             renderSmartSquareArray[d] = renderSmartSquare;
 
+=======
+>>>>>>> parent of 2bb9099... fixed movement for robbie, working with webgl speed
         }
 
         foreach (GameObject specificCube in cubesInMatrix)
