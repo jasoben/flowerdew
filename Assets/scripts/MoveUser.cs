@@ -24,6 +24,7 @@ public class MoveUser : MonoBehaviour
     public string flyDown;
     public string spinCW;
     public string spinCCW;
+    public string mouseLookMode;
 
     //public MonoBehaviour moveMouseY;
     //public MonoBehaviour moveMouseX;
@@ -105,32 +106,41 @@ public class MoveUser : MonoBehaviour
             viewpointObject.GetComponent<MouseLookY>().rotY = viewpointObject.transform.localRotation.eulerAngles.y;
         }
 
-        
+        else if (Input.GetKey(mouseLookMode) == true)
+        {
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = !viewpointObject.GetComponent<MouseLookY>().moveCamera;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = !mainCamera.GetComponent<MouseLookX>().moveCamera;
+        }
+
+        //Mouse movement using right and middle mouse buttons
+
         else if (Input.GetMouseButton(2))
-        {
-            float mouseY = Input.GetAxis("Mouse Y") * distanceBetweenOriginAndPlayer * movementModifier;
-            float mouseX = Input.GetAxis("Mouse X") * distanceBetweenOriginAndPlayer * movementModifier;
-            Vector3 mouseMoveWithMiddleButton = new Vector3(-mouseX, 0, -mouseY);
-            viewpointObject.transform.Translate(mouseMoveWithMiddleButton);
+            {
+                float mouseY = Input.GetAxis("Mouse Y") * distanceBetweenOriginAndPlayer * movementModifier;
+                float mouseX = Input.GetAxis("Mouse X") * distanceBetweenOriginAndPlayer * movementModifier;
+                Vector3 mouseMoveWithMiddleButton = new Vector3(-mouseX, 0, -mouseY);
+                viewpointObject.transform.Translate(mouseMoveWithMiddleButton);
 
-        }
-
-
-        //else if (Input.GetKeyDown("m") == true)
-        else if (Input.GetMouseButton(1) == true)
-        {
-            viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
-            mainCamera.GetComponent<MouseLookX>().moveCamera = true;
-        }
+            }
 
 
-        else if (Input.GetMouseButtonUp(1) == true)
-        {
-            viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
-            mainCamera.GetComponent<MouseLookX>().moveCamera = false;
-        }
 
-        else if (Input.GetKeyDown("r") == true)
+
+            else if (Input.GetMouseButton(1) == true)
+            {
+                viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
+                mainCamera.GetComponent<MouseLookX>().moveCamera = true;
+            }
+
+
+            else if (Input.GetMouseButtonUp(1) == true)
+            {
+                viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
+                mainCamera.GetComponent<MouseLookX>().moveCamera = false;
+            }
+
+
+            else if (Input.GetKeyDown("r") == true)
         {
             viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
             mainCamera.GetComponent<MouseLookX>().moveCamera = true;
