@@ -5,37 +5,32 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClickOnCube : MonoBehaviour {
+public class ClickOnCube : MonoBehaviour
+{
 
     public string myNameIs;
     public Text cubeInfo;
 
-    private bool transparentOrNot;
-    private bool showAllCubes;
-
-    //This array and list are for selecting a single cube OR a column, and for clearing selection from the un-selected cubes
-    private List<GameObject> theseCubes;
+    //GameObjects
+    private GameObject masterObject;
     
-
-    //This is a reference instance of the class that creates the cube matrix, allowing us to easily reference properties of that class. It's here purely for convencience.
-    private CreateMatrix matrix;
-
     private string cubeNameWithoutDepth;
-  
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //cubeInfo = GameObject.Find("CubeInfo").GetComponent<Text>();
         //Below we put the CreateMatrix class script (attached to the duplicator game object [an empty]) into an instance of that class.
         matrix = GameObject.Find("CubeDuplicator").GetComponent<CreateMatrix>();
 
         theseCubes = new List<GameObject>();
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
     }
     void OnMouseDown()
     {
@@ -89,7 +84,7 @@ public class ClickOnCube : MonoBehaviour {
                 if (theCubeInThisLayer.name.Contains("Layer")) theseCubes.Remove(theCubeInThisLayer);
             }
 
-            
+
 
         }
         //This is for the condition when SHIFT is not held down, i.e. to select a single cube instead of a column
@@ -102,9 +97,9 @@ public class ClickOnCube : MonoBehaviour {
             //cubeInfo.text = myNameIs;
             theseCubes.Add(this.gameObject);
 
-            
-            
-            
+
+
+
 
         }
 
@@ -115,6 +110,6 @@ public class ClickOnCube : MonoBehaviour {
         //TODO fix problem where selecting whole layer, then selecting same individual cube, leaves whole layer selected
     }
 
-   
+
 
 }
