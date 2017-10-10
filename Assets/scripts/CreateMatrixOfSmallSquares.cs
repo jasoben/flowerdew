@@ -7,11 +7,14 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
     //Colors
     private Color[] blockColor;
 
+    //Custom Classes
+    private CubeBuffer cubeBuffer;
+
     //GameObjects
     private GameObject[] cubesInMatrix;
     private GameObject matrixCube;
-    private GameObject matrixOrigin;
-
+    private GameObject masterObject;
+    
     //Numbers
     private int matrixXSize;
     private int matrixZSize;
@@ -40,7 +43,9 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
         blockColor[7] = new Color(.9f, .9f, .9f);
 
         //GameObjects
-        matrixCube = GameObject.Find("MasterObject").GetComponent<MasterScript>().SmallSquarePrefab;
+        masterObject = GameObject.Find("MasterObject");
+        cubeBuffer = masterObject.GetComponent<CubeBuffer>();
+        matrixCube = masterObject.GetComponent<MasterScript>().SmallSquarePrefab;
         cubesInMatrix = new GameObject[24];
         
         //Numbers
@@ -86,7 +91,9 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 cubesInMatrix[currentCubeNumber].tag = "level" + largeSquareNumber;
 
                 ClickOnCube thisCube = cubesInMatrix[currentCubeNumber].GetComponent<ClickOnCube>();
-                thisCube.myNameIs = cubesInMatrix[currentCubeNumber].name;
+                thisCube.MyNameIs = cubesInMatrix[currentCubeNumber].name;
+
+                cubeBuffer.AllCubes.Add(cubesInMatrix[currentCubeNumber]);
 
                 currentCubeNumber++;
 

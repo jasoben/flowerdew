@@ -7,24 +7,25 @@ using UnityEngine.UI;
 
 public class ClickOnCube : MonoBehaviour
 {
-
-    public string myNameIs;
-    public Text cubeInfo;
+    //Custom Classes
+    private CubeBuffer cubeBuffer;
 
     //GameObjects
     private GameObject masterObject;
     
+    //Text
+    private string myNameIs;
+    public string MyNameIs { get { return myNameIs; } set { } }
+    public Text cubeInfo;
     private string cubeNameWithoutDepth;
 
     // Use this for initialization
     void Start()
     {
-        //cubeInfo = GameObject.Find("CubeInfo").GetComponent<Text>();
-        //Below we put the CreateMatrix class script (attached to the duplicator game object [an empty]) into an instance of that class.
-        matrix = GameObject.Find("CubeDuplicator").GetComponent<CreateMatrix>();
-
-        theseCubes = new List<GameObject>();
-
+        //GameObjects    
+        masterObject = GameObject.Find("MasterObject");
+        cubeBuffer = GameObject.Find("MasterObject").GetComponent<CubeBuffer>();
+                
     }
 
     // Update is called once per frame
@@ -35,36 +36,12 @@ public class ClickOnCube : MonoBehaviour
     void OnMouseDown()
     {
 
-        theseCubes.Clear();
-
+        
         //This is the conditional for selecting columns
 
         if (Input.GetKey(KeyCode.C))
         {
-
-            transparentOrNot = true;
-            showAllCubes = true;
-
-            for (int d = 0; d < matrix.matrixDepth; d++)
-            {
-
-                cubeNameWithoutDepth = this.name.Remove(this.name.Length - 1, 1);
-
-                foreach (GameObject cubeWithSimilarName in matrix.totalCubesInMatrix)
-                {
-
-                    if (cubeWithSimilarName.name.Contains(cubeNameWithoutDepth + d.ToString()))
-                    {
-                        theseCubes.Add(cubeWithSimilarName);
-                    }
-
-                }
-
-                //TODO fix this function call so that it doesn't always set all cubes to active (for instance, when you're selecting a column at a lower layer)
-                //TODO decide whether or not to return the whole column (or just the objects beneath the current layer) when column is selected
-
-            }
-
+            cubeBuffer.SelectColumn(this.transform.gameObject);
         }
 
         //This is the conditional for selecting the whole layer
@@ -72,17 +49,7 @@ public class ClickOnCube : MonoBehaviour
         else if (Input.GetKey(KeyCode.LeftShift))
         {
 
-            transparentOrNot = false;
-            showAllCubes = false;
-
-            string levelTagOfThisCube = this.tag.Replace("level", "");
-            int levelIntegerOfThisCube = Int32.Parse(levelTagOfThisCube);
-
-            foreach (GameObject theCubeInThisLayer in matrix.cubeLayers[levelIntegerOfThisCube])
-            {
-                theseCubes.Add(theCubeInThisLayer);
-                if (theCubeInThisLayer.name.Contains("Layer")) theseCubes.Remove(theCubeInThisLayer);
-            }
+            
 
 
 
@@ -103,9 +70,7 @@ public class ClickOnCube : MonoBehaviour
 
         }
 
-        Application.ExternalCall("find_content", theseCubes);
-
-        matrix.ActivateCubes(theseCubes, transparentOrNot, showAllCubes);
+        
 
         //TODO fix problem where selecting whole layer, then selecting same individual cube, leaves whole layer selected
     }
