@@ -48,33 +48,15 @@ public class ClickOnCube : MonoBehaviour
 
         else if (Input.GetKey(KeyCode.LeftShift))
         {
-
-            
-
-
-
+            cubeBuffer.SelectLayer(this.transform.gameObject);
         }
         //This is for the condition when SHIFT is not held down, i.e. to select a single cube instead of a column
 
         else
         {
-            transparentOrNot = false;
-            showAllCubes = false;
-
-            //cubeInfo.text = myNameIs;
-            theseCubes.Add(this.gameObject);
-
-
-
-
-
+            cubeBuffer.SelectSingleCube(this.transform.gameObject);
         }
-
         
-
-        //TODO fix problem where selecting whole layer, then selecting same individual cube, leaves whole layer selected
     }
-
-
 
 }

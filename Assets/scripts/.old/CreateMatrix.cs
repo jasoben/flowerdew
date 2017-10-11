@@ -148,21 +148,21 @@ public class CreateMatrix : MonoBehaviour
                 newBlockColor = new Color(layerDepthColorStartingValue * .3f * e, layerDepthColorStartingValue * .3f * e, layerDepthColorStartingValue * .5f * e);
             }
 
-            GameObject[] largeSquare387 = CreateLargeSquare(387, 0, 0, d);
-            GameObject[] largeSquare388 = CreateLargeSquare(388, 1, 0, d);
-            GameObject[] largeSquare389 = CreateLargeSquare(389, 2, 0, d);
+            //GameObject[] largeSquare387 = CreateLargeSquare(387, 0, 0, d);
+            //GameObject[] largeSquare388 = CreateLargeSquare(388, 1, 0, d);
+            //GameObject[] largeSquare389 = CreateLargeSquare(389, 2, 0, d);
 
-            GameObject[] largeSquare317 = CreateLargeSquare(317, 0, 1, d);
-            GameObject[] largeSquare318 = CreateLargeSquare(318, 1, 1, d);
-            GameObject[] largeSquare319 = CreateLargeSquare(319, 2, 1, d);
+            //GameObject[] largeSquare317 = CreateLargeSquare(317, 0, 1, d);
+            //GameObject[] largeSquare318 = CreateLargeSquare(318, 1, 1, d);
+            //GameObject[] largeSquare319 = CreateLargeSquare(319, 2, 1, d);
 
-            GameObject[] largeSquare247 = CreateLargeSquare(247, 0, 2, d);
-            GameObject[] largeSquare248 = CreateLargeSquare(248, 1, 2, d);
-            GameObject[] largeSquare249 = CreateLargeSquare(249, 2, 2, d);
+            //GameObject[] largeSquare247 = CreateLargeSquare(247, 0, 2, d);
+            //GameObject[] largeSquare248 = CreateLargeSquare(248, 1, 2, d);
+            //GameObject[] largeSquare249 = CreateLargeSquare(249, 2, 2, d);
 
-            GameObject[] largeSquare177 = CreateLargeSquare(177, 0, 3, d);
-            GameObject[] largeSquare178 = CreateLargeSquare(178, 1, 3, d);
-            GameObject[] largeSquare179 = CreateLargeSquare(179, 2, 3, d);
+            //GameObject[] largeSquare177 = CreateLargeSquare(177, 0, 3, d);
+            //GameObject[] largeSquare178 = CreateLargeSquare(178, 1, 3, d);
+            //GameObject[] largeSquare179 = CreateLargeSquare(179, 2, 3, d);
 
 
             currentLayerIndicatorBlock = Instantiate(layerIndicatorBlock, new Vector3(11, -d * matrixCubeDepth * interCubeDistance, 22), Quaternion.identity);

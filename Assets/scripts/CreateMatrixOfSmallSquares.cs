@@ -14,20 +14,57 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
     private GameObject[] cubesInMatrix;
     private GameObject matrixCube;
     private GameObject masterObject;
-    
+
     //Numbers
     private int matrixXSize;
     private int matrixZSize;
     private int currentCubeNumber;
     private float matrixCubeXZScale;
     private float interCubeDistance;
+    private int largeSquareNumber;
+    public int LargeSquareNumber
+    {
+        get
+        {
+            return largeSquareNumber;
+        }
+        set { largeSquareNumber = value; }
+    }
+    private int largeSquareXPosition;
+    public int LargeSquareXPosition
+    {
+        get
+        {
+            return largeSquareXPosition;
+        }
+        set { largeSquareXPosition = value; }
+    }
+    private int largeSquareZPosition;
+    public int LargeSquareZPosition
+    {
+        get
+        {
+            return largeSquareZPosition;
+        }
+        set { largeSquareZPosition = value; }
+    }
+    private int depth;
+    public int Depth
+    {
+        get
+        {
+            return depth;
+        }
+        set { depth = value; }
+    }
 
     //Vectors
     private Vector3 matrixLocation;
     private Vector3 matrixCubeOffset;
 
+   
     // Use this for initialization
-    private void Start()
+    void Awake()
     {
 
         //Colors
@@ -46,60 +83,64 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
         masterObject = GameObject.Find("MasterObject");
         cubeBuffer = masterObject.GetComponent<CubeBuffer>();
         matrixCube = masterObject.GetComponent<MasterScript>().SmallSquarePrefab;
-        cubesInMatrix = new GameObject[24];
-        
+        //cubesInMatrix = defined in LATE
+
         //Numbers
-        matrixXSize = 6;
-        matrixZSize = 4;
-        matrixCubeXZScale = 1;
-        interCubeDistance = .2f;
+        matrixXSize = masterObject.GetComponent<MasterScript>().MatrixXSize;
+        matrixZSize = masterObject.GetComponent<MasterScript>().MatrixZSize;
+        matrixCubeXZScale = masterObject.GetComponent<MasterScript>().MatrixCubeXZScale;
+        interCubeDistance = masterObject.GetComponent<MasterScript>().InterCubeDistance;
         currentCubeNumber = 0;
 
         //Vectors
-        matrixLocation = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        matrixLocation = new Vector3(this.transform.gameObject.transform.position.x, this.transform.gameObject.transform.position.y, this.transform.gameObject.transform.position.z);
+
+        //LATE
+        cubesInMatrix = new GameObject[matrixXSize * matrixZSize];
                 
     }
 
-    private void Update()
+    void Update()
     {
-        
+
     }
 
-    public CreateMatrixOfSmallSquares(int largeSquareNumber, int xLocation, int zLocation, int depth)
+    public void CreateTheMatrixOfSmallSquares(int largeSquareNumber, int xLocation, int zLocation, int depth)
     {
-        
 
+        
         for (int z = 0; z < matrixZSize; z++)
         {
 
             for (int x = 0; x < matrixXSize; x++)
             {
-                matrixCubeOffset = new Vector3((xLocation * matrixCubeXZScale * x) + interCubeDistance, depth, (zLocation * matrixCubeXZScale * z) + interCubeDistance);
+                matrixCubeOffset = new Vector3((matrixCubeXZScale * x) + interCubeDistance, depth, (matrixCubeXZScale * z + 1) + interCubeDistance);
 
                 cubesInMatrix[currentCubeNumber] = Instantiate(matrixCube, matrixLocation + matrixCubeOffset, Quaternion.identity);
-                
+
                 string cubeName = "littleSquare" + "_alpha" + currentCubeNumber + "_" + largeSquareNumber + "_" + depth;
 
                 cubeName = ChangeNumberToLetter(cubeName);
 
-                cubesInMatrix[currentCubeNumber].GetComponent<Renderer>().material.color = blockColor[currentCubeNumber];
+                
+                cubesInMatrix[currentCubeNumber].GetComponent<Renderer>().material.SetColor("_Color", blockColor[depth]);
                 cubesInMatrix[currentCubeNumber].name = cubeName;
                 cubesInMatrix[currentCubeNumber].transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = largeSquareNumber.ToString();
                 cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "alpha" + currentCubeNumber.ToString();
                 cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = ChangeNumberToLetter(cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text);
 
-                cubesInMatrix[currentCubeNumber].tag = "level" + largeSquareNumber;
+                cubesInMatrix[currentCubeNumber].tag = "level" + depth;
 
                 ClickOnCube thisCube = cubesInMatrix[currentCubeNumber].GetComponent<ClickOnCube>();
                 thisCube.MyNameIs = cubesInMatrix[currentCubeNumber].name;
 
-                cubeBuffer.AllCubes.Add(cubesInMatrix[currentCubeNumber]);
+                masterObject.GetComponent<MasterScript>().AllCubes.Add(cubesInMatrix[currentCubeNumber]);
 
                 currentCubeNumber++;
 
             }
         }
-                
+
     }
 
     private string ChangeNumberToLetter(string thisName)
@@ -133,5 +174,10 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
         thisName = thisName.Replace("alpha5", "Z");
 
         return thisName;
+    }
+
+    public void DoThis()
+    {
+        Debug.Log(matrixXSize);
     }
 }
