@@ -105,18 +105,20 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
     }
 
-    public void CreateTheMatrixOfSmallSquares(int largeSquareNumber, int xLocation, int zLocation, int depth)
+    public void CreateTheMatrixOfSmallSquares(int largeSquareNumber, int depth, GameObject parentLayerObject)
     {
 
-        
+        float adjustedDepth = matrixLocation.y;
+
         for (int z = 0; z < matrixZSize; z++)
         {
 
             for (int x = 0; x < matrixXSize; x++)
             {
-                matrixCubeOffset = new Vector3((matrixCubeXZScale * x) + interCubeDistance, depth, (matrixCubeXZScale * z + 1) + interCubeDistance);
+                matrixCubeOffset = new Vector3((matrixCubeXZScale * x) + interCubeDistance, adjustedDepth, (matrixCubeXZScale * z + 1) + interCubeDistance);
 
                 cubesInMatrix[currentCubeNumber] = Instantiate(matrixCube, matrixLocation + matrixCubeOffset, Quaternion.identity);
+                cubesInMatrix[currentCubeNumber].transform.SetParent(parentLayerObject.transform);
 
                 string cubeName = "littleSquare" + "_alpha" + currentCubeNumber + "_" + largeSquareNumber + "_" + depth;
 
@@ -175,9 +177,5 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
         return thisName;
     }
-
-    public void DoThis()
-    {
-        Debug.Log(matrixXSize);
-    }
+    
 }
