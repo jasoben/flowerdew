@@ -25,6 +25,12 @@ public class Controls : MonoBehaviour
     public KeyCode spinCW;
     public KeyCode spinCCW;
     public KeyCode mouseLookMode;
+    public KeyCode layerUp;
+    public KeyCode layerDown;
+    public KeyCode mapOnOff;
+    public KeyCode modelOnOff;
+    public KeyCode resetView;
+    public KeyCode textOnOff;
 
 
     //public MonoBehaviour moveMouseY;
@@ -64,32 +70,32 @@ public class Controls : MonoBehaviour
 
         // <<Change perspective with keys
 
-        if (Input.GetKey(moveForward) == true)
+        if (Input.GetKey(moveForward))
         {
             viewpointObject.transform.Translate(Vector3.forward * distanceBetweenOriginAndPlayer * movementModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
         }
-        else if (Input.GetKey(moveBackwards) == true)
+        else if (Input.GetKey(moveBackwards))
         {
             viewpointObject.transform.Translate(Vector3.back * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        else if (Input.GetKey(moveLeft) == true)
+        if (Input.GetKey(moveLeft))
         {
             viewpointObject.transform.Translate(Vector3.left * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        else if (Input.GetKey(moveRight) == true)
+        else if (Input.GetKey(moveRight))
         {
             viewpointObject.transform.Translate(Vector3.right * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        else if ((Input.GetKey(flyUp) == true) || (Input.GetAxis("Mouse ScrollWheel") < 0f))
+        if ((Input.GetKey(flyUp)) || (Input.GetAxis("Mouse ScrollWheel") < 0f))
         {
             viewpointObject.transform.Translate(Vector3.up * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        else if (Input.GetKey(flyDown) == true || (Input.GetAxis("Mouse ScrollWheel") > 0f))
+        else if (Input.GetKey(flyDown) || (Input.GetAxis("Mouse ScrollWheel") > 0f))
         {
             viewpointObject.transform.Translate(Vector3.down * distanceBetweenOriginAndPlayer * movementModifier);
         }
 
-        else if (Input.GetKeyDown(spinCCW) == true || Input.GetKeyDown(spinCW) == true)
+        if (Input.GetKeyDown(spinCCW) || Input.GetKeyDown(spinCW))
         {
             viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
             mainCamera.GetComponent<MouseLookX>().moveCamera = false;
@@ -97,18 +103,18 @@ public class Controls : MonoBehaviour
 
 
 
-        else if (Input.GetKey(spinCCW) == true)
+        if (Input.GetKey(spinCCW))
         {
             viewpointObject.transform.Rotate(0, -1, 0);
             viewpointObject.GetComponent<MouseLookY>().rotY = viewpointObject.transform.localRotation.eulerAngles.y;
         }
-        else if (Input.GetKey(spinCW) == true)
+        else if (Input.GetKey(spinCW))
         {
             viewpointObject.transform.Rotate(0, 1, 0);
             viewpointObject.GetComponent<MouseLookY>().rotY = viewpointObject.transform.localRotation.eulerAngles.y;
         }
 
-        else if (Input.GetKey(mouseLookMode) == true)
+        if (Input.GetKeyDown(mouseLookMode))
         {
             viewpointObject.GetComponent<MouseLookY>().moveCamera = !viewpointObject.GetComponent<MouseLookY>().moveCamera;
             mainCamera.GetComponent<MouseLookX>().moveCamera = !mainCamera.GetComponent<MouseLookX>().moveCamera;
@@ -116,7 +122,7 @@ public class Controls : MonoBehaviour
 
         //Mouse movement using right and middle mouse buttons
 
-        else if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(2))
         {
             float mouseY = Input.GetAxis("Mouse Y") * distanceBetweenOriginAndPlayer * movementModifier;
             float mouseX = Input.GetAxis("Mouse X") * distanceBetweenOriginAndPlayer * movementModifier;
@@ -128,21 +134,21 @@ public class Controls : MonoBehaviour
 
 
 
-        else if (Input.GetMouseButton(1) == true)
+        if (Input.GetMouseButton(1))
         {
             viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
             mainCamera.GetComponent<MouseLookX>().moveCamera = true;
         }
 
 
-        else if (Input.GetMouseButtonUp(1) == true)
+        else if (Input.GetMouseButtonUp(1))
         {
             viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
             mainCamera.GetComponent<MouseLookX>().moveCamera = false;
         }
 
 
-        else if (Input.GetKeyDown("r") == true)
+        if (Input.GetKey(resetView))
         {
             viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
             mainCamera.GetComponent<MouseLookX>().moveCamera = true;
@@ -155,7 +161,7 @@ public class Controls : MonoBehaviour
             mainCamera.GetComponent<MouseLookX>().RotY = 0f;
         }
 
-        else if (Input.GetKeyDown("t") == true)
+        if (Input.GetKeyDown(textOnOff))
         {
             foreach (GameObject cubeText in cubeBuffer.CubeText)
             {
@@ -163,6 +169,23 @@ public class Controls : MonoBehaviour
             }
 
             cubeTextBool = !cubeTextBool;
+        }
+
+        if (Input.GetKeyDown(layerDown))
+        {
+            LayerNavigator.ActivateOrDeactivateLayer(LayerNavigator.CurrentLayer, false);
+            LayerNavigator.ChangeLayerTo(LayerNavigator.CurrentLayer + 1);
+        }
+        else if (Input.GetKeyDown(layerUp))
+        {
+            LayerNavigator.ActivateOrDeactivateLayer(LayerNavigator.CurrentLayer, true);
+            LayerNavigator.ChangeLayerTo(LayerNavigator.CurrentLayer - 1);
+            LayerNavigator.ActivateOrDeactivateLayer(LayerNavigator.CurrentLayer, true);
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C))
+        {
+            CubeBuffer.ClearBuffer();
         }
     }
 

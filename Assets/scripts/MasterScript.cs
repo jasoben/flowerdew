@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MasterScript : MonoBehaviour {
 
+    //Event handling delegates
+    public delegate void AllObjectsHaveBeenCreated();
+    public static AllObjectsHaveBeenCreated ObjectsDone;
+
     //GameObjects
     [SerializeField]
     private GameObject smallSquarePrefab;
@@ -30,8 +34,8 @@ public class MasterScript : MonoBehaviour {
         get { return layerEmptyObject; }
     }
 
-    private List<GameObject> allCubes;
-    public List<GameObject> AllCubes
+    private static List<GameObject> allCubes;
+    public static List<GameObject> AllCubes
     {
         get
         {
@@ -43,34 +47,34 @@ public class MasterScript : MonoBehaviour {
     private GameObject[] thisLayer;
 
     //Numbers
-    private int matrixDepth;
-    public int MatrixDepth
+    private static int matrixDepth;
+    public static int MatrixDepth
     {
         get
         { return matrixDepth; }
     }
-    private int matrixXSize;
-    public int MatrixXSize
+    private static int matrixXSize;
+    public static int MatrixXSize
     {
         get { return matrixXSize; }
     }
-    private int matrixZSize;
-    public int MatrixZSize
+    private static int matrixZSize;
+    public static int MatrixZSize
     {
         get { return matrixZSize; }
     }
-    private int matrixCubeXZScale;
-    public int MatrixCubeXZScale
+    private static int matrixCubeXZScale;
+    public static int MatrixCubeXZScale
     {
         get { return matrixCubeXZScale; }
     }
-    private float interCubeDistance;
-    public float InterCubeDistance
+    private static float interCubeDistance;
+    public static float InterCubeDistance
     {
         get { return interCubeDistance; }
     }
-    private float largeSquareSeparationX;
-    private float largeSquareSeparationZ;
+    private static float largeSquareSeparationX;
+    private static float largeSquareSeparationZ;
 
     //Vectors
     private Vector3 newLargeSquarePosition;
@@ -119,7 +123,7 @@ public class MasterScript : MonoBehaviour {
 
         indicatorObject.SetActive(false);
 
-
+        ObjectsDone();
     }
 	
 	// Update is called once per frame
@@ -127,9 +131,9 @@ public class MasterScript : MonoBehaviour {
 		
 	}
 
-    public void SendCubesToExternalApplication(List<GameObject> selectedCubes)
+    public void SendCubesToExternalApplication()
     {
-        Application.ExternalCall("find_content", selectedCubes);                
+        Application.ExternalCall("find_content", CubeBuffer.SelectedCubes);                
     }
     
     public void CreateLargeSquare(int largeSquareNumber, int largeSquareXPosition, int largeSquareZPosition, int depth)

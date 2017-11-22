@@ -7,24 +7,11 @@ using UnityEngine.UI;
 
 public class ClickOnCube : MonoBehaviour
 {
-    //Custom Classes
-    private CubeBuffer cubeBuffer;
-
-    //GameObjects
-    private GameObject masterObject;
-    
-    //Text
-    private string myNameIs;
-    public string MyNameIs { get { return myNameIs; } set { } }
-    public Text cubeInfo;
-    private string cubeNameWithoutDepth;
+       
 
     // Use this for initialization
     void Start()
     {
-        //GameObjects    
-        masterObject = GameObject.Find("MasterObject");
-        cubeBuffer = GameObject.Find("MasterObject").GetComponent<CubeBuffer>();
                 
     }
 
@@ -41,20 +28,20 @@ public class ClickOnCube : MonoBehaviour
 
         if (Input.GetKey(KeyCode.C))
         {
-            cubeBuffer.SelectColumn(this.transform.gameObject);
+            CubeBuffer.SelectColumn(this.transform.gameObject);
         }
 
         //This is the conditional for selecting the whole layer
 
         else if (Input.GetKey(KeyCode.LeftShift))
         {
-            cubeBuffer.SelectLayer(this.transform.gameObject);
+            CubeBuffer.SelectLayer(this.transform.gameObject);
         }
         //This is for the condition when SHIFT is not held down, i.e. to select a single cube instead of a column
 
         else
         {
-            cubeBuffer.SelectSingleCube(this.transform.gameObject);
+            CubeBuffer.SelectSingleCube(this.transform.gameObject);
         }
         
     }

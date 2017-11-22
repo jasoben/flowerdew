@@ -69,27 +69,25 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
         //Colors
         blockColor = new Color[8];
+        float baseColor = .3f;
+        float colorMultiplier = 12;
+        for (int i = 0; i < 8; i++)
+        {
 
-        blockColor[0] = new Color(.1f, .1f, .1f);
-        blockColor[1] = new Color(.2f, .2f, .2f);
-        blockColor[2] = new Color(.3f, .3f, .3f);
-        blockColor[3] = new Color(.4f, .4f, .4f);
-        blockColor[4] = new Color(.5f, .5f, .5f);
-        blockColor[5] = new Color(.7f, .7f, .7f);
-        blockColor[6] = new Color(.8f, .8f, .8f);
-        blockColor[7] = new Color(.9f, .9f, .9f);
+            blockColor[7 - i] = new Color(baseColor + (i + 1) / colorMultiplier, baseColor + (i + 1) / colorMultiplier, baseColor + (i + 1) / colorMultiplier);            
+        }
+        
 
         //GameObjects
         masterObject = GameObject.Find("MasterObject");
-        cubeBuffer = masterObject.GetComponent<CubeBuffer>();
         matrixCube = masterObject.GetComponent<MasterScript>().SmallSquarePrefab;
         //cubesInMatrix = defined in LATE
 
         //Numbers
-        matrixXSize = masterObject.GetComponent<MasterScript>().MatrixXSize;
-        matrixZSize = masterObject.GetComponent<MasterScript>().MatrixZSize;
-        matrixCubeXZScale = masterObject.GetComponent<MasterScript>().MatrixCubeXZScale;
-        interCubeDistance = masterObject.GetComponent<MasterScript>().InterCubeDistance;
+        matrixXSize = MasterScript.MatrixXSize;
+        matrixZSize = MasterScript.MatrixZSize;
+        matrixCubeXZScale = MasterScript.MatrixCubeXZScale;
+        interCubeDistance = MasterScript.InterCubeDistance;
         currentCubeNumber = 0;
 
         //Vectors
@@ -127,16 +125,18 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 
                 cubesInMatrix[currentCubeNumber].GetComponent<Renderer>().material.SetColor("_Color", blockColor[depth]);
                 cubesInMatrix[currentCubeNumber].name = cubeName;
+
+                //Insert text on each child element (Text Rendereres)
                 cubesInMatrix[currentCubeNumber].transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = largeSquareNumber.ToString();
                 cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "alpha" + currentCubeNumber.ToString();
                 cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = ChangeNumberToLetter(cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text);
+                cubesInMatrix[currentCubeNumber].transform.GetChild(2).gameObject.GetComponent<TextMesh>().text = depth.ToString();
 
                 cubesInMatrix[currentCubeNumber].tag = "level" + depth;
 
                 ClickOnCube thisCube = cubesInMatrix[currentCubeNumber].GetComponent<ClickOnCube>();
-                thisCube.MyNameIs = cubesInMatrix[currentCubeNumber].name;
-
-                masterObject.GetComponent<MasterScript>().AllCubes.Add(cubesInMatrix[currentCubeNumber]);
+                
+                MasterScript.AllCubes.Add(cubesInMatrix[currentCubeNumber]);
 
                 currentCubeNumber++;
 
