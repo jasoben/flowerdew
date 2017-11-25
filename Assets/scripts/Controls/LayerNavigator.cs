@@ -10,6 +10,9 @@ public class LayerNavigator : MonoBehaviour {
 
     //GameObjects
     private static GameObject[][] layerObjects;
+    private static List<GameObject> visibleObjects;
+    private static List<GameObject> inVisibleObjects;
+
     //Numbers
     private static int currentlayer;
     public static int CurrentLayer
@@ -25,7 +28,8 @@ public class LayerNavigator : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-        
+        visibleObjects = new List<GameObject>();
+        inVisibleObjects = new List<GameObject>();
     }
 	
 	// Update is called once per frame
@@ -40,6 +44,72 @@ public class LayerNavigator : MonoBehaviour {
         for (int i = 0; i < 8; i++)
         {
             layerObjects[i] = GameObject.FindGameObjectsWithTag("level" + i);
+            
+            //Add cubes to "visible cubes" and "invisible cubes" lists to increase performance in WebGL
+            foreach (GameObject thisObject in layerObjects[i])
+            {
+                string bigSquareNumber = thisObject.transform.GetChild(0).GetComponent<TextMesh>().text;
+                string littleSquareLetter = thisObject.transform.GetChild(1).GetComponent<TextMesh>().text;
+                string depth = thisObject.transform.GetChild(2).GetComponent<TextMesh>().text;
+                
+                if ((bigSquareNumber == "387" ||
+                    bigSquareNumber == "317" ||
+                    bigSquareNumber == "247" ||
+                    bigSquareNumber == "177") &&
+                    (littleSquareLetter == "A" ||
+                    littleSquareLetter == "G" ||
+                    littleSquareLetter == "N" ||
+                    littleSquareLetter == "U"))
+                {
+                    visibleObjects.Add(thisObject);
+                }
+                else if ((bigSquareNumber == "387" ||
+                    bigSquareNumber == "388" ||
+                    bigSquareNumber == "389") &&
+                    (littleSquareLetter == "U" ||
+                    littleSquareLetter == "V" ||
+                    littleSquareLetter == "W" ||
+                    littleSquareLetter == "X" ||
+                    littleSquareLetter == "Y" ||
+                    littleSquareLetter == "Z"))
+                {
+                    visibleObjects.Add(thisObject);
+                }
+                else if ((bigSquareNumber == "177" ||
+                    bigSquareNumber == "178" ||
+                    bigSquareNumber == "179") &&
+                    (littleSquareLetter == "A" ||
+                    littleSquareLetter == "B" ||
+                    littleSquareLetter == "C" ||
+                    littleSquareLetter == "D" ||
+                    littleSquareLetter == "E" ||
+                    littleSquareLetter == "F"))
+                {
+                    visibleObjects.Add(thisObject);
+                }
+                else if ((bigSquareNumber == "179" ||
+                    bigSquareNumber == "249" ||
+                    bigSquareNumber == "319" ||
+                    bigSquareNumber == "389") &&
+                    (littleSquareLetter == "F" ||
+                    littleSquareLetter == "M" ||
+                    littleSquareLetter == "T" ||
+                    littleSquareLetter == "Z"))
+                {
+                    visibleObjects.Add(thisObject);
+                }
+                else
+                {
+                    thisObject.SetActive(false);
+                    inVisibleObjects.Add(thisObject);
+                }
+
+            }
+        }
+        //Re-enable layer 0
+        foreach (GameObject thisObject in layerObjects[0])
+        {
+            thisObject.SetActive(true);
         }
 
         MasterScript.ObjectsDone -= RunWhenObjectsCreated;
@@ -54,12 +124,14 @@ public class LayerNavigator : MonoBehaviour {
 
     public static void ActivateOrDeactivateLayer(int layerNumber, bool yesOrNo)
     {
-        layerNumber = (int)Mathf.Clamp((float)layerNumber, 0, 6);
+        DisableHiddenCubes();
+        layerNumber = (int)Mathf.Clamp((float)layerNumber, 0, 7);
         foreach (GameObject thisObject in layerObjects[layerNumber])
         {
             thisObject.SetActive(yesOrNo);
         }
         ReActivateSelectedCubes();
+        
     }
     public static void ClearCubesAboveLayer()
     {
@@ -69,6 +141,13 @@ public class LayerNavigator : MonoBehaviour {
             {
                 thisObject.SetActive(false);
             }
+        }
+    }
+    public static void DisableHiddenCubes()
+    {
+        foreach (GameObject thisObject in inVisibleObjects)
+        {
+            thisObject.SetActive(false);
         }
     }
     private static void ReActivateSelectedCubes()

@@ -175,6 +175,7 @@ public class Controls : MonoBehaviour
         {
             LayerNavigator.ActivateOrDeactivateLayer(LayerNavigator.CurrentLayer, false);
             LayerNavigator.ChangeLayerTo(LayerNavigator.CurrentLayer + 1);
+            LayerNavigator.ActivateOrDeactivateLayer(LayerNavigator.CurrentLayer, true);
         }
         else if (Input.GetKeyDown(layerUp))
         {
