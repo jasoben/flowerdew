@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew", "Flowerdew.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew.Editor.Plugins", "Flowerdew.Editor.Plugins.csproj", "{B661E072-0B36-C58D-6494-A79C68180B49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowerdew.Editor", "Flowerdew.Editor.csproj", "{13342AA5-C68C-A6CE-860E-B20BF8D89FA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{B661E072-0B36-C58D-6494-A79C68180B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B661E072-0B36-C58D-6494-A79C68180B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B661E072-0B36-C58D-6494-A79C68180B49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13342AA5-C68C-A6CE-860E-B20BF8D89FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13342AA5-C68C-A6CE-860E-B20BF8D89FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13342AA5-C68C-A6CE-860E-B20BF8D89FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13342AA5-C68C-A6CE-860E-B20BF8D89FA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
