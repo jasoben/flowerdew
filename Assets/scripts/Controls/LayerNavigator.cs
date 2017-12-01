@@ -24,7 +24,7 @@ public class LayerNavigator : MonoBehaviour {
     private void Awake()
     {
         currentlayer = 0;
-        MasterScript.ObjectsDone += RunWhenObjectsCreated;
+        CubeBuffer.CubesAreCreated += RunWhenObjectsCreated;
     }
     // Use this for initialization
     void Start () {
@@ -52,8 +52,8 @@ public class LayerNavigator : MonoBehaviour {
                 string littleSquareLetter = thisObject.transform.GetChild(1).GetComponent<TextMesh>().text;
                 string depth = thisObject.transform.GetChild(2).GetComponent<TextMesh>().text;
                 
-                if ((bigSquareNumber == "387" ||
-                    bigSquareNumber == "317" ||
+                if ((bigSquareNumber == "386" ||
+                    bigSquareNumber == "316" ||
                     bigSquareNumber == "247" ||
                     bigSquareNumber == "177") &&
                     (littleSquareLetter == "A" ||
@@ -63,7 +63,9 @@ public class LayerNavigator : MonoBehaviour {
                 {
                     visibleObjects.Add(thisObject);
                 }
-                else if ((bigSquareNumber == "387" ||
+                else if ((bigSquareNumber == "180" ||
+                    bigSquareNumber == "386" ||
+                    bigSquareNumber == "387" ||
                     bigSquareNumber == "388" ||
                     bigSquareNumber == "389") &&
                     (littleSquareLetter == "U" ||
@@ -75,7 +77,9 @@ public class LayerNavigator : MonoBehaviour {
                 {
                     visibleObjects.Add(thisObject);
                 }
-                else if ((bigSquareNumber == "177" ||
+                else if ((bigSquareNumber == "180" ||
+                    bigSquareNumber == "316" ||
+                    bigSquareNumber == "177" ||
                     bigSquareNumber == "178" ||
                     bigSquareNumber == "179") &&
                     (littleSquareLetter == "A" ||
@@ -87,7 +91,7 @@ public class LayerNavigator : MonoBehaviour {
                 {
                     visibleObjects.Add(thisObject);
                 }
-                else if ((bigSquareNumber == "179" ||
+                else if ((bigSquareNumber == "180" ||
                     bigSquareNumber == "249" ||
                     bigSquareNumber == "319" ||
                     bigSquareNumber == "389") &&
@@ -98,6 +102,7 @@ public class LayerNavigator : MonoBehaviour {
                 {
                     visibleObjects.Add(thisObject);
                 }
+                
                 else
                 {
                     thisObject.SetActive(false);
@@ -112,7 +117,7 @@ public class LayerNavigator : MonoBehaviour {
             thisObject.SetActive(true);
         }
 
-        MasterScript.ObjectsDone -= RunWhenObjectsCreated;
+        CubeBuffer.CubesAreCreated -= RunWhenObjectsCreated;
     }
 
     public static void ChangeLayerTo(int layerNumber)

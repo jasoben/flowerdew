@@ -103,10 +103,12 @@ public class MasterScript : MonoBehaviour {
             thisLayer[d] = Instantiate(layerEmptyObject, this.transform.position, Quaternion.identity);
             thisLayer[d].name = "Layer " + d;
 
+            CreateLargeSquare(386, -1, 0, d);
             CreateLargeSquare(387, 0, 0, d);
             CreateLargeSquare(388, 1, 0, d);
             CreateLargeSquare(389, 2, 0, d);
 
+            CreateLargeSquare(316, -1, 1, d);
             CreateLargeSquare(317, 0, 1, d);
             CreateLargeSquare(318, 1, 1, d);
             CreateLargeSquare(319, 2, 1, d);
@@ -118,6 +120,7 @@ public class MasterScript : MonoBehaviour {
             CreateLargeSquare(177, 0, 3, d);
             CreateLargeSquare(178, 1, 3, d);
             CreateLargeSquare(179, 2, 3, d);
+            CreateLargeSquare(180, 3, 3, d);
 
         }
 

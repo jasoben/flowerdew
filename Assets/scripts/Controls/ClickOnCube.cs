@@ -37,8 +37,8 @@ public class ClickOnCube : MonoBehaviour
         {
             CubeBuffer.SelectLayer(this.transform.gameObject);
         }
+        
         //This is for the condition when SHIFT is not held down, i.e. to select a single cube instead of a column
-
         else
         {
             CubeBuffer.SelectSingleCube(this.transform.gameObject);

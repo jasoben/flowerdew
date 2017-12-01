@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class CubeBuffer : MonoBehaviour {
 
+    public delegate void CubeLayersCreated();
+    public static CubeLayersCreated CubesAreCreated;
+
     //Colors
     private static List<Color> cubeColors;
     private static Color blue;
@@ -13,6 +16,7 @@ public class CubeBuffer : MonoBehaviour {
 
     //GameObjects
     private static GameObject[][] cubeLayers;
+    private static GameObject[] cubeLayerHoldingEmptyObjects;
     private static List<GameObject> allCubes;
     private static List<GameObject> selectedCubes;
     public static List<GameObject> SelectedCubes
@@ -73,12 +77,14 @@ public class CubeBuffer : MonoBehaviour {
 
         //GameObjects
         cubeLayers = new GameObject[matrixDepth][];
+        cubeLayerHoldingEmptyObjects = new GameObject[matrixDepth];
 
         for (int i = 0; i < matrixDepth; i++)
         {
             cubeLayers[i] = GameObject.FindGameObjectsWithTag("level" + i.ToString()); //These go into an array for easy selection; even though it would be possible to search the list each time, it's faster to define the array early for whole-layer selection later
+            cubeLayerHoldingEmptyObjects[i] = GameObject.Find("Layer " + i.ToString());
         }
-        
+        CubesAreCreated();
         MasterScript.ObjectsDone -= RunWhenObjectDataLoaded;
     }
     public static void SelectSingleCube(GameObject thisSelectedCube)
@@ -139,7 +145,15 @@ public class CubeBuffer : MonoBehaviour {
             currentCount = 0;
         }
     }
-
+    
+    public static void TextVisibilitySwitcher()
+    {
+        foreach (GameObject layerHolder in cubeLayerHoldingEmptyObjects)
+        {
+            Debug.Log(layerHolder);
+            layerHolder.GetComponent<CubeTextEnabler>().ShowOrHideText();
+        }
+    }
     private static void HighLightCubes(Color color)
     {
         RemoveDuplicateCubes();
@@ -151,7 +165,15 @@ public class CubeBuffer : MonoBehaviour {
             if (thisCube.GetComponent<Renderer>().material.color.r != 0)
                 thisCube.GetComponent<Renderer>().material.color = thisCube.GetComponent<Renderer>().material.color * color;
         }
+
+        foreach (GameObject thisObject in selectedCubes)
+        {
+            thisObject.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
+            thisObject.transform.Find("squareNumber").transform.gameObject.SetActive(true);
+            thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
+        }
     }
+
 
     private static void StoreColorValue()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Controls : MonoBehaviour
 {
@@ -9,12 +10,13 @@ public class Controls : MonoBehaviour
     public GameObject mainCamera;
     private CubeBuffer cubeBuffer;
     public GameObject masterObject;
-
+    
     private float distanceBetweenOriginAndPlayer;
 
     public float movementModifier;
 
     private bool cubeTextBool;
+    private bool allTextBool;
 
     public KeyCode moveForward;
     public KeyCode moveBackwards;
@@ -44,7 +46,7 @@ public class Controls : MonoBehaviour
         masterObject = GameObject.Find("MasterObject");
         cubeBuffer = masterObject.GetComponent<CubeBuffer>();
         cubeTextBool = false;
-
+        allTextBool = true;
         //moveMouseY = viewpointObject.GetComponent<MouseLookY>() as MonoBehaviour;
         //moveMouseX = mainCamera.GetComponent<MouseLookX>() as MonoBehaviour;
         
@@ -163,12 +165,8 @@ public class Controls : MonoBehaviour
 
         if (Input.GetKeyDown(textOnOff))
         {
-            foreach (GameObject cubeText in cubeBuffer.CubeText)
-            {
-                cubeText.SetActive(cubeTextBool);
-            }
-
-            cubeTextBool = !cubeTextBool;
+            allTextBool = !allTextBool;
+            GameObject.Find("TextToggle").GetComponent<Toggle>().isOn = allTextBool;
         }
 
         if (Input.GetKeyDown(layerDown))
@@ -190,5 +188,9 @@ public class Controls : MonoBehaviour
         }
     }
 
+    public void UITextToggle()
+    {
+        CubeBuffer.TextVisibilitySwitcher();
+    }
 
 }

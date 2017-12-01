@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CubeTextEnabler : MonoBehaviour {
 
@@ -11,14 +12,17 @@ public class CubeTextEnabler : MonoBehaviour {
         get { return textObjects; }        
     }
 
+    private bool textShowingOrNot;
+
     //Numbers
     private string thisLayer;
 
 	// Use this for initialization
 	void Start () {
-        LayerNavigator.LayerHasBeenChanged += ShowOrHideText;
+        LayerNavigator.LayerHasBeenChanged += ShowOrHideTextOnCurrentLayer;
         thisLayer = this.name;
         textObjects = new List<GameObject>();
+        textShowingOrNot = true;
 
         foreach (Transform child in transform)
         {
@@ -30,7 +34,7 @@ public class CubeTextEnabler : MonoBehaviour {
             }
         }
 
-        ShowOrHideText();
+        ShowOrHideTextOnCurrentLayer();
 
 	}
 	
@@ -39,24 +43,45 @@ public class CubeTextEnabler : MonoBehaviour {
 		
 	}
 
-    private void ShowOrHideText()
+    private void ShowOrHideTextOnCurrentLayer()
     {
-        if (thisLayer == "Layer " + LayerNavigator.CurrentLayer)
+
+        if (textShowingOrNot)
         {
-            foreach (GameObject thisTextObject in textObjects)
+            if (thisLayer == "Layer " + LayerNavigator.CurrentLayer)
             {
-                thisTextObject.SetActive(true);
+                foreach (GameObject thisTextObject in textObjects)
+                {
+                    thisTextObject.SetActive(true);
+                }
+
             }
-            
+            else
+            {
+                foreach (GameObject thisTextObject in textObjects)
+                {
+                    thisTextObject.SetActive(false);
+                }
+            }
+
+            ShowSelectedText();
         }
-        else
+    }
+
+    public void ShowOrHideText()
+    {
+        textShowingOrNot = !textShowingOrNot;
+        
+        foreach (GameObject thisTextObject in textObjects)
         {
-            foreach (GameObject thisTextObject in textObjects)
-            {
-                thisTextObject.SetActive(false);
-            }
+            thisTextObject.SetActive(textShowingOrNot);
         }
 
+        ShowSelectedText();
+    }
+
+    public void ShowSelectedText()
+    {
         foreach (GameObject thisObject in CubeBuffer.SelectedCubes)
         {
             thisObject.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
