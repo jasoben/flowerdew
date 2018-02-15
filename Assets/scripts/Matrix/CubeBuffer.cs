@@ -59,7 +59,7 @@ public class CubeBuffer : MonoBehaviour {
         allCubes = new List<GameObject>();
         selectedCubes = new List<GameObject>();
         allCubes = MasterScript.AllCubes;
-        
+        print("test");
     }
 
     private void Update()

@@ -45,7 +45,6 @@ public class CubeTextEnabler : MonoBehaviour {
 
     private void ShowOrHideTextOnCurrentLayer()
     {
-
         if (textShowingOrNot)
         {
             if (thisLayer == "Layer " + LayerNavigator.CurrentLayer)

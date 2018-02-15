@@ -1,10 +1,17 @@
 fileFormatVersion: 2
 guid: f2ddfa72fc530524aa80935cbddc00ba
-timeCreated: 1507672457
+timeCreated: 1512152557
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - smallSquarePrefab: {fileID: 1202549930076280, guid: a00ed68a26191c848a6da960d0c76a18,
+      type: 2}
+  - largeSquareObject: {fileID: 1456173809885872, guid: bc570c3330b07a34b95c79b8edcdeb7d,
+      type: 2}
+  - indicatorObject: {instanceID: 0}
+  - layerEmptyObject: {fileID: 1086786022013622, guid: 08479c5880514da46bfb6e1098054de6,
+      type: 2}
   executionOrder: 100
   icon: {instanceID: 0}
   userData: 
