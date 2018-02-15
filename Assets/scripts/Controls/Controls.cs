@@ -34,6 +34,8 @@ public class Controls : MonoBehaviour
     public KeyCode resetView;
     public KeyCode textOnOff;
 
+    public Button ZoomIn, ZoomOut;
+    private bool zoomingIn, zoomingOut;
 
     //public MonoBehaviour moveMouseY;
     //public MonoBehaviour moveMouseX;
@@ -62,7 +64,7 @@ public class Controls : MonoBehaviour
     }
 
     // LateUpdate is for camera movements (called after Update)
-
+    
     private void LateUpdate()
     {
 
@@ -71,7 +73,6 @@ public class Controls : MonoBehaviour
 
 
         // <<Change perspective with keys
-
         if (Input.GetKey(moveForward))
         {
             viewpointObject.transform.Translate(Vector3.forward * distanceBetweenOriginAndPlayer * movementModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
@@ -88,11 +89,11 @@ public class Controls : MonoBehaviour
         {
             viewpointObject.transform.Translate(Vector3.right * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        if ((Input.GetKey(flyUp)) || (Input.GetAxis("Mouse ScrollWheel") < 0f))
+        if ((Input.GetKey(flyUp)) || (Input.GetAxis("Mouse ScrollWheel") < 0f) || zoomingOut)
         {
             viewpointObject.transform.Translate(Vector3.up * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        else if (Input.GetKey(flyDown) || (Input.GetAxis("Mouse ScrollWheel") > 0f))
+        else if (Input.GetKey(flyDown) || (Input.GetAxis("Mouse ScrollWheel") > 0f) || zoomingIn)
         {
             viewpointObject.transform.Translate(Vector3.down * distanceBetweenOriginAndPlayer * movementModifier);
         }
@@ -192,5 +193,27 @@ public class Controls : MonoBehaviour
     {
         CubeBuffer.TextVisibilitySwitcher();
     }
+
+    public void OnZoomOutButtonPressed()
+    {
+        zoomingOut = true;
+    }
+
+    public void OnZoomInButtonPressed()
+    {
+        zoomingIn = true;
+    }
+
+    public void OnZoomOutButtonReleased()
+    {
+        zoomingOut = false;
+    }
+
+    public void OnZoomInButtonReleased()
+    {
+        zoomingIn = false;
+    }
+
+
 
 }

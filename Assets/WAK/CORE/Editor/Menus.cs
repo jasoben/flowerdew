@@ -160,7 +160,7 @@ namespace hg.ApiWebKit.editor
 		[MenuItem("internal:Tools/Web API Kit/Capture Screen")]
 		static void TakeScreenshot()
 		{
-			Application.CaptureScreenshot("ss.png");
+			ScreenCapture.CaptureScreenshot("ss.png");
 		}
 
 		
