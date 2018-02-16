@@ -63,7 +63,7 @@ public class CubeTextEnabler : MonoBehaviour {
                 }
             }
 
-            ShowSelectedText();
+      //      ShowSelectedText();
         }
     }
 
@@ -76,16 +76,16 @@ public class CubeTextEnabler : MonoBehaviour {
             thisTextObject.SetActive(textShowingOrNot);
         }
 
-        ShowSelectedText();
+       // ShowSelectedText();
     }
 
-    public void ShowSelectedText()
-    {
-        foreach (GameObject thisObject in CubeBuffer.SelectedCubes)
-        {
-            thisObject.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
-            thisObject.transform.Find("squareNumber").transform.gameObject.SetActive(true);
-            thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
-        }
-    }
+    //public void ShowSelectedText()
+    //{
+    //    foreach (GameObject thisObject in CubeBuffer.SelectedCubes)
+    //    {
+    //        thisObject.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
+    //        thisObject.transform.Find("squareNumber").transform.gameObject.SetActive(true);
+    //        thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
+    //    }
+    //}
 }

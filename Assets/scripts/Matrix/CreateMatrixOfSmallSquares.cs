@@ -91,8 +91,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
         currentCubeNumber = 0;
 
         //Vectors
-        matrixLocation = new Vector3(this.transform.gameObject.transform.position.x, this.transform.gameObject.transform.position.y, this.transform.gameObject.transform.position.z);
-
+        matrixLocation = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         //LATE
         cubesInMatrix = new GameObject[matrixXSize * matrixZSize];
                 
@@ -116,13 +115,14 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 matrixCubeOffset = new Vector3((matrixCubeXZScale * x) + interCubeDistance, adjustedDepth, (matrixCubeXZScale * z + 1) + interCubeDistance);
 
                 cubesInMatrix[currentCubeNumber] = Instantiate(matrixCube, matrixLocation + matrixCubeOffset, Quaternion.identity);
+                cubesInMatrix[currentCubeNumber].transform.position = matrixLocation + matrixCubeOffset;
                 cubesInMatrix[currentCubeNumber].transform.SetParent(parentLayerObject.transform);
 
                 string cubeName = "littleSquare" + "_alpha" + currentCubeNumber + "_" + largeSquareNumber + "_" + depth;
 
                 cubeName = ChangeNumberToLetter(cubeName);
 
-                
+
                 cubesInMatrix[currentCubeNumber].GetComponent<Renderer>().material.SetColor("_Color", blockColor[depth]);
                 cubesInMatrix[currentCubeNumber].name = cubeName;
 
@@ -135,10 +135,11 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 cubesInMatrix[currentCubeNumber].tag = "level" + depth;
 
                 ClickOnCube thisCube = cubesInMatrix[currentCubeNumber].GetComponent<ClickOnCube>();
-                
+
                 MasterScript.AllCubes.Add(cubesInMatrix[currentCubeNumber]);
 
                 currentCubeNumber++;
+
 
             }
         }

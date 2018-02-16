@@ -81,7 +81,9 @@ public class CubeBuffer : MonoBehaviour {
 
         for (int i = 0; i < matrixDepth; i++)
         {
-            cubeLayers[i] = GameObject.FindGameObjectsWithTag("level" + i.ToString()); //These go into an array for easy selection; even though it would be possible to search the list each time, it's faster to define the array early for whole-layer selection later
+            //These go into an array for easy selection; even though it would be possible to 
+            //search the list each time, it's faster to define the array early for whole-layer selection later
+            cubeLayers[i] = GameObject.FindGameObjectsWithTag("level" + i.ToString());
             cubeLayerHoldingEmptyObjects[i] = GameObject.Find("Layer " + i.ToString());
         }
         CubesAreCreated();
@@ -151,7 +153,7 @@ public class CubeBuffer : MonoBehaviour {
         foreach (GameObject layerHolder in cubeLayerHoldingEmptyObjects)
         {
             Debug.Log(layerHolder);
-            layerHolder.GetComponent<CubeTextEnabler>().ShowOrHideText();
+        //    layerHolder.GetComponent<CubeTextEnabler>().ShowOrHideText();
         }
     }
     private static void HighLightCubes(Color color)
