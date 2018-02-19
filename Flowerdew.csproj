@@ -305,6 +305,7 @@
     <Compile Include="Assets\scripts\Matrix\CubeBuffer.cs" />
     <Compile Include="Assets\scripts\Matrix\CubeTextEnabler.cs" />
     <Compile Include="Assets\scripts\RenderDisguise.cs" />
+    <Compile Include="Assets\scripts\Test Scripts\TestScript.cs" />
     <Compile Include="Assets\WAK\CORE\apis\ApiBehavior.cs" />
     <Compile Include="Assets\WAK\CORE\apis\ApiMonitor.cs" />
     <Compile Include="Assets\WAK\CORE\apis\ApiWebKitInitialize.cs" />

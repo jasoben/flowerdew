@@ -151,7 +151,7 @@ public class MasterScript : MonoBehaviour {
         thisLargeSquare.name = "Large Square " + largeSquareNumber;
 
         thisLargeSquare.transform.SetParent(thisLayer[depth].transform);
-        
+
         thisLargeSquare.GetComponent<CreateMatrixOfSmallSquares>().CreateTheMatrixOfSmallSquares(largeSquareNumber, depth, thisLargeSquare);
     }
 
