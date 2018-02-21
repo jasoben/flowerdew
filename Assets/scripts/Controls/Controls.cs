@@ -73,32 +73,32 @@ public class Controls : MonoBehaviour
 
 
         // <<Change perspective with keys
-        if (Input.GetKey(moveForward))
+        if (Input.GetKey(moveForward) || Input.GetKey(KeyCode.W))
         {
             viewpointObject.transform.Translate(Vector3.forward * distanceBetweenOriginAndPlayer * movementModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
         }
-        else if (Input.GetKey(moveBackwards))
+        else if (Input.GetKey(moveBackwards) || Input.GetKey(KeyCode.S))
         {
             viewpointObject.transform.Translate(Vector3.back * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        if (Input.GetKey(moveLeft))
+        if (Input.GetKey(moveLeft) || Input.GetKey(KeyCode.A))
         {
             viewpointObject.transform.Translate(Vector3.left * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        else if (Input.GetKey(moveRight))
+        else if (Input.GetKey(moveRight) || Input.GetKey(KeyCode.D))
         {
             viewpointObject.transform.Translate(Vector3.right * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        if ((Input.GetKey(flyUp)) || (Input.GetAxis("Mouse ScrollWheel") < 0f) || zoomingOut)
+        if ((Input.GetKey(flyUp)) || Input.GetKey(KeyCode.X) || (Input.GetAxis("Mouse ScrollWheel") < 0f) || zoomingOut)
         {
             viewpointObject.transform.Translate(Vector3.up * distanceBetweenOriginAndPlayer * movementModifier);
         }
-        else if (Input.GetKey(flyDown) || (Input.GetAxis("Mouse ScrollWheel") > 0f) || zoomingIn)
+        else if (Input.GetKey(flyDown) || Input.GetKey(KeyCode.Z) || (Input.GetAxis("Mouse ScrollWheel") > 0f) || zoomingIn)
         {
             viewpointObject.transform.Translate(Vector3.down * distanceBetweenOriginAndPlayer * movementModifier);
         }
 
-        if (Input.GetKeyDown(spinCCW) || Input.GetKeyDown(spinCW))
+        if (Input.GetKeyDown(spinCCW) || Input.GetKeyDown(spinCW) || Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
             viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
             mainCamera.GetComponent<MouseLookX>().moveCamera = false;
@@ -106,12 +106,12 @@ public class Controls : MonoBehaviour
 
 
 
-        if (Input.GetKey(spinCCW))
+        if (Input.GetKey(spinCCW) || Input.GetKey(KeyCode.Q))
         {
             viewpointObject.transform.Rotate(0, -1, 0);
             viewpointObject.GetComponent<MouseLookY>().rotY = viewpointObject.transform.localRotation.eulerAngles.y;
         }
-        else if (Input.GetKey(spinCW))
+        else if (Input.GetKey(spinCW) || Input.GetKey(KeyCode.E))
         {
             viewpointObject.transform.Rotate(0, 1, 0);
             viewpointObject.GetComponent<MouseLookY>().rotY = viewpointObject.transform.localRotation.eulerAngles.y;

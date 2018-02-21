@@ -1,9 +1,13 @@
 {
-"TOTAL_MEMORY": 525336576,
+"companyName": "DefaultCompany",
+"productName": "Flowerdew Matrix",
 "dataUrl": "WebGL Build.data.unityweb",
 "asmCodeUrl": "WebGL Build.asm.code.unityweb",
 "asmMemoryUrl": "WebGL Build.asm.memory.unityweb",
 "asmFrameworkUrl": "WebGL Build.asm.framework.unityweb",
+"TOTAL_MEMORY": 525336576,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
 "splashScreenStyle": "Dark",
 "backgroundColor": "#231F20"
 }

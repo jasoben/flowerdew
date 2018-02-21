@@ -113,7 +113,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 matrixCubeOffset = new Vector3((matrixCubeXZScale * x) + interCubeDistance, adjustedDepth, (matrixCubeXZScale * z + 1) + interCubeDistance);
 
                 Vector3 newPosition = transform.position + matrixCubeOffset;
-                cubesInMatrix[currentCubeNumber] = Instantiate(matrixCube, newPosition, Quaternion.identity, transform);
+                cubesInMatrix[currentCubeNumber] = Instantiate(matrixCube, newPosition, Quaternion.identity, parentLayerObject.transform);
                 string cubeName = "littleSquare" + "_alpha" + currentCubeNumber + "_" + largeSquareNumber + "_" + depth;
 
                 cubeName = ChangeNumberToLetter(cubeName);

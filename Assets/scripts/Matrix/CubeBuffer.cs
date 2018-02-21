@@ -152,8 +152,7 @@ public class CubeBuffer : MonoBehaviour {
     {
         foreach (GameObject layerHolder in cubeLayerHoldingEmptyObjects)
         {
-            Debug.Log(layerHolder);
-        //    layerHolder.GetComponent<CubeTextEnabler>().ShowOrHideText();
+            layerHolder.GetComponent<CubeTextEnabler>().ShowOrHideText();
         }
     }
     private static void HighLightCubes(Color color)

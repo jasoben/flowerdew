@@ -1,8 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.InteropServices;
 
 public class MasterScript : MonoBehaviour {
+
+    //Network Communication
+    [DllImport("__Internal")]
+    private static extern void SendData(string str);
 
     //Event handling delegates
     public delegate void AllObjectsHaveBeenCreated();
@@ -134,9 +139,9 @@ public class MasterScript : MonoBehaviour {
 		
 	}
 
-    public void SendCubesToExternalApplication()
+    public static void SendCubesToExternalApplication(string thisString)
     {
-        Application.ExternalCall("find_content", CubeBuffer.SelectedCubes);                
+        SendData(thisString);                
     }
     
     public void CreateLargeSquare(int largeSquareNumber, int largeSquareXPosition, int largeSquareZPosition, int depth)

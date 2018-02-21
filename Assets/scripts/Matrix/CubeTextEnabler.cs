@@ -28,9 +28,9 @@ public class CubeTextEnabler : MonoBehaviour {
         {
             foreach (Transform secondChild in child)
             {
-                textObjects.Add(secondChild.transform.Find("cubeLetter").transform.gameObject);
-                textObjects.Add(secondChild.transform.Find("squareNumber").transform.gameObject);
-                textObjects.Add(secondChild.transform.Find("layerNumber").transform.gameObject);
+                textObjects.Add(secondChild.Find("cubeLetter").gameObject);
+                textObjects.Add(secondChild.Find("squareNumber").gameObject);
+                textObjects.Add(secondChild.Find("layerNumber").gameObject);
             }
         }
 
@@ -63,7 +63,7 @@ public class CubeTextEnabler : MonoBehaviour {
                 }
             }
 
-      //      ShowSelectedText();
+            ShowSelectedText();
         }
     }
 
@@ -76,16 +76,19 @@ public class CubeTextEnabler : MonoBehaviour {
             thisTextObject.SetActive(textShowingOrNot);
         }
 
-       // ShowSelectedText();
+        ShowSelectedText();
     }
 
-    //public void ShowSelectedText()
-    //{
-    //    foreach (GameObject thisObject in CubeBuffer.SelectedCubes)
-    //    {
-    //        thisObject.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
-    //        thisObject.transform.Find("squareNumber").transform.gameObject.SetActive(true);
-    //        thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
-    //    }
-    //}
+    public void ShowSelectedText()
+    {
+        if (CubeBuffer.SelectedCubes != null)
+        {
+            foreach (GameObject thisObject in CubeBuffer.SelectedCubes)
+            {
+                thisObject.transform.Find("cubeLetter").gameObject.SetActive(true);
+                thisObject.transform.Find("squareNumber").gameObject.SetActive(true);
+                thisObject.transform.Find("layerNumber").gameObject.SetActive(true);
+            }
+        }
+    }
 }
