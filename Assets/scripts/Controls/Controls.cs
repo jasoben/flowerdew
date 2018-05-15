@@ -54,7 +54,7 @@ public class Controls : MonoBehaviour
         allTextBool = true;
         //moveMouseY = viewpointObject.GetComponent<MouseLookY>() as MonoBehaviour;
         //moveMouseX = mainCamera.GetComponent<MouseLookX>() as MonoBehaviour;
-        
+        thisClick = TypeOfClick.select;
        
 
     }
@@ -128,34 +128,26 @@ public class Controls : MonoBehaviour
 
         //Mouse movement using right and middle mouse buttons
 
-        if (Input.GetMouseButton(2))
+        if ((Input.GetMouseButton(1)) || (Input.GetMouseButton(0) && thisClick == TypeOfClick.view))
+        {
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = true;
+        }
+
+
+        else if ((Input.GetMouseButtonUp(1)) || (Input.GetMouseButtonUp(0) && thisClick == TypeOfClick.view))
+        {
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = false;
+        }
+
+        if ((Input.GetMouseButton(2)) || (Input.GetMouseButton(0) && thisClick == TypeOfClick.move))
         {
             float mouseY = Input.GetAxis("Mouse Y") * distanceBetweenOriginAndPlayer * movementModifier;
             float mouseX = Input.GetAxis("Mouse X") * distanceBetweenOriginAndPlayer * movementModifier;
             Vector3 mouseMoveWithMiddleButton = new Vector3(-mouseX, 0, -mouseY);
             viewpointObject.transform.Translate(mouseMoveWithMiddleButton);
 
-        }
-
-
-        if (Input.GetMouseButton(0))
-        {
-            viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
-            mainCamera.GetComponent<MouseLookX>().moveCamera = true;
-        }
-
-
-        if (Input.GetMouseButton(1))
-        {
-            viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
-            mainCamera.GetComponent<MouseLookX>().moveCamera = true;
-        }
-
-
-        else if (Input.GetMouseButtonUp(1))
-        {
-            viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
-            mainCamera.GetComponent<MouseLookX>().moveCamera = false;
         }
 
 
@@ -224,9 +216,17 @@ public class Controls : MonoBehaviour
 
     public void OnHandIconButtonPressed()
     {
-        viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
-        mainCamera.GetComponent<MouseLookX>().moveCamera = true;
+        thisClick = TypeOfClick.move;
+        Debug.Log(thisClick);
+        viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
+        mainCamera.GetComponent<MouseLookX>().moveCamera = false;
     }
+    public void OnEyeIconButtonPressed()
+    {
+        thisClick = TypeOfClick.view;
+        Debug.Log(thisClick);
+    }
+
 
 
 }

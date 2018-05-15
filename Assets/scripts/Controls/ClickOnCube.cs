@@ -8,13 +8,11 @@ using UnityEngine.UI;
 public class ClickOnCube : MonoBehaviour
 {
     Controls navigationControls;
-    TypeOfClick thisClick;
 
     // Use this for initialization
     void Start()
     {
         navigationControls = GameObject.Find("UserViewpoint").GetComponent<Controls>();
-
     }
 
     // Update is called once per frame
@@ -24,8 +22,7 @@ public class ClickOnCube : MonoBehaviour
     }
     void OnMouseDown()
     {
-        thisClick = navigationControls.thisClick;
-        switch (thisClick)
+        switch (navigationControls.thisClick)
         {
             case TypeOfClick.select:
             {
