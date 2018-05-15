@@ -7,12 +7,14 @@ using UnityEngine.UI;
 
 public class ClickOnCube : MonoBehaviour
 {
-       
+    Controls navigationControls;
+    TypeOfClick thisClick;
 
     // Use this for initialization
     void Start()
     {
-                
+        navigationControls = GameObject.Find("UserViewpoint").GetComponent<Controls>();
+
     }
 
     // Update is called once per frame
@@ -22,28 +24,45 @@ public class ClickOnCube : MonoBehaviour
     }
     void OnMouseDown()
     {
-
-        
-        //This is the conditional for selecting columns
-
-        if (Input.GetKey(KeyCode.C))
+        thisClick = navigationControls.thisClick;
+        switch (thisClick)
         {
-            CubeBuffer.SelectColumn(this.transform.gameObject);
-        }
+            case TypeOfClick.select:
+            {
+                //This is the conditional for selecting columns
 
-        //This is the conditional for selecting the whole layer
+                if (Input.GetKey(KeyCode.C))
+                {
+                    CubeBuffer.SelectColumn(this.transform.gameObject);
+                }
 
-        else if (Input.GetKey(KeyCode.LeftShift))
-        {
-            CubeBuffer.SelectLayer(this.transform.gameObject);
+                //This is the conditional for selecting the whole layer
+
+                else if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    CubeBuffer.SelectLayer(this.transform.gameObject);
+                }
+
+                //This is for the condition when SHIFT is not held down, i.e. to select a single cube instead of a column
+                else
+                {
+                    CubeBuffer.SelectSingleCube(this.transform.gameObject);
+                }
+                break;
+            }
+            case TypeOfClick.move:
+            {
+                break;
+
+            }
+            case TypeOfClick.view:
+            {
+                break;
+            }
+
+               
+
         }
-        
-        //This is for the condition when SHIFT is not held down, i.e. to select a single cube instead of a column
-        else
-        {
-            CubeBuffer.SelectSingleCube(this.transform.gameObject);
-        }
-        
     }
 
 }

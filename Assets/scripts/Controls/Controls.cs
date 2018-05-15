@@ -34,8 +34,11 @@ public class Controls : MonoBehaviour
     public KeyCode resetView;
     public KeyCode textOnOff;
 
-    public Button ZoomIn, ZoomOut;
+    public Button ZoomIn, ZoomOut, HandIcon, EyeIcon;
+    public Slider ZoomSlider;
     private bool zoomingIn, zoomingOut;
+
+    public TypeOfClick thisClick;
 
     //public MonoBehaviour moveMouseY;
     //public MonoBehaviour moveMouseX;
@@ -135,6 +138,11 @@ public class Controls : MonoBehaviour
         }
 
 
+        if (Input.GetMouseButton(0))
+        {
+            viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
+            mainCamera.GetComponent<MouseLookX>().moveCamera = true;
+        }
 
 
         if (Input.GetMouseButton(1))
@@ -214,6 +222,13 @@ public class Controls : MonoBehaviour
         zoomingIn = false;
     }
 
+    public void OnHandIconButtonPressed()
+    {
+        viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
+        mainCamera.GetComponent<MouseLookX>().moveCamera = true;
+    }
 
 
 }
+
+public enum TypeOfClick { move, view, select };
