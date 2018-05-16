@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class Controls : MonoBehaviour
 {
-
     public GameObject viewpointObject;
     public GameObject mainCamera;
     private CubeBuffer cubeBuffer;
     public GameObject masterObject;
+    public Texture2D handCursor;
+    public Texture2D eyeCursor;
+    public Texture2D currentCursor;
     
+    private float distanceBetweenOriginAndPlayerClamped;
     private float distanceBetweenOriginAndPlayer;
+    private Vector3 originalCameraLocation;
 
     public float movementModifier;
 
@@ -55,14 +59,13 @@ public class Controls : MonoBehaviour
         //moveMouseY = viewpointObject.GetComponent<MouseLookY>() as MonoBehaviour;
         //moveMouseX = mainCamera.GetComponent<MouseLookX>() as MonoBehaviour;
         thisClick = TypeOfClick.select;
-       
+        originalCameraLocation = viewpointObject.transform.position;       
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
 
     }
 
@@ -71,34 +74,41 @@ public class Controls : MonoBehaviour
     private void LateUpdate()
     {
 
-        distanceBetweenOriginAndPlayer = Mathf.Clamp(-10 + viewpointObject.transform.position.y - masterObject.transform.position.y, 1, 10);
-
-
+        distanceBetweenOriginAndPlayer = viewpointObject.transform.position.y - masterObject.transform.position.y;
+        distanceBetweenOriginAndPlayerClamped = Mathf.Clamp(-10 + viewpointObject.transform.position.y - masterObject.transform.position.y, 1, 10);
 
         // <<Change perspective with keys
         if (Input.GetKey(moveForward) || Input.GetKey(KeyCode.W))
         {
-            viewpointObject.transform.Translate(Vector3.forward * distanceBetweenOriginAndPlayer * movementModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
+            viewpointObject.transform.Translate(Vector3.forward * distanceBetweenOriginAndPlayerClamped * movementModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
         }
         else if (Input.GetKey(moveBackwards) || Input.GetKey(KeyCode.S))
         {
-            viewpointObject.transform.Translate(Vector3.back * distanceBetweenOriginAndPlayer * movementModifier);
+            viewpointObject.transform.Translate(Vector3.back * distanceBetweenOriginAndPlayerClamped * movementModifier);
         }
         if (Input.GetKey(moveLeft) || Input.GetKey(KeyCode.A))
         {
-            viewpointObject.transform.Translate(Vector3.left * distanceBetweenOriginAndPlayer * movementModifier);
+            viewpointObject.transform.Translate(Vector3.left * distanceBetweenOriginAndPlayerClamped * movementModifier);
         }
         else if (Input.GetKey(moveRight) || Input.GetKey(KeyCode.D))
         {
-            viewpointObject.transform.Translate(Vector3.right * distanceBetweenOriginAndPlayer * movementModifier);
+            viewpointObject.transform.Translate(Vector3.right * distanceBetweenOriginAndPlayerClamped * movementModifier);
         }
         if ((Input.GetKey(flyUp)) || Input.GetKey(KeyCode.X) || (Input.GetAxis("Mouse ScrollWheel") < 0f) || zoomingOut)
         {
-            viewpointObject.transform.Translate(Vector3.up * distanceBetweenOriginAndPlayer * movementModifier);
+            Debug.Log(distanceBetweenOriginAndPlayer);
+            if (distanceBetweenOriginAndPlayer < 25)
+            {
+                viewpointObject.transform.Translate(Vector3.up * distanceBetweenOriginAndPlayerClamped * movementModifier);
+            }
         }
         else if (Input.GetKey(flyDown) || Input.GetKey(KeyCode.Z) || (Input.GetAxis("Mouse ScrollWheel") > 0f) || zoomingIn)
         {
-            viewpointObject.transform.Translate(Vector3.down * distanceBetweenOriginAndPlayer * movementModifier);
+            Debug.Log(distanceBetweenOriginAndPlayer);
+            if (distanceBetweenOriginAndPlayer > 1)
+            {
+                viewpointObject.transform.Translate(Vector3.down * distanceBetweenOriginAndPlayerClamped * movementModifier);
+            }
         }
 
         if (Input.GetKeyDown(spinCCW) || Input.GetKeyDown(spinCW) || Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
@@ -143,8 +153,8 @@ public class Controls : MonoBehaviour
 
         if ((Input.GetMouseButton(2)) || (Input.GetMouseButton(0) && thisClick == TypeOfClick.move))
         {
-            float mouseY = Input.GetAxis("Mouse Y") * distanceBetweenOriginAndPlayer * movementModifier;
-            float mouseX = Input.GetAxis("Mouse X") * distanceBetweenOriginAndPlayer * movementModifier;
+            float mouseY = Input.GetAxis("Mouse Y") * distanceBetweenOriginAndPlayerClamped * movementModifier;
+            float mouseX = Input.GetAxis("Mouse X") * distanceBetweenOriginAndPlayerClamped * movementModifier;
             Vector3 mouseMoveWithMiddleButton = new Vector3(-mouseX, 0, -mouseY);
             viewpointObject.transform.Translate(mouseMoveWithMiddleButton);
 
@@ -153,14 +163,14 @@ public class Controls : MonoBehaviour
 
         if (Input.GetKey(resetView))
         {
+            viewpointObject.transform.position = originalCameraLocation;
             viewpointObject.GetComponent<MouseLookY>().moveCamera = true;
             mainCamera.GetComponent<MouseLookX>().moveCamera = true;
 
             viewpointObject.GetComponent<MouseLookY>().rotY = 0f;
             viewpointObject.GetComponent<MouseLookY>().rotX = 0f;
 
-
-            mainCamera.GetComponent<MouseLookX>().RotX = 0f;
+            mainCamera.GetComponent<MouseLookX>().RotX = 90f;
             mainCamera.GetComponent<MouseLookX>().RotY = 0f;
         }
 
@@ -214,20 +224,31 @@ public class Controls : MonoBehaviour
         zoomingIn = false;
     }
 
+    public void OnButtonHover()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+    }
+    public void OnButtonHoverExit()
+    {
+        Cursor.SetCursor(currentCursor, Vector2.zero, CursorMode.Auto);
+    }
+
     public void OnHandIconButtonPressed()
     {
         thisClick = TypeOfClick.move;
-        Debug.Log(thisClick);
         viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
         mainCamera.GetComponent<MouseLookX>().moveCamera = false;
+        Cursor.SetCursor(handCursor, Vector2.zero, CursorMode.Auto);
+        currentCursor = handCursor;
     }
+
     public void OnEyeIconButtonPressed()
     {
         thisClick = TypeOfClick.view;
         Debug.Log(thisClick);
+        Cursor.SetCursor(eyeCursor, Vector2.zero, CursorMode.Auto);
+        currentCursor = eyeCursor;
     }
-
-
 
 }
 
