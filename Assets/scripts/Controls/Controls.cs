@@ -100,6 +100,7 @@ public class Controls : MonoBehaviour
             if (distanceBetweenOriginAndPlayer < 25)
             {
                 viewpointObject.transform.Translate(Vector3.up * distanceBetweenOriginAndPlayerClamped * movementModifier);
+                ChangeSliderValue(viewpointObject.transform.position.y);
             }
         }
         else if (Input.GetKey(flyDown) || Input.GetKey(KeyCode.Z) || (Input.GetAxis("Mouse ScrollWheel") > 0f) || zoomingIn)
@@ -108,6 +109,7 @@ public class Controls : MonoBehaviour
             if (distanceBetweenOriginAndPlayer > 1)
             {
                 viewpointObject.transform.Translate(Vector3.down * distanceBetweenOriginAndPlayerClamped * movementModifier);
+                ChangeSliderValue(viewpointObject.transform.position.y);
             }
         }
 
@@ -245,11 +247,28 @@ public class Controls : MonoBehaviour
     public void OnEyeIconButtonPressed()
     {
         thisClick = TypeOfClick.view;
-        Debug.Log(thisClick);
         Cursor.SetCursor(eyeCursor, Vector2.zero, CursorMode.Auto);
         currentCursor = eyeCursor;
     }
 
+    public void OnSelectIconButtonPressed()
+    {
+        thisClick = TypeOfClick.select;
+        viewpointObject.GetComponent<MouseLookY>().moveCamera = false;
+        mainCamera.GetComponent<MouseLookX>().moveCamera = false;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        currentCursor = null;
+    }
+        
+    public void OnZoomSliderChange()
+    {
+        viewpointObject.transform.position = new Vector3(viewpointObject.transform.position.x, ZoomSlider.value, viewpointObject.transform.position.z);
+    }
+
+    private void ChangeSliderValue(float newValue)
+    {
+        ZoomSlider.value = newValue;
+    }
 }
 
 public enum TypeOfClick { move, view, select };
