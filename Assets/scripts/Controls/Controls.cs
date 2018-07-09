@@ -11,7 +11,7 @@ public class Controls : MonoBehaviour
     public GameObject masterObject;
     public Texture2D handCursor;
     public Texture2D eyeCursor;
-    public Texture2D currentCursor;
+    private Texture2D currentCursor;
     
     private float distanceBetweenOriginAndPlayerClamped;
     private float distanceBetweenOriginAndPlayer;
