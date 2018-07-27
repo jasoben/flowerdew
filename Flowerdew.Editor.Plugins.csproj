@@ -283,18 +283,15 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>Library\UnityAssemblies\UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>Assets\WAK\CORE\dlls\System.Drawing.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Flowerdew.csproj">
-      <Project>{819AF1E4-5E2F-A3CC-E59A-4804FE92848E}</Project>
-      <Name>Flowerdew</Name>
-    </ProjectReference>
     <ProjectReference Include="Flowerdew.Plugins.csproj">
       <Project>{D89CC3E3-4700-48C0-73A3-A97E8986BA42}</Project>
       <Name>Flowerdew.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="Flowerdew.csproj">
+      <Project>{819AF1E4-5E2F-A3CC-E59A-4804FE92848E}</Project>
+      <Name>Flowerdew</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -305,8 +302,6 @@
     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
-    <None Include="Assets\WAK\CORE\README.txt" />
-    <None Include="Assets\WAK\DOCUMENTATION.txt" />
     <None Include="Assets\shaders\GUI3D Text Shader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

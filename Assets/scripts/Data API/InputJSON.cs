@@ -7,9 +7,35 @@ public class InputJSON : MonoBehaviour {
     private string JSONData;
     private bool showData;
 
+    public static class JsonHelper
+    {
+        public static T[] FromJson<T>(string json)
+        {
+            Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+            return wrapper.LittleSquare;
+        }
+
+        [System.Serializable]
+        private class Wrapper<T>
+        {
+            public T[] LittleSquare;
+        }
+    }
+
+
+    [System.Serializable]
+    public class DrupalSelectedCubes
+    {
+        public string littleSquareLetter;
+        public int bigSquareNumber;
+        public int depth;
+    }
+
+    public DrupalSelectedCubes[] theseCubes;
+ 
 	// Use this for initialization
 	void Start () {
-        showData = false;		
+        showData = false;
 	}
 	
 	// Update is called once per frame
@@ -26,6 +52,15 @@ public class InputJSON : MonoBehaviour {
     private void OnGUI()
     {
         if (showData)
-            GUI.Label(new Rect(Screen.width - 200, 0, 200, Screen.height - 40), JSONData);
+        {
+
+            GUI.Label(new Rect(0, 0, Screen.width, Screen.height), JSONData);
+            //theseCubes = JsonHelper.FromJson<DrupalSelectedCubes>(JSONData);
+            //GUI.Label(new Rect(0, 0, Screen.width, Screen.height), theseCubes[0].ToString());
+            //    for (int i = 0; i < theseCubes.Length; i++)
+            //    {
+            //        string thisCubeString = "littleSquare_" + theseCubes[i].littleSquareLetter
+            //    }
+        }
     }
 }

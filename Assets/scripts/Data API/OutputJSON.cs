@@ -65,7 +65,6 @@ public class OutputJSON : MonoBehaviour {
                 i++;
             }
             
-            print(JsonHelper.ToJson(selectedSquares));
             MasterScript.SendCubesToExternalApplication(JsonHelper.ToJson(selectedSquares));
             System.IO.File.WriteAllText(Application.persistentDataPath + "/squares.json", JsonHelper.ToJson(selectedSquares));
 
