@@ -142,6 +142,8 @@ public class MasterScript : MonoBehaviour {
     public static void SendCubesToExternalApplication(string thisString)
     {
         SendData(thisString);                
+
+        //Application.ExternalCall("ReceiveUnityData", thisString);
     }
     
     public void CreateLargeSquare(int largeSquareNumber, int largeSquareXPosition, int largeSquareZPosition, int depth)

@@ -299,6 +299,7 @@
     <Compile Include="Assets\scripts\Controls\LayerNavigator.cs" />
     <Compile Include="Assets\scripts\Controls\MouseLookX.cs" />
     <Compile Include="Assets\scripts\Controls\MouseLookY.cs" />
+    <Compile Include="Assets\scripts\Data API\InputJSON.cs" />
     <Compile Include="Assets\scripts\Data API\OutputJSON.cs" />
     <Compile Include="Assets\scripts\MasterScript.cs" />
     <Compile Include="Assets\scripts\Matrix\CreateMatrixOfSmallSquares.cs" />
