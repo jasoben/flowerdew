@@ -139,12 +139,18 @@ public class CubeBuffer : MonoBehaviour {
             
             for (int i = 0; i < selectedCubes.Count; i++)
             {
-                selectedCubes[i].GetComponent<Renderer>().material.color = cubeColors[i];                
+                selectedCubes[i].GetComponent<Renderer>().material.color = cubeColors[i];
+                selectedCubes[i].GetComponent<ClickOnCube>().CubeSelected = false;
             }
             selectedCubes.Clear();
             cubeColors.Clear();
             LayerNavigator.ClearCubesAboveLayer();
             currentCount = 0;
+
+            foreach (GameObject layerHolder in cubeLayerHoldingEmptyObjects)
+            {
+                layerHolder.GetComponent<CubeTextEnabler>().HideText();
+            }   
         }
     }
     
@@ -163,6 +169,7 @@ public class CubeBuffer : MonoBehaviour {
         foreach (GameObject thisCube in selectedCubes)
         {
             //this conditional checks to see if it's already been colored
+            thisCube.GetComponent<ClickOnCube>().CubeSelected = true;
             if (thisCube.GetComponent<Renderer>().material.color.r != 0)
                 thisCube.GetComponent<Renderer>().material.color = thisCube.GetComponent<Renderer>().material.color * color;
         }

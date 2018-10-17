@@ -127,6 +127,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = ChangeNumberToLetter(cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text);
                 cubesInMatrix[currentCubeNumber].transform.GetChild(2).gameObject.GetComponent<TextMesh>().text = depth.ToString();
 
+
                 cubesInMatrix[currentCubeNumber].tag = "level" + depth;
 
                 ClickOnCube thisCube = cubesInMatrix[currentCubeNumber].GetComponent<ClickOnCube>();

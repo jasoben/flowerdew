@@ -9,10 +9,23 @@ public class ClickOnCube : MonoBehaviour
 {
     Controls navigationControls;
 
+    private GameObject cubeLetter, level;
+
+    private bool cubeSelected;
+
+    public bool CubeSelected
+    {
+        get { return cubeSelected; }
+        set { cubeSelected = value; }
+    }
+
     // Use this for initialization
     void Start()
     {
         navigationControls = GameObject.Find("UserViewpoint").GetComponent<Controls>();
+        cubeLetter = transform.GetChild(1).gameObject;
+        level = transform.GetChild(2).gameObject;
+        cubeSelected = false;
     }
 
     // Update is called once per frame
@@ -20,7 +33,20 @@ public class ClickOnCube : MonoBehaviour
     {
 
     }
-    void OnMouseDown()
+    void OnMouseOver()
+    {
+        cubeLetter.SetActive(true);
+        level.SetActive(true);
+    }
+    void OnMouseExit()
+    {
+        if (!cubeSelected)
+        {
+            cubeLetter.SetActive(false);
+            level.SetActive(false);
+        }
+    }
+     void OnMouseDown()
     {
         switch (navigationControls.thisClick)
         {

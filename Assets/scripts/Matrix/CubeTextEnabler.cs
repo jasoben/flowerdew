@@ -12,6 +12,12 @@ public class CubeTextEnabler : MonoBehaviour {
         get { return textObjects; }        
     }
 
+    private List<GameObject> onlyLargeSquareTitles;
+    public List<GameObject> OnlyLargeSquareTitles
+    {
+        get { return onlyLargeSquareTitles; }        
+    }
+
     private bool textShowingOrNot;
 
     //Numbers
@@ -22,6 +28,7 @@ public class CubeTextEnabler : MonoBehaviour {
         LayerNavigator.LayerHasBeenChanged += ShowOrHideTextOnCurrentLayer;
         thisLayer = this.name;
         textObjects = new List<GameObject>();
+        onlyLargeSquareTitles = new List<GameObject>();
         textShowingOrNot = true;
 
         foreach (Transform child in transform)
@@ -31,6 +38,9 @@ public class CubeTextEnabler : MonoBehaviour {
                 textObjects.Add(secondChild.Find("cubeLetter").gameObject);
                 textObjects.Add(secondChild.Find("squareNumber").gameObject);
                 textObjects.Add(secondChild.Find("layerNumber").gameObject);
+
+                onlyLargeSquareTitles.Add(secondChild.Find("squareNumber").gameObject);
+
             }
         }
 
@@ -49,7 +59,7 @@ public class CubeTextEnabler : MonoBehaviour {
         {
             if (thisLayer == "Layer " + LayerNavigator.CurrentLayer)
             {
-                foreach (GameObject thisTextObject in textObjects)
+                foreach (GameObject thisTextObject in onlyLargeSquareTitles)
                 {
                     thisTextObject.SetActive(true);
                 }
@@ -90,5 +100,30 @@ public class CubeTextEnabler : MonoBehaviour {
                 thisObject.transform.Find("layerNumber").gameObject.SetActive(true);
             }
         }
+       
     }
+    public void HideText()
+    {
+        if (textShowingOrNot == false)
+        {
+            foreach(GameObject thisObject in textObjects)
+            { 
+                thisObject.SetActive(false);
+            }
+        }
+        else if (textShowingOrNot == true)
+        {
+            foreach(GameObject thisObject in textObjects)
+            { 
+                thisObject.SetActive(false);
+            }
+            foreach(GameObject thisObject in onlyLargeSquareTitles)
+            {
+                thisObject.SetActive(true);
+            }
+        }
+
+
+    }
+
 }
