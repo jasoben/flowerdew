@@ -13,6 +13,9 @@ public class ClickOnCube : MonoBehaviour
 
     private bool cubeSelected;
 
+    public Color selectedCubeColor;
+    public Color defaultCubeColor;
+
     public bool CubeSelected
     {
         get { return cubeSelected; }
@@ -23,8 +26,6 @@ public class ClickOnCube : MonoBehaviour
     void Start()
     {
         navigationControls = GameObject.Find("UserViewpoint").GetComponent<Controls>();
-        cubeLetter = transform.GetChild(1).gameObject;
-        level = transform.GetChild(2).gameObject;
         cubeSelected = false;
     }
 
@@ -35,15 +36,13 @@ public class ClickOnCube : MonoBehaviour
     }
     void OnMouseOver()
     {
-        cubeLetter.SetActive(true);
-        level.SetActive(true);
+        GetComponent<Renderer>().material.color = selectedCubeColor;
     }
     void OnMouseExit()
     {
         if (!cubeSelected)
         {
-            cubeLetter.SetActive(false);
-            level.SetActive(false);
+            GetComponent<Renderer>().material.color = defaultCubeColor;
         }
     }
      void OnMouseDown()

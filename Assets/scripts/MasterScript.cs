@@ -39,6 +39,11 @@ public class MasterScript : MonoBehaviour {
         get { return layerEmptyObject; }
     }
 
+    //this stores a buffer of the last selected big cube, to re-activate it when "mouse out"
+    //I'm doing it this way because I'm deactivating the cube when I "mouse over", which means no "mouse out" would register
+    //I'm doing it that way because I need to have cursor activation for the stuff behind the big cube
+    public static GameObject LastSelectedBigCube;
+
     private static List<GameObject> allCubes;
     public static List<GameObject> AllCubes
     {
@@ -93,7 +98,7 @@ public class MasterScript : MonoBehaviour {
         matrixXSize = 6;
         matrixZSize = 4;
         matrixCubeXZScale = 1;
-        interCubeDistance = .2f;
+        interCubeDistance = 0f;
         largeSquareSeparationX = (matrixCubeXZScale * interCubeDistance) + (matrixXSize * matrixCubeXZScale);
         largeSquareSeparationZ = (matrixCubeXZScale * interCubeDistance) + (matrixZSize * matrixCubeXZScale);
 
@@ -146,6 +151,7 @@ public class MasterScript : MonoBehaviour {
         //Application.ExternalCall("ReceiveUnityData", thisString);
     }
     
+    //This method creates the "big squares" that hold the 6x4 matrix of "small squares"
     public void CreateLargeSquare(int largeSquareNumber, int largeSquareXPosition, int largeSquareZPosition, int depth)
     {
         float depthAdjuster = 0.3f;

@@ -12,7 +12,24 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
     //GameObjects
     private GameObject[] cubesInMatrix;
+    private List<GameObject> bigSquareIdentifiers;
+    public List<GameObject> BigSquareIdentifiers
+    {
+        get { return bigSquareIdentifiers; }
+    }
+    private List<GameObject> smallSquaresInABigSquare;
+
+    public List<GameObject> SmallSquaresInABigSquare
+    {
+        get { return smallSquaresInABigSquare; }
+        set { smallSquaresInABigSquare = value; }
+    }
+
+    public List<List<GameObject>> BigSquaresWithSmallSquares;
+
     private GameObject matrixCube;
+    [SerializeField]
+    private GameObject bigCube;
     private GameObject masterObject;
 
     //Numbers
@@ -81,6 +98,9 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
         //GameObjects
         masterObject = GameObject.Find("MasterObject");
         matrixCube = masterObject.GetComponent<MasterScript>().SmallSquarePrefab;
+        bigSquareIdentifiers = new List<GameObject>();
+        smallSquaresInABigSquare = new List<GameObject>();
+
         //cubesInMatrix = defined in LATE
 
         //Numbers
@@ -92,6 +112,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
         //LATE
         cubesInMatrix = new GameObject[matrixXSize * matrixZSize];
+
                 
     }
 
@@ -100,14 +121,26 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
     }
 
+    //This method creates the individual 6x4 matrix of small squares; a separate loop calls it for every large square position
+    //and depth
     public void CreateTheMatrixOfSmallSquares(int largeSquareNumber, int depth, GameObject parentLayerObject)
     {
 
+        //create the identifier block that shows the "Big Square" number
+        GameObject bigSquareIDTemp = Instantiate(bigCube, transform);
+        bigSquareIDTemp.transform.localScale = new Vector3(bigSquareIDTemp.transform.localScale.x * 6, bigSquareIDTemp.transform.localScale.y, bigSquareIDTemp.transform.localScale.z * 4);
+        bigSquareIDTemp.transform.localPosition = new Vector3(2.5f, .15f, 2.5f);
+        bigSquareIDTemp.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = largeSquareNumber.ToString();
+        bigSquareIDTemp.tag = "level" + depth;
+        bigSquareIDTemp.transform.SetParent(transform.parent.parent);
+        bigSquareIdentifiers.Add(bigSquareIDTemp);
+
+        //adjusts the depth if needed
         float adjustedDepth = matrixLocation.y;
 
         for (int z = 0; z < matrixZSize; z++)
         {
-
+            
             for (int x = 0; x < matrixXSize; x++)
             {
                 matrixCubeOffset = new Vector3((matrixCubeXZScale * x) + interCubeDistance, adjustedDepth, (matrixCubeXZScale * z + 1) + interCubeDistance);
@@ -133,6 +166,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 ClickOnCube thisCube = cubesInMatrix[currentCubeNumber].GetComponent<ClickOnCube>();
 
                 MasterScript.AllCubes.Add(cubesInMatrix[currentCubeNumber]);
+                smallSquaresInABigSquare.Add(cubesInMatrix[currentCubeNumber]);
 
                 currentCubeNumber++;
 
