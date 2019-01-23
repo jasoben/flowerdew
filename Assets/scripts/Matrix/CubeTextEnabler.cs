@@ -35,8 +35,8 @@ public class CubeTextEnabler : MonoBehaviour {
         {
             foreach (Transform secondChild in child)
             {
-                textObjects.Add(secondChild.Find("cubeLetter").gameObject);
-                textObjects.Add(secondChild.Find("squareNumber").gameObject);
+                //textObjects.Add(secondChild.Find("cubeLetter").gameObject);
+                //textObjects.Add(secondChild.Find("squareNumber").gameObject);
                 textObjects.Add(secondChild.Find("layerNumber").gameObject);
 
                 onlyLargeSquareTitles.Add(secondChild.Find("squareNumber").gameObject);
@@ -95,8 +95,8 @@ public class CubeTextEnabler : MonoBehaviour {
         {
             foreach (GameObject thisObject in CubeBuffer.SelectedCubes)
             {
-                thisObject.transform.Find("cubeLetter").gameObject.SetActive(true);
-                thisObject.transform.Find("squareNumber").gameObject.SetActive(true);
+                //thisObject.transform.Find("cubeLetter").gameObject.SetActive(true);
+                //thisObject.transform.Find("squareNumber").gameObject.SetActive(true);
                 thisObject.transform.Find("layerNumber").gameObject.SetActive(true);
             }
         }

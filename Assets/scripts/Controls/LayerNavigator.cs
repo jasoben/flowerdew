@@ -136,6 +136,7 @@ public class LayerNavigator : MonoBehaviour {
             thisObject.SetActive(yesOrNo);
         }
         ReActivateSelectedCubes();
+        TurnOffBigCubesInBuffer();
         
     }
     public static void ClearCubesAboveLayer()
@@ -153,6 +154,7 @@ public class LayerNavigator : MonoBehaviour {
         foreach (GameObject thisObject in inVisibleObjects)
         {
             thisObject.SetActive(false);
+            thisObject.GetComponent<Renderer>().material.color = MasterScript.DefaultCubeColor;
         }
     }
     private static void ReActivateSelectedCubes()
@@ -160,6 +162,14 @@ public class LayerNavigator : MonoBehaviour {
         foreach (GameObject thisObject in CubeBuffer.SelectedCubes)
         {
             thisObject.SetActive(true);
+            thisObject.GetComponent<Renderer>().material.color = MasterScript.SelectedCubeColor;
+        }
+    }
+    private static void TurnOffBigCubesInBuffer()
+    {
+        foreach (GameObject thisObject in MasterScript.LastSelectedBigCube)
+        {
+            thisObject.SetActive(false);
         }
     }
 }

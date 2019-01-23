@@ -10,9 +10,8 @@ public class CubeBuffer : MonoBehaviour {
     public static CubeLayersCreated CubesAreCreated;
 
     //Colors
-    private static List<Color> cubeColors;
-    private static Color blue;
-    private static Color green;
+    private static Color cubeColor;
+    private static Color selectedColor;
 
     //GameObjects
     private static GameObject[][] cubeLayers;
@@ -51,9 +50,8 @@ public class CubeBuffer : MonoBehaviour {
     private void Start()
     {
         //Colors
-        cubeColors = new List<Color>();
-        blue = new Color(0, .6f, 1);
-        green = new Color(0, 1, 0);
+        cubeColor = MasterScript.DefaultCubeColor;
+        selectedColor = MasterScript.SelectedCubeColor;
         
         //GameObjects
         allCubes = new List<GameObject>();
@@ -92,7 +90,7 @@ public class CubeBuffer : MonoBehaviour {
     public static void SelectSingleCube(GameObject thisSelectedCube)
     {
         selectedCubes.Add(thisSelectedCube);
-        HighLightCubes(green);
+        HighLightCubes(selectedColor);
     }
 
     public static void SelectColumn(GameObject thisSelectedCube)
@@ -110,8 +108,8 @@ public class CubeBuffer : MonoBehaviour {
                     cubeWithSimilarName.SetActive(true);
                     cubeWithSimilarName.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
                     cubeWithSimilarName.transform.Find("squareNumber").transform.gameObject.SetActive(true);
-                    cubeWithSimilarName.transform.Find("layerNumber").transform.gameObject.SetActive(true);
-                    HighLightCubes(blue);
+                    //cubeWithSimilarName.transform.Find("layerNumber").transform.gameObject.SetActive(true);
+                    HighLightCubes(selectedColor);
                     
                 }
 
@@ -127,9 +125,9 @@ public class CubeBuffer : MonoBehaviour {
         foreach (GameObject theCubeInThisLayer in cubeLayers[levelIntegerOfThisCube])
         {
             selectedCubes.Add(theCubeInThisLayer);
-            if (theCubeInThisLayer.name.Contains("Layer")) selectedCubes.Remove(theCubeInThisLayer); //This removes the layer indicator boxes from the selection
+            if (theCubeInThisLayer.name.Contains("BigCube")) selectedCubes.Remove(theCubeInThisLayer); //This removes the layer indicator boxes from the selection
         }
-        HighLightCubes(green);
+        HighLightCubes(selectedColor);
     }
     
     public static void ClearBuffer()
@@ -139,18 +137,17 @@ public class CubeBuffer : MonoBehaviour {
             
             for (int i = 0; i < selectedCubes.Count; i++)
             {
-                selectedCubes[i].GetComponent<Renderer>().material.color = cubeColors[i];
+                selectedCubes[i].GetComponent<Renderer>().material.color = cubeColor;
                 selectedCubes[i].GetComponent<ClickOnCube>().CubeSelected = false;
             }
             selectedCubes.Clear();
-            cubeColors.Clear();
             LayerNavigator.ClearCubesAboveLayer();
             currentCount = 0;
 
             foreach (GameObject layerHolder in cubeLayerHoldingEmptyObjects)
             {
                 layerHolder.GetComponent<CubeTextEnabler>().HideText();
-            }   
+            }
         }
     }
     
@@ -164,32 +161,20 @@ public class CubeBuffer : MonoBehaviour {
     private static void HighLightCubes(Color color)
     {
         RemoveDuplicateCubes();
-        StoreColorValue();
         
         foreach (GameObject thisCube in selectedCubes)
         {
             //this conditional checks to see if it's already been colored
             thisCube.GetComponent<ClickOnCube>().CubeSelected = true;
-            if (thisCube.GetComponent<Renderer>().material.color.r != 0)
-                thisCube.GetComponent<Renderer>().material.color = thisCube.GetComponent<Renderer>().material.color * color;
+            thisCube.GetComponent<Renderer>().material.color = color;
         }
 
         foreach (GameObject thisObject in selectedCubes)
         {
             thisObject.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
             thisObject.transform.Find("squareNumber").transform.gameObject.SetActive(true);
-            thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
+            //thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
         }
-    }
-
-
-    private static void StoreColorValue()
-    {
-        for (int i = currentCount; i < selectedCubes.Count; i++)
-        {
-            cubeColors.Add(selectedCubes[i].GetComponent<Renderer>().material.color);
-        }
-        currentCount = selectedCubes.Count;
     }
 
     private static void RemoveDuplicateCubes()

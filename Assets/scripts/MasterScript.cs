@@ -42,7 +42,9 @@ public class MasterScript : MonoBehaviour {
     //this stores a buffer of the last selected big cube, to re-activate it when "mouse out"
     //I'm doing it this way because I'm deactivating the cube when I "mouse over", which means no "mouse out" would register
     //I'm doing it that way because I need to have cursor activation for the stuff behind the big cube
-    public static GameObject LastSelectedBigCube;
+    public static List<GameObject> LastSelectedBigCube;
+    public static bool CubeClickedWhileBigCubeHidden; //this is a way to determine whether the 
+    //big cube should stay hidden after selection of cubes behind it
 
     private static List<GameObject> allCubes;
     public static List<GameObject> AllCubes
@@ -89,9 +91,19 @@ public class MasterScript : MonoBehaviour {
     //Vectors
     private Vector3 newLargeSquarePosition;
 
+    //Colors
+    [SerializeField]
+    private Color defaultCubeColor, selectedCubeColor, highlightColor;
+
+    public static Color DefaultCubeColor, SelectedCubeColor, HighlightColor;
+
     // Use this for initialization
     void Start () {
 
+        //Colors
+        DefaultCubeColor = defaultCubeColor;
+        SelectedCubeColor = selectedCubeColor;
+        HighlightColor = highlightColor;
         
         //Numbers
         matrixDepth = 8;
@@ -107,6 +119,7 @@ public class MasterScript : MonoBehaviour {
         thisLayer = new GameObject[matrixDepth];
         allCubes = new List<GameObject>();
 
+        LastSelectedBigCube = new List<GameObject>();
 
         for (int d = 0; d < matrixDepth; d++)
         {

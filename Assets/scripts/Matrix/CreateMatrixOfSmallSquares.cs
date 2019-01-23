@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class CreateMatrixOfSmallSquares : MonoBehaviour
 {
-    //Colors
-    private Color[] blockColor;
-
     //Custom Classes
     private CubeBuffer cubeBuffer;
 
@@ -84,17 +81,6 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
     void Awake()
     {
 
-        //Colors
-        blockColor = new Color[8];
-        float baseColor = .3f;
-        float colorMultiplier = 12;
-        for (int i = 0; i < 8; i++)
-        {
-
-            blockColor[7 - i] = new Color(baseColor + (i + 1) / colorMultiplier, baseColor + (i + 1) / colorMultiplier, baseColor + (i + 1) / colorMultiplier);            
-        }
-        
-
         //GameObjects
         masterObject = GameObject.Find("MasterObject");
         matrixCube = masterObject.GetComponent<MasterScript>().SmallSquarePrefab;
@@ -131,6 +117,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
         bigSquareIDTemp.transform.localScale = new Vector3(bigSquareIDTemp.transform.localScale.x * 6, bigSquareIDTemp.transform.localScale.y, bigSquareIDTemp.transform.localScale.z * 4);
         bigSquareIDTemp.transform.localPosition = new Vector3(2.5f, .15f, 2.5f);
         bigSquareIDTemp.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = largeSquareNumber.ToString();
+        bigSquareIDTemp.transform.GetChild(2).gameObject.GetComponent<TextMesh>().text = "Layer:" + " " + (depth + 1).ToString();
         bigSquareIDTemp.tag = "level" + depth;
         bigSquareIDTemp.transform.SetParent(transform.parent.parent);
         bigSquareIdentifiers.Add(bigSquareIDTemp);
@@ -151,7 +138,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
                 cubeName = ChangeNumberToLetter(cubeName);
 
-                cubesInMatrix[currentCubeNumber].GetComponent<Renderer>().material.SetColor("_Color", blockColor[depth]);
+                cubesInMatrix[currentCubeNumber].GetComponent<Renderer>().material.SetColor("_Color", MasterScript.DefaultCubeColor);
                 cubesInMatrix[currentCubeNumber].name = cubeName;
 
                 //Insert text on each child element (Text Rendereres)

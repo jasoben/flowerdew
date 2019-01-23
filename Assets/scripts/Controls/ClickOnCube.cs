@@ -13,9 +13,6 @@ public class ClickOnCube : MonoBehaviour
 
     private bool cubeSelected;
 
-    public Color selectedCubeColor;
-    public Color defaultCubeColor;
-
     public bool CubeSelected
     {
         get { return cubeSelected; }
@@ -36,13 +33,16 @@ public class ClickOnCube : MonoBehaviour
     }
     void OnMouseOver()
     {
-        GetComponent<Renderer>().material.color = selectedCubeColor;
+        if (!cubeSelected)
+        {
+            GetComponent<Renderer>().material.color = MasterScript.HighlightColor;
+        }
     }
     void OnMouseExit()
     {
         if (!cubeSelected)
         {
-            GetComponent<Renderer>().material.color = defaultCubeColor;
+            GetComponent<Renderer>().material.color = MasterScript.DefaultCubeColor;
         }
     }
      void OnMouseDown()
@@ -53,7 +53,7 @@ public class ClickOnCube : MonoBehaviour
             {
                 //This is the conditional for selecting columns
 
-                if (Input.GetKey(KeyCode.C))
+                if (Input.GetKey(KeyCode.LeftControl))
                 {
                     CubeBuffer.SelectColumn(this.transform.gameObject);
                 }
@@ -70,6 +70,9 @@ public class ClickOnCube : MonoBehaviour
                 {
                     CubeBuffer.SelectSingleCube(this.transform.gameObject);
                 }
+
+                CubeSelected = true;
+                MasterScript.CubeClickedWhileBigCubeHidden = true;
                 break;
             }
             case TypeOfClick.move:
