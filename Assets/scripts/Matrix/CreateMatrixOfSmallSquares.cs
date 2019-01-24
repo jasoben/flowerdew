@@ -120,6 +120,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
         bigSquareIDTemp.transform.GetChild(2).gameObject.GetComponent<TextMesh>().text = "Layer:" + " " + (depth + 1).ToString();
         bigSquareIDTemp.tag = "level" + depth;
         bigSquareIDTemp.transform.SetParent(transform.parent.parent);
+        MasterScript.AllBigCubes.Add(bigSquareIDTemp);
         bigSquareIdentifiers.Add(bigSquareIDTemp);
 
         //adjusts the depth if needed

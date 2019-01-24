@@ -19,11 +19,14 @@ public class ClickOnCube : MonoBehaviour
         set { cubeSelected = value; }
     }
 
+    private void Awake()
+    {
+        cubeSelected = false;
+    }
     // Use this for initialization
     void Start()
     {
         navigationControls = GameObject.Find("UserViewpoint").GetComponent<Controls>();
-        cubeSelected = false;
     }
 
     // Update is called once per frame

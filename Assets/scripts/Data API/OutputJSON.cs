@@ -50,8 +50,8 @@ public class OutputJSON : MonoBehaviour {
         int i = 0;
         if (CubeBuffer.SelectedCubes == null || CubeBuffer.SelectedCubes.Count == 0)
         {
-            this.transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().text = "No Data Selected!";
-            this.transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color = new Color(1, 0, 0);
+            transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().text = "No Data Selected!";
+            transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color = new Color(1, 0, 0);
             Invoke("SwitchTextBack", 1f);
         } else
         {

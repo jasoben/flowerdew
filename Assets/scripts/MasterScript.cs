@@ -55,6 +55,7 @@ public class MasterScript : MonoBehaviour {
         }
         set { allCubes = value; }
     }
+    public static List<GameObject> AllBigCubes { get; set; } // these are the cubes that have number and layer info on them
     private GameObject thisLargeSquare;
     private GameObject[] thisLayer;
 
@@ -118,6 +119,7 @@ public class MasterScript : MonoBehaviour {
 
         thisLayer = new GameObject[matrixDepth];
         allCubes = new List<GameObject>();
+        AllBigCubes = new List<GameObject>();
 
         LastSelectedBigCube = new List<GameObject>();
 
@@ -186,4 +188,5 @@ public class MasterScript : MonoBehaviour {
         Vector3 adjustedPosition = new Vector3(naiveVector.x + this.transform.position.x, naiveVector.y + this.transform.position.y, naiveVector.z + this.transform.position.z);
         return adjustedPosition;
     }
+
 }

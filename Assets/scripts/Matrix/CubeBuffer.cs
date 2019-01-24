@@ -140,7 +140,12 @@ public class CubeBuffer : MonoBehaviour {
                 selectedCubes[i].GetComponent<Renderer>().material.color = cubeColor;
                 selectedCubes[i].GetComponent<ClickOnCube>().CubeSelected = false;
             }
-            selectedCubes.Clear();
+            selectedCubes.Clear(); //clear the small cubes
+            foreach (GameObject thisBigCube in MasterScript.AllBigCubes) //clear the big cubes
+            {
+                thisBigCube.SetActive(true);
+            }
+            MasterScript.LastSelectedBigCube.Clear();
             LayerNavigator.ClearCubesAboveLayer();
             currentCount = 0;
 
@@ -158,13 +163,27 @@ public class CubeBuffer : MonoBehaviour {
             layerHolder.GetComponent<CubeTextEnabler>().ShowOrHideText();
         }
     }
-    private static void HighLightCubes(Color color)
+    public static void HideAllCubesExceptSelected()
+    {
+        foreach (GameObject thisCube in MasterScript.AllCubes)
+        {
+            thisCube.SetActive(false);
+        }
+        foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+        {
+            thisBigCube.SetActive(false);
+        }
+        foreach (GameObject thisSelectedCube in selectedCubes)
+        {
+            thisSelectedCube.SetActive(true);
+        }
+    }
+    public static void HighLightCubes(Color color)
     {
         RemoveDuplicateCubes();
         
         foreach (GameObject thisCube in selectedCubes)
         {
-            //this conditional checks to see if it's already been colored
             thisCube.GetComponent<ClickOnCube>().CubeSelected = true;
             thisCube.GetComponent<Renderer>().material.color = color;
         }
@@ -173,7 +192,7 @@ public class CubeBuffer : MonoBehaviour {
         {
             thisObject.transform.Find("cubeLetter").transform.gameObject.SetActive(true);
             thisObject.transform.Find("squareNumber").transform.gameObject.SetActive(true);
-            //thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
+            thisObject.transform.Find("layerNumber").transform.gameObject.SetActive(true);
         }
     }
 

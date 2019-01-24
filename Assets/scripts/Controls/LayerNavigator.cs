@@ -120,6 +120,13 @@ public class LayerNavigator : MonoBehaviour {
         CubeBuffer.CubesAreCreated -= RunWhenObjectsCreated;
     }
 
+    public static void ShowAllCubes()
+    {
+        foreach (GameObject thisCube in inVisibleObjects)
+        {
+            thisCube.SetActive(true);
+        }
+    }
     public static void ChangeLayerTo(int layerNumber)
     {
         layerNumber = (int)Mathf.Clamp((float)layerNumber, 0, 7);
@@ -171,5 +178,19 @@ public class LayerNavigator : MonoBehaviour {
         {
             thisObject.SetActive(false);
         }
+    }
+
+    public void MoveUpLayerButton()
+    {
+        ActivateOrDeactivateLayer(CurrentLayer, false);
+        ChangeLayerTo(CurrentLayer - 1);
+        ActivateOrDeactivateLayer(CurrentLayer, true);
+    }
+
+    public void MoveDownLayerButton()
+    {
+        ActivateOrDeactivateLayer(CurrentLayer, false);
+        ChangeLayerTo(CurrentLayer + 1);
+        ActivateOrDeactivateLayer(CurrentLayer, true);
     }
 }
