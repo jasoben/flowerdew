@@ -8,21 +8,29 @@ ModelImporter:
     100004: Cube_MeshPart2
     100006: //RootNode
     100008: Cube_MeshPart3
+    100010: Camera
+    100012: Cube
+    100014: Lamp
     400000: Cube_MeshPart0
     400002: Cube_MeshPart1
     400004: Cube_MeshPart2
     400006: //RootNode
     400008: Cube_MeshPart3
+    400010: Camera
+    400012: Cube
+    400014: Lamp
     2300000: Cube_MeshPart0
     2300002: Cube_MeshPart1
     2300004: Cube_MeshPart2
     2300006: Cube_MeshPart3
     2300008: //RootNode
+    2300010: Cube
     3300000: Cube_MeshPart0
     3300002: Cube_MeshPart1
     3300004: Cube_MeshPart2
     3300006: Cube_MeshPart3
     3300008: //RootNode
+    3300010: Cube
     4300000: Cube_MeshPart0
     4300002: Cube_MeshPart1
     4300004: Cube_MeshPart2
@@ -75,6 +83,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 2
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
@@ -99,6 +108,9 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -113,7 +125,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1

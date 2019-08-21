@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class ClickOnCube : MonoBehaviour
 {
     Controls navigationControls;
+    public GlobalSelect selectType;
 
     private GameObject cubeLetter, level;
 
@@ -56,14 +57,14 @@ public class ClickOnCube : MonoBehaviour
             {
                 //This is the conditional for selecting columns
 
-                if (Input.GetKey(KeyCode.LeftControl))
+                if (Input.GetKey(KeyCode.LeftControl) || selectType.typeOfSelect == TypeOfSelect.column)
                 {
                     CubeBuffer.SelectColumn(this.transform.gameObject);
                 }
 
                 //This is the conditional for selecting the whole layer
 
-                else if (Input.GetKey(KeyCode.LeftShift))
+                else if (Input.GetKey(KeyCode.LeftShift)|| selectType.typeOfSelect == TypeOfSelect.layer)
                 {
                     CubeBuffer.SelectLayer(this.transform.gameObject);
                 }
