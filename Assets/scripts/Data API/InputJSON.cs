@@ -52,7 +52,7 @@ public class InputJSON : MonoBehaviour {
 
     }
 
-    void ReceiveData(string thisData)
+    public void ReceiveData(string thisData)
     {
         CubeBuffer.ClearBuffer();
         LayerNavigator.ShowAllCubes();//This shows the hidden cubes, which are hidden to increase performance in WebGL
@@ -61,11 +61,16 @@ public class InputJSON : MonoBehaviour {
         //showData = true;
         foreach (DrupalSelectedCubes thisCube in theseCubes)
         {
-            int adjustedLevel = Int32.Parse(thisCube.littleSquareLetter[1].ToString());
-            adjustedLevel = adjustedLevel + 1;
-            string nameOfCube = "littleSquare_" + thisCube.littleSquareLetter[0] + "_" + thisCube.bigSquareNumber + "_" + adjustedLevel.ToString();
+            int adjustedLevel = Int32.Parse(thisCube.depth.ToString());
+            adjustedLevel = adjustedLevel - 1;
+            string nameOfCube = "littleSquare_" + thisCube.littleSquareLetter + "_" + thisCube.bigSquareNumber + "_" + adjustedLevel.ToString();
             GameObject thisSelectedCube = GameObject.Find(nameOfCube);
-            CubeBuffer.SelectedCubes.Add(thisSelectedCube);
+            if (!CubeBuffer.SelectedCubes.Contains(thisSelectedCube))
+            {
+                Debug.Log(nameOfCube);
+                Debug.Log(thisSelectedCube.ToString());
+                CubeBuffer.SelectedCubes.Add(thisSelectedCube);
+            }
         }
         if (CubeBuffer.SelectedCubes.Count > 0)
         {
