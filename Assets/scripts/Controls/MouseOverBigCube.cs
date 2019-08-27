@@ -8,31 +8,42 @@ using UnityEngine.UI;
 public class MouseOverBigCube : MonoBehaviour
 {
     
-    private bool cubeSelected;
+    private bool cubeSelected, sentDown;
+    public GameObject block, layer;
+    private Vector3 originalPosition;
 
     // Use this for initialization
     void Start()
     {
         cubeSelected = false;
+        sentDown = false;
+        originalPosition = gameObject.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+    
     }
-    void OnMouseOver()
+
+    private void OnTriggerEnter(Collider other)
     {
-
-        //deactivate this cube and re-activate the one stored in the buffer, then store this one in the buffer
-        gameObject.SetActive(false);
-        if (MasterScript.LastSelectedBigCube.Count > 0 && MasterScript.CubeClickedWhileBigCubeHidden == false)
+        Debug.Log("Triggered!");
+        if (!sentDown)
         {
-            MasterScript.LastSelectedBigCube.Last().SetActive(true);
-            MasterScript.LastSelectedBigCube.Remove(MasterScript.LastSelectedBigCube.Last());
+            originalPosition = gameObject.transform.position;
+            gameObject.transform.Translate(0, -20, 0);
+            sentDown = true;
         }
-        MasterScript.CubeClickedWhileBigCubeHidden = false;
-        MasterScript.LastSelectedBigCube.Add(gameObject);
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("UnTriggered!");
+        if (sentDown)
+        {
+            gameObject.transform.position = originalPosition;
+            sentDown = false;
+        }
     }
 }
