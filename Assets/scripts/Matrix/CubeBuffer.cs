@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CubeBuffer : MonoBehaviour {
 
     public delegate void CubeLayersCreated();
     public static CubeLayersCreated CubesAreCreated;
+    public UnityEvent clearSelectedCubes;
+    public IntList selectedBlocks;
 
     //Colors
     private static Color cubeColor;
@@ -58,6 +61,18 @@ public class CubeBuffer : MonoBehaviour {
         selectedCubes = new List<GameObject>();
         allCubes = MasterScript.AllCubes;
         print("test");
+
+        Invoke("ResetEverything", .5f);
+
+    }
+
+    private void ResetEverything()
+    {
+        clearSelectedCubes.Invoke();
+    }
+    public void ClearSelectionList()
+    {
+        selectedBlocks.ints.Clear();
     }
 
     private void Update()

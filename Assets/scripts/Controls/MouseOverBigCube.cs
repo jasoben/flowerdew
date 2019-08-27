@@ -8,47 +8,63 @@ using UnityEngine.UI;
 public class MouseOverBigCube : MonoBehaviour
 {
     
-    private bool cubeSelected, sentDown;
+    private bool cubeEnabled;
     public GameObject block, layer;
-    private Vector3 originalPosition;
+    private Renderer bigCubeRenderer;
+    public IntList selectedBlocks;
+    private string thisBlockNumber;
+    private int thisBlockNumberInt;
 
     // Use this for initialization
     void Start()
     {
-        cubeSelected = false;
-        sentDown = false;
-        originalPosition = gameObject.transform.position;
+        cubeEnabled = true;
+        bigCubeRenderer = GetComponent<Renderer>();
+        thisBlockNumber = block.GetComponent<TextMesh>().text;
+        thisBlockNumberInt = int.Parse(thisBlockNumber);
     }
 
     // Update is called once per frame
     void Update()
     {
-    
+        foreach (int thisBlock in selectedBlocks.ints)
+        {
+            if (thisBlock == thisBlockNumberInt && cubeEnabled)
+            {
+                DisableBigCube();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "SelectorRay")
+        if (other.gameObject.tag == "SelectorRay" && cubeEnabled)
         {
-            if (!sentDown)
-            {
-                originalPosition = gameObject.transform.position;
-                gameObject.transform.Translate(0, -.5f, 0);
-                sentDown = true;
-            }
+            DisableBigCube();
         }
    }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "SelectorRay")
+        if (other.gameObject.tag == "SelectorRay" && !cubeEnabled)
         {
-            Debug.Log("Exit");
-            if (sentDown)
-            {
-                gameObject.transform.position = originalPosition;
-                sentDown = false;
-            }
+            EnableBigCube();
         }
+    }
+
+    public void DisableBigCube()
+    {
+        bigCubeRenderer.enabled = false;
+        block.SetActive(false);
+        layer.SetActive(false);
+        cubeEnabled = false;
+    }
+
+    public void EnableBigCube()
+    {
+        bigCubeRenderer.enabled = true;
+        block.SetActive(true);
+        layer.SetActive(true);
+        cubeEnabled = true;
     }
 }
