@@ -28,22 +28,27 @@ public class MouseOverBigCube : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered!");
-        if (!sentDown)
+        if (other.gameObject.tag == "SelectorRay")
         {
-            originalPosition = gameObject.transform.position;
-            gameObject.transform.Translate(0, -20, 0);
-            sentDown = true;
+            if (!sentDown)
+            {
+                originalPosition = gameObject.transform.position;
+                gameObject.transform.Translate(0, -.5f, 0);
+                sentDown = true;
+            }
         }
-    }
+   }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("UnTriggered!");
-        if (sentDown)
+        if (other.gameObject.tag == "SelectorRay")
         {
-            gameObject.transform.position = originalPosition;
-            sentDown = false;
+            Debug.Log("Exit");
+            if (sentDown)
+            {
+                gameObject.transform.position = originalPosition;
+                sentDown = false;
+            }
         }
     }
 }

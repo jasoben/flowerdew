@@ -34,8 +34,4 @@ public class RaySelector : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("RayTrigger");
-    }
 }
