@@ -12,7 +12,8 @@ public class MouseLookY : MonoBehaviour
     public float rotY = 0.0f; // rotation around the up/y axis
     public float rotX = 0.0f; // rotation around the right/x axis
 
- 
+    public Transform lookTarget;
+    private Vector3 lookTargetPoint;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class MouseLookY : MonoBehaviour
         rotX = rot.x;
 
         moveCamera = false;
-
+        lookTargetPoint = lookTarget.position;
     }
 
     void Update()
@@ -37,9 +38,11 @@ public class MouseLookY : MonoBehaviour
 
             //rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
 
-            Quaternion localRotation = Quaternion.Euler(0.0f, rotY, 0.0f);
+            //Quaternion localRotation = Quaternion.Euler(0.0f, rotY, 0.0f);
 
-            transform.rotation = localRotation;
+            transform.RotateAround(lookTargetPoint, Vector3.back, mouseX);
+
+            //transform.rotation = localRotation;
         }
 
     }

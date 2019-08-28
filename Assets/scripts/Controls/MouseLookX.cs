@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MouseLookX : MonoBehaviour
 {
-    public float mouseSensitivity = 100.0f;
+    public float mouseSensitivity = 1.0f;
     public float clampAngle = 80.0f;
+    public Transform lookTarget;
+    private Vector3 lookTargetPoint;
 
     public bool moveCamera;
 
@@ -35,6 +37,7 @@ public class MouseLookX : MonoBehaviour
         rotX = rot.x;
 
         moveCamera = false;
+        lookTargetPoint = lookTarget.position;
     }
 
     void Update()
@@ -52,9 +55,10 @@ public class MouseLookX : MonoBehaviour
 
             viewpointRotation = viewpointUser.transform.rotation;
 
-            Quaternion localRotation = Quaternion.Euler(rotX, viewpointRotation.eulerAngles.y, 0);
+//            Quaternion localRotation = Quaternion.Euler(rotX, viewpointRotation.eulerAngles.y, 0);
 
-            transform.rotation = localRotation;
+            transform.RotateAround(lookTargetPoint, Vector3.left, mouseY);
+//            transform.rotation = localRotation;
         }
     }
 
