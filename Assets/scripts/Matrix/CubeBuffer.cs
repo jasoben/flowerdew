@@ -11,6 +11,7 @@ public class CubeBuffer : MonoBehaviour {
     public static CubeLayersCreated CubesAreCreated;
     public UnityEvent clearSelectedCubes;
     public IntList selectedBlocks;
+    public GameObject map;
 
     //Colors
     private static Color cubeColor;
@@ -231,6 +232,24 @@ public class CubeBuffer : MonoBehaviour {
     public void ClearButton()
     {
         ClearBuffer();
+    }
+
+    public void ClearBigCubesForMap()
+    {
+        if (map.activeSelf)
+        {
+            foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+            {
+                thisBigCube.SetActive(false);
+            }
+        }
+        else
+        {
+            foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+            {
+                thisBigCube.SetActive(true);
+            }
+        }
     }
 }
 

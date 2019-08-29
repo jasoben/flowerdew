@@ -209,6 +209,7 @@ public class Controls : MonoBehaviour
         
     public void OnZoomSliderChange()
     {
+        distance = GetComponent<MouseOrbit>().distance = ZoomSlider.value;
     }
 
     private void ChangeSliderValue(float newValue)
