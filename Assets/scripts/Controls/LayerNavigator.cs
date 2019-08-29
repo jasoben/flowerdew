@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LayerNavigator : MonoBehaviour {
 
+    public IntList selectedBigCubes;
     //Event handling delegates
     public delegate void LayerChanged();
     public static LayerChanged LayerHasBeenChanged;

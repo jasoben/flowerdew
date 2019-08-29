@@ -3,7 +3,8 @@ using System.Collections;
  
 [AddComponentMenu("Camera-Control/Mouse Orbit with zoom")]
 public class MouseOrbit : MonoBehaviour {
- 
+
+    public GlobalBool mouseLook;
     public Transform target;
     public float distance = 105.0f;
     public float xSpeed = 12.0f;
@@ -40,8 +41,13 @@ public class MouseOrbit : MonoBehaviour {
     {
         if (target) 
         {
-            x += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
-            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+            float rotateOrNot;
+            if (mouseLook.globalBool)
+                rotateOrNot = 1;
+            else
+                rotateOrNot = 0;
+            x += Input.GetAxis("Mouse X") * xSpeed * rotateOrNot * distance * 0.02f;
+            y -= Input.GetAxis("Mouse Y") * ySpeed * rotateOrNot * 0.02f;
  
             y = ClampAngle(y, yMinLimit, yMaxLimit);
  

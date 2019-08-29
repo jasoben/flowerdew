@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class MouseOverBigCube : MonoBehaviour
 {
-    
+
+    public GlobalControl controls;
     private bool cubeEnabled;
     public GameObject block, layer;
     private Renderer bigCubeRenderer;
@@ -38,7 +39,7 @@ public class MouseOverBigCube : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "SelectorRay" && cubeEnabled)
+        if (other.gameObject.tag == "SelectorRay" && cubeEnabled && controls.typeOfClick == TypeOfClick.select)
         {
             DisableBigCube();
         }
@@ -46,7 +47,7 @@ public class MouseOverBigCube : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "SelectorRay" && !cubeEnabled)
+        if (other.gameObject.tag == "SelectorRay" && !cubeEnabled && controls.typeOfClick == TypeOfClick.select)
         {
             EnableBigCube();
         }

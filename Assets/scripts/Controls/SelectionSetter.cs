@@ -5,25 +5,25 @@ using UnityEngine.UI;
 
 public class SelectionSetter : MonoBehaviour
 {
-    public GlobalSelect selectionType;
+    public GlobalControl controls;
     public Button single, column, layer; 
 
     public void SetSingle()
     {
-        selectionType.typeOfSelect = TypeOfSelect.single;
+        controls.typeOfSelect = TypeOfSelect.single;
         ShowAllButtons();
         single.interactable = false;
     }
 
     public void SetColumn()
     {
-        selectionType.typeOfSelect = TypeOfSelect.column;
+        controls.typeOfSelect = TypeOfSelect.column;
         ShowAllButtons();
         column.interactable = false;
     }
     public void SetLayer()
     {
-        selectionType.typeOfSelect = TypeOfSelect.layer;
+        controls.typeOfSelect = TypeOfSelect.layer;
         ShowAllButtons();
         layer.interactable = false;
     }
@@ -33,6 +33,5 @@ public class SelectionSetter : MonoBehaviour
         single.interactable = true;
         column.interactable = true;
         layer.interactable = true;
-
     }
 }

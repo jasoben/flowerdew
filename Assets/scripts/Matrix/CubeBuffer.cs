@@ -149,7 +149,6 @@ public class CubeBuffer : MonoBehaviour {
     {
         if (selectedCubes.Count > 0)
         {
-            
             for (int i = 0; i < selectedCubes.Count; i++)
             {
                 selectedCubes[i].GetComponent<Renderer>().material.color = cubeColor;
