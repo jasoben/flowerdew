@@ -61,14 +61,10 @@ public class InputJSON : MonoBehaviour {
         //showData = true;
         foreach (DrupalSelectedCubes thisCube in theseCubes)
         {
-            int adjustedLevel = Int32.Parse(thisCube.depth.ToString());
-            adjustedLevel = adjustedLevel - 1;
-            string nameOfCube = "littleSquare_" + thisCube.littleSquareLetter + "_" + thisCube.bigSquareNumber + "_" + adjustedLevel.ToString();
+            string nameOfCube = "littleSquare_" + thisCube.littleSquareLetter + "_" + thisCube.bigSquareNumber + "_" + thisCube.depth;
             GameObject thisSelectedCube = GameObject.Find(nameOfCube);
             if (!CubeBuffer.SelectedCubes.Contains(thisSelectedCube))
             {
-                Debug.Log(nameOfCube);
-                Debug.Log(thisSelectedCube.ToString());
                 CubeBuffer.SelectedCubes.Add(thisSelectedCube);
             }
         }

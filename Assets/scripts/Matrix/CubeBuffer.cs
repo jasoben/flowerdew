@@ -147,6 +147,7 @@ public class CubeBuffer : MonoBehaviour {
     
     public static void ClearBuffer()
     {
+        ShowAllCubes();
         if (selectedCubes.Count > 0)
         {
             for (int i = 0; i < selectedCubes.Count; i++)
@@ -158,6 +159,7 @@ public class CubeBuffer : MonoBehaviour {
             foreach (GameObject thisBigCube in MasterScript.AllBigCubes) //clear the big cubes
             {
                 thisBigCube.SetActive(true);
+                thisBigCube.GetComponent<MouseOverBigCube>().EnableBigCube();
             }
             MasterScript.LastSelectedBigCube.Clear();
             LayerNavigator.ClearCubesAboveLayer();
@@ -190,6 +192,18 @@ public class CubeBuffer : MonoBehaviour {
         foreach (GameObject thisSelectedCube in selectedCubes)
         {
             thisSelectedCube.SetActive(true);
+        }
+    }
+
+    public static void ShowAllCubes()
+    {
+        foreach (GameObject thisCube in MasterScript.AllCubes)
+        {
+            thisCube.SetActive(true);
+        }
+        foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+        {
+            thisBigCube.SetActive(true);
         }
     }
     public static void HighLightCubes(Color color)

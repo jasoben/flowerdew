@@ -135,7 +135,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
 
                 Vector3 newPosition = transform.position + matrixCubeOffset;
                 cubesInMatrix[currentCubeNumber] = Instantiate(matrixCube, newPosition, Quaternion.identity, parentLayerObject.transform);
-                string cubeName = "littleSquare" + "_alpha" + currentCubeNumber + "_" + largeSquareNumber + "_" + depth;
+                string cubeName = "littleSquare" + "_alpha" + currentCubeNumber + "_" + largeSquareNumber + "_" + (depth+1);
 
                 cubeName = ChangeNumberToLetter(cubeName);
 
@@ -146,7 +146,7 @@ public class CreateMatrixOfSmallSquares : MonoBehaviour
                 cubesInMatrix[currentCubeNumber].transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = largeSquareNumber.ToString();
                 cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = "alpha" + currentCubeNumber.ToString();
                 cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text = ChangeNumberToLetter(cubesInMatrix[currentCubeNumber].transform.GetChild(1).gameObject.GetComponent<TextMesh>().text);
-                cubesInMatrix[currentCubeNumber].transform.GetChild(2).gameObject.GetComponent<TextMesh>().text = depth.ToString();
+                cubesInMatrix[currentCubeNumber].transform.GetChild(2).gameObject.GetComponent<TextMesh>().text = (depth + 1).ToString();
 
 
                 cubesInMatrix[currentCubeNumber].tag = "level" + depth;

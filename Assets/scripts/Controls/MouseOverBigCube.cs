@@ -63,7 +63,7 @@ public class MouseOverBigCube : MonoBehaviour
 
     public void EnableBigCube()
     {
-        bigCubeRenderer.enabled = true;
+        GetComponent<Renderer>().enabled = true;
         block.SetActive(true);
         layer.SetActive(true);
         cubeEnabled = true;
