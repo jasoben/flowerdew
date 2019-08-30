@@ -62,7 +62,6 @@ public class ClickOnCube : MonoBehaviour
             {
                 case TypeOfClick.select:
                     {
-                        //This is the conditional for selecting columns
                         if (!selectedBlocks.ints.Contains(blockNumber))
                         {
                             selectedBlocks.ints.Add(blockNumber);
@@ -119,5 +118,29 @@ public class ClickOnCube : MonoBehaviour
                     }
             }
         }
+    }
+    private void OnMouseEnter()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (controls.typeOfClick == TypeOfClick.select)
+            {
+                if (!selectedBlocks.ints.Contains(blockNumber))
+                {
+                    selectedBlocks.ints.Add(blockNumber);
+                }
+
+                if (Input.GetKey(KeyCode.LeftControl) || controls.typeOfSelect == TypeOfSelect.column)
+                {
+                    CubeBuffer.SelectColumn(this.transform.gameObject);
+                }
+                else
+                {
+                    CubeBuffer.SelectSingleCube(this.transform.gameObject);
+                }
+            }
+     
+        }
+       
     }
 }

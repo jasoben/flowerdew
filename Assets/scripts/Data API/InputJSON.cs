@@ -8,6 +8,7 @@ public class InputJSON : MonoBehaviour {
 
     private string JSONData;
     private bool showData;
+    public GlobalBool cubesSelectedViaDrupal;
 
     public static class JsonHelper
     {
@@ -54,6 +55,7 @@ public class InputJSON : MonoBehaviour {
 
     public void ReceiveData(string thisData)
     {
+        cubesSelectedViaDrupal.globalBool = true;
         CubeBuffer.ClearBuffer();
         LayerNavigator.ShowAllCubes();//This shows the hidden cubes, which are hidden to increase performance in WebGL
         JSONData = thisData;

@@ -12,6 +12,7 @@ public class CubeBuffer : MonoBehaviour {
     public UnityEvent clearSelectedCubes;
     public IntList selectedBlocks;
     public GameObject map;
+    public GlobalBool cubesSelectedFromDrupal;
 
     //Colors
     private static Color cubeColor;
@@ -64,6 +65,8 @@ public class CubeBuffer : MonoBehaviour {
         print("test");
 
         Invoke("ResetEverything", .5f);
+
+        cubesSelectedFromDrupal.globalBool = false;
 
     }
 
@@ -231,24 +234,27 @@ public class CubeBuffer : MonoBehaviour {
     }
     public void ClearButton()
     {
+        cubesSelectedFromDrupal.globalBool = false;
         ClearBuffer();
     }
 
     public void ClearBigCubesForMap()
     {
-        if (map.activeSelf)
+        if (!cubesSelectedFromDrupal.globalBool)
         {
-            foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+            if (map.activeSelf)
             {
-                thisBigCube.SetActive(false);
-            }
-        }
-        else
-        {
-            foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+                foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+                {
+                    thisBigCube.SetActive(false);
+                }
+            } else
             {
-                thisBigCube.SetActive(true);
-            }
+                foreach (GameObject thisBigCube in MasterScript.AllBigCubes)
+                {
+                    thisBigCube.SetActive(true);
+                }
+            } 
         }
     }
 }
