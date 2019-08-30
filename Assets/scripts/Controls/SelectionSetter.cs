@@ -7,12 +7,16 @@ public class SelectionSetter : MonoBehaviour
 {
     public GlobalControl controls;
     public Button single, column, layer,
-        select, view, move; 
+        select, view, move;
+    public Image singleBlock, columnBlocks, layerBlocks;
+    public Color whiteColor, greenColor;
 
     public void SetSingle()
     {
         controls.typeOfSelect = TypeOfSelect.single;
         ShowAllSelectButtons();
+        ResetToWhite();
+        singleBlock.color = greenColor;
         single.interactable = false;
     }
 
@@ -21,12 +25,16 @@ public class SelectionSetter : MonoBehaviour
         controls.typeOfSelect = TypeOfSelect.column;
         ShowAllSelectButtons();
         column.interactable = false;
+        ResetToWhite();
+        columnBlocks.color = greenColor;
     }
     public void SetLayer()
     {
         controls.typeOfSelect = TypeOfSelect.layer;
         ShowAllSelectButtons();
         layer.interactable = false;
+        ResetToWhite();
+        layerBlocks.color = greenColor;
     }
     public void SetSelect()
     {
@@ -59,5 +67,11 @@ public class SelectionSetter : MonoBehaviour
         select.interactable = true;
         view.interactable = true;
         move.interactable = true;
+    }
+    private void ResetToWhite()
+    {
+        singleBlock.color = whiteColor;
+        columnBlocks.color = whiteColor;
+        layerBlocks.color = whiteColor;
     }
 }

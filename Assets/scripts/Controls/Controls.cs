@@ -36,7 +36,7 @@ public class Controls : MonoBehaviour
     public Button ZoomIn, ZoomOut, HandIcon, EyeIcon;
     public Slider ZoomSlider;
     private bool zoomingIn, zoomingOut;
-    public float moveModifier;
+    public float moveModifier, zoomModifier;
 
     //public MonoBehaviour moveMouseY;
     //public MonoBehaviour moveMouseX;
@@ -58,28 +58,30 @@ public class Controls : MonoBehaviour
     
     private void LateUpdate()
     {
+        Vector3 adjustedForwardDirection = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+        Vector3 adjustedLateralDirection = new Vector3(Camera.main.transform.right.x, 0, Camera.main.transform.right.z);
         // <<Change perspective with keys
         if (Input.GetKey(moveForward) || Input.GetKey(KeyCode.W))
         {
-            lookRotationObject.transform.Translate(Vector3.forward * moveModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
+            lookRotationObject.transform.Translate(adjustedForwardDirection * moveModifier);   //NOTE TO SELF - This is why the camera needs to be attached to a capsule or other object
         }
         else if (Input.GetKey(moveBackwards) || Input.GetKey(KeyCode.S))
         {
-            lookRotationObject.transform.Translate(Vector3.back * moveModifier);
+            lookRotationObject.transform.Translate(-adjustedForwardDirection * moveModifier);
         }
         if (Input.GetKey(moveLeft) || Input.GetKey(KeyCode.A))
         {
-            lookRotationObject.transform.Translate(Vector3.left * moveModifier);
+            lookRotationObject.transform.Translate(-adjustedLateralDirection * moveModifier);
         }
         else if (Input.GetKey(moveRight) || Input.GetKey(KeyCode.D))
         {
-            lookRotationObject.transform.Translate(Vector3.right * moveModifier);
+            lookRotationObject.transform.Translate(adjustedLateralDirection * moveModifier);
         }
         if ((Input.GetKey(flyUp)) || Input.GetKey(KeyCode.X) || (Input.GetAxis("Mouse ScrollWheel") < 0f) || zoomingOut)
         {
             if (distance < 25)
             {
-                distance += moveModifier;
+                distance += zoomModifier;
                 GetComponent<MouseOrbit>().distance = distance;
                 ChangeSliderValue(distance);
             }
@@ -88,7 +90,7 @@ public class Controls : MonoBehaviour
         {
             if (distance > 5)
             {
-                distance -= moveModifier;
+                distance -= zoomModifier;
                 GetComponent<MouseOrbit>().distance = distance;
                 ChangeSliderValue(distance);
             }
