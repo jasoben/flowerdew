@@ -11,6 +11,7 @@ public class Controls : MonoBehaviour
     public Texture2D eyeCursor;
     private Texture2D currentCursor;
     public GlobalBool mouseLook;
+    public GameObject adjustedPointer;
     
     private bool cubeTextBool;
     private bool allTextBool;
@@ -117,7 +118,7 @@ public class Controls : MonoBehaviour
             float mouseY = Input.GetAxis("Mouse Y");
             float mouseX = Input.GetAxis("Mouse X");
             Vector3 mouseMoveWithMiddleButton = new Vector3(-mouseX, 0, -mouseY);
-            lookRotationObject.transform.Translate(mouseMoveWithMiddleButton);
+            lookRotationObject.transform.Translate(mouseMoveWithMiddleButton, adjustedPointer.transform);
         }
 
 
