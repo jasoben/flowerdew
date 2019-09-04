@@ -39,6 +39,8 @@ public class Controls : MonoBehaviour
     private bool zoomingIn, zoomingOut;
     public float moveModifier, zoomModifier;
 
+    private TypeOfClick tempTypeOfClick;
+
     //public MonoBehaviour moveMouseY;
     //public MonoBehaviour moveMouseX;
 
@@ -180,16 +182,19 @@ public class Controls : MonoBehaviour
     public void OnButtonHover()
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        tempTypeOfClick = controls.typeOfClick;
+        controls.typeOfClick = TypeOfClick.select; 
     }
     public void OnButtonHoverExit()
     {
         Cursor.SetCursor(currentCursor, Vector2.zero, CursorMode.Auto);
+        controls.typeOfClick = tempTypeOfClick;
     }
 
     public void OnHandIconButtonPressed()
     {
         mouseLook.globalBool = false;
-        controls.typeOfClick = TypeOfClick.move;
+        controls.typeOfClick = tempTypeOfClick = TypeOfClick.move;
         Cursor.SetCursor(handCursor, Vector2.zero, CursorMode.Auto);
         currentCursor = handCursor;
     }
@@ -197,7 +202,7 @@ public class Controls : MonoBehaviour
     public void OnEyeIconButtonPressed()
     {
         mouseLook.globalBool = false;
-        controls.typeOfClick = TypeOfClick.view;
+        controls.typeOfClick = tempTypeOfClick = TypeOfClick.view;
         Cursor.SetCursor(eyeCursor, Vector2.zero, CursorMode.Auto);
         currentCursor = eyeCursor;
     }
@@ -205,7 +210,7 @@ public class Controls : MonoBehaviour
     public void OnSelectIconButtonPressed()
     {
         mouseLook.globalBool = false;
-        controls.typeOfClick = TypeOfClick.select;
+        controls.typeOfClick = tempTypeOfClick = TypeOfClick.select;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         currentCursor = null;
     }

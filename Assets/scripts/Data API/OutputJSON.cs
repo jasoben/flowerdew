@@ -44,7 +44,15 @@ public class OutputJSON : MonoBehaviour {
 
     public LittleSquare[] selectedSquares;
     public LittleSquare thisSquare;
-    
+
+    private string originalText;
+    private Color originalColor;
+
+    private void Start()
+    {
+        originalText = transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().text;
+        originalColor = transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color;
+    }
     public void SaveDataToJSON()
     {
         int i = 0;
@@ -75,8 +83,8 @@ public class OutputJSON : MonoBehaviour {
 
     public void SwitchTextBack()
     {
-        this.transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().text = "Send Data to Drupal";
-        this.transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color = new Color(0, 0, 0);
+        this.transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().text = originalText;
+        this.transform.gameObject.GetComponentInChildren<UnityEngine.UI.Text>().color = originalColor;
     }
 
 }
