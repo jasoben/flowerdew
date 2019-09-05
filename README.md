@@ -1,6 +1,6 @@
-# Flowerdew Hundred Unity Simulation
+# Flowerdew Hundred Simulation
 
-The Flowerdew Hundred Simulatio is a 3D representation of a Harris matrix for the Flowerdew Hundred Plantation archeological site. It is open source and available for non-commercial use by any who are interested, under a CC license (see below).
+The Flowerdew Hundred Simulation is a 3D representation of a Harris matrix for the Flowerdew Hundred Plantation archeological site. It is open source and available for non-commercial use by any who are interested, under a CC license (see below).
 
 This is a Unity widget that functions as part of the Flowerdew Hundred online repository (https://flowerdewhundred.org). An explanation of the tool, as well as the tool itself and the database it connects to, can be found at https://flowerdewhundred.org/explore-in-space/
 
