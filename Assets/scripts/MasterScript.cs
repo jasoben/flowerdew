@@ -154,7 +154,7 @@ public class MasterScript : MonoBehaviour {
         ObjectsDone();
 
         //WebGL
-        //WebGLInput.captureAllKeyboardInput = false;
+        WebGLInput.captureAllKeyboardInput = false;
     }
 	
 	// Update is called once per frame
